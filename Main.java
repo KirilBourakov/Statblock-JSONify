@@ -1,11 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import helpers.CreatureFactory;
 
 public class Main{
     private static Boolean ReadingStatblock = false;
     private static String line = "";
     private static String lastline = "";
+    private static helpers.CreatureFactory CurrentCreature = new helpers.CreatureFactory();
 
     public static void main(String[] args){
         try {
@@ -15,10 +17,11 @@ public class Main{
                 line = reader.nextLine().strip();
                 UpdateReadingStatus();
                 if (ReadingStatblock){
-                    System.out.println(line);
+                    CurrentCreature.addtoSection(line);
                 }
                 lastline = line;
             }
+            CurrentCreature.Construct();
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("No such file exists");
@@ -31,7 +34,7 @@ public class Main{
             ReadingStatblock = true;
         }
         Boolean emptyline = line.length() == 0;
-        Boolean statblockEnd = (line.length() > 1 && line.charAt(0) != '>') || emptyline; 
+        Boolean statblockEnd = ((line.length() > 1 && line.charAt(0) != '>') || emptyline) && ReadingStatblock; 
         if (statblockEnd){
             ReadingStatblock = false;
         }
