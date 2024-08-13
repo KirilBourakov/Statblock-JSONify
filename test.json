@@ -1,0 +1,56 @@
+{
+    "_meta": {
+        "sources": [
+            {
+                "json": "48w39hudusfhuo74374",
+                "abbreviation": "tst",
+                "full": "Test",
+                "authors": [
+                    "Me"
+                ],
+                "convertedBy": [
+                    "Me"
+                ],
+                "version": "1.0",
+                "url": "",
+                "targetSchema": "1.0"
+            }
+        ],
+        "dateAdded": 0,
+        "dateLastModified": 0
+    },
+    "monster": [
+		{
+			"name": "Test Creature",
+			"source": "Test",
+			"page": 0,
+			"size": [
+				"M"
+			],
+			"type": {
+				"type": "humanoid",
+				"tags": [
+					"any"
+				]
+			},
+			"alignment": [
+				"A"
+			],
+			"ac": [
+				{
+					"ac": 17,
+					"from": [
+						"{@spell mage armor}"
+					]
+				}
+			],
+			"hp": {
+				"average": 130,
+				"formula": "17d6 + 68"
+			},
+			"speed": {
+				"walk": 30
+			}
+        }
+    ]
+}
