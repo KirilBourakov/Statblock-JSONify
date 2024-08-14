@@ -111,38 +111,60 @@ public class CreatureFactory {
     }
 
     private void ConstructSaveSection(){
-        HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", saveSection.get(0));
-        HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", saveSection.get(1));
-        ArrayList<String> DR = this.CommaSeperatedParser("resistances", saveSection.get(2));
-        ArrayList<String> DI = this.CommaSeperatedParser("Immunities", saveSection.get(3));
-        ArrayList<String> CI = this.CommaSeperatedParser("Immunities", saveSection.get(4));
-        ArrayList<String> senses = this.CommaSeperatedParser("Senses", saveSection.get(5));
-        ArrayList<String> languages = this.CommaSeperatedParser("Languages", saveSection.get(6));
+        // TODO: remove assumption all of these always exist
         
-        String unparsedChallange = saveSection.get(7);
-        int CR = this.RemoveNonNumericIntify(unparsedChallange.substring(0, unparsedChallange.indexOf("(")));
+        HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
+        HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
+        ArrayList<String> DR = this.CommaSeperatedParser("resistances", getSaveSectionLine("resistance"));
+        ArrayList<String> DI = this.CommaSeperatedParser("Immunities", getSaveSectionLine("age im"));
+        ArrayList<String> CI = this.CommaSeperatedParser("Immunities", getSaveSectionLine("condition"));
+        ArrayList<String> senses = this.CommaSeperatedParser("Senses", getSaveSectionLine("sense"));
+        ArrayList<String> languages = this.CommaSeperatedParser("Languages", getSaveSectionLine("lang"));
+        
+        String unparsedCR = getSaveSectionLine("chall");
+        int CR = 0;
+        if (unparsedCR.indexOf("(") > 0){
+            CR = this.RemoveNonNumericIntify(unparsedCR.substring(0, unparsedCR.indexOf("(")));
+        }
+        CR = this.RemoveNonNumericIntify(unparsedCR);
 
         monster.setSavesSection(finalSaves, finalSkills, DR, DI, CI, senses, languages, CR);
     }
 
+    private String getSaveSectionLine(String sectionTitle){
+        String finalSection = "";
+        for (String section : saveSection) {
+            if (section.toLowerCase().contains(sectionTitle.toLowerCase().strip())){
+                finalSection = section;
+                break;
+            }
+        }
+        return finalSection;
+    }
+
     private HashMap<String, Integer> SkillsAndSavesParser(String title, String line){
         HashMap<String, Integer> finalMap = new HashMap<>();
+        if (line.length() != 0){
+            line = ReplaceNonAlphaNumeric(line).toUpperCase();
+            title = title.toUpperCase();
 
-        line = ReplaceNonAlphaNumeric(line).toUpperCase();
-        title = title.toUpperCase();
+            line = line.substring(line.indexOf(title) + title.length()).trim();
+            String[] savelist = line.split("\\s+");
 
-        line = line.substring(line.indexOf(title) + title.length()).trim();
-        String[] savelist = line.split("\\s+");
-
-        for (int i = 0; i < savelist.length; i += 2) {
-            String key = savelist[i];
-            int value = Integer.parseInt(savelist[i+1]);
-            finalMap.put(key, value);
-        }   
+            for (int i = 0; i < savelist.length; i += 2) {
+                String key = savelist[i];
+                int value = Integer.parseInt(savelist[i+1]);
+                finalMap.put(key, value);
+            }   
+        }
         return finalMap;
     }   
 
     private ArrayList<String> CommaSeperatedParser(String title, String line){
+        if (line.length() == 0){
+            return new ArrayList<>();
+        }
+        
         line = ReplaceNonAlphaNumeric(line).toUpperCase();
         title = title.toUpperCase();
         line = line.substring(line.indexOf(title) + title.length()).trim();
