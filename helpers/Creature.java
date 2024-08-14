@@ -78,7 +78,6 @@ public class Creature {
         this.mythicActions = traits.get("mythicActions");
     }
 
-
     public void print(){
         System.out.println("name: " + this.name);
         System.out.println("type: " + this.type);
@@ -105,5 +104,10 @@ public class Creature {
         System.out.println("LActions " + this.LActions);
         System.out.println("mythicActions " + this.mythicActions);
     }
+
+    public String toString() {
+        return name;
+    }
+
 
 }
