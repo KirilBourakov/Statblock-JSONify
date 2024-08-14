@@ -1,6 +1,7 @@
 package helpers;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,7 @@ public class CreatureFactory {
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
+        this.ConstructSaveSection();
         monster.print();
     }
 
@@ -101,9 +103,51 @@ public class CreatureFactory {
         monster.setStatsSection(finalStats);
     }
 
+    private void ConstructSaveSection(){
+        HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", saveSection.get(0));
+        HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", saveSection.get(1));
+        ArrayList<String> DR = this.CommaSeperatedParser("resistances", saveSection.get(2));
+        ArrayList<String> DI = this.CommaSeperatedParser("Immunities", saveSection.get(3));
+        ArrayList<String> CI = this.CommaSeperatedParser("Immunities", saveSection.get(4));
+        ArrayList<String> senses = this.CommaSeperatedParser("Senses", saveSection.get(5));
+        ArrayList<String> languages = this.CommaSeperatedParser("Languages", saveSection.get(6));
+        
+        String unparsedChallange = saveSection.get(7);
+        int CR = this.RemoveNonNumericIntify(unparsedChallange.substring(0, unparsedChallange.indexOf("(")));
+
+        monster.setSavesSection(finalSaves, finalSkills, DR, DI, CI, senses, languages, CR);
+    }
+
+    private HashMap<String, Integer> SkillsAndSavesParser(String title, String line){
+        HashMap<String, Integer> finalMap = new HashMap<>();
+
+        line = ReplaceNonAlphaNumeric(line).toUpperCase();
+        title = title.toUpperCase();
+        
+        line = line.substring(line.indexOf(title) + title.length()).trim();
+        String[] savelist = line.split("\\s+");
+        for (int i = 0; i < savelist.length; i += 2) {
+            String key = savelist[i];
+            int value = Integer.parseInt(savelist[i+1]);
+            finalMap.put(key, value);
+        }   
+        return finalMap;
+    }   
+
+    private ArrayList<String> CommaSeperatedParser(String title, String line){
+        line = ReplaceNonAlphaNumeric(line).toUpperCase();
+        title = title.toUpperCase();
+        line = line.substring(line.indexOf(title) + title.length()).trim();
+        ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\s+")));
+        return finalList;
+    }
+
     private String ReplaceNonAlphaNumeric(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll("  ", " ");
         input = input.strip(); 
         return input;
+    }
+    private int RemoveNonNumericIntify(String input){
+        return Integer.parseInt(input.replaceAll("[^\\d.]", ""));
     }
 }
