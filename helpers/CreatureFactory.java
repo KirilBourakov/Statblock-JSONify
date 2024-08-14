@@ -111,7 +111,6 @@ public class CreatureFactory {
     }
 
     private void ConstructSaveSection(){
-        // TODO: remove assumption all of these always exist
         
         HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
         HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
