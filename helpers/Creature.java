@@ -69,6 +69,15 @@ public class Creature {
         this.CR = CR;
     }
 
+    public void setTratsSection(HashMap<String, ArrayList<String>> traits){
+        this.traits = traits.get("traits");
+        this.actions = traits.get("actions");
+        this.bonusAction = traits.get("bonus");
+        this.reactions = traits.get("reactions");
+        this.LActions = traits.get("LActions");
+        this.mythicActions = traits.get("mythicActions");
+    }
+
 
     public void print(){
         System.out.println("name: " + this.name);
@@ -88,6 +97,13 @@ public class Creature {
         System.out.println("senses " + this.senses);
         System.out.println("languages " + this.languages);
         System.out.println("CR " + this.CR);
+
+        System.out.println("traits " + this.traits);
+        System.out.println("actions " + this.actions);
+        System.out.println("bonusAction " + this.bonusAction);
+        System.out.println("reactions " + this.reactions);
+        System.out.println("LActions " + this.LActions);
+        System.out.println("mythicActions " + this.mythicActions);
     }
 
 }

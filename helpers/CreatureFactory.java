@@ -61,6 +61,7 @@ public class CreatureFactory {
         this.ConstructHpSection();
         this.ConstructStats();
         this.ConstructSaveSection();
+        this.ConstructTraits();
         monster.print();
     }
 
@@ -140,6 +141,66 @@ public class CreatureFactory {
         line = line.substring(line.indexOf(title) + title.length()).trim();
         ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\s+")));
         return finalList;
+    }
+
+    private void ConstructTraits(){
+        ArrayList<String> cleanTraits = new ArrayList<>();
+        boolean previousHeader = false;
+        for (String traitLine : traitsSection) {
+            if (traitLine.length() != 0){
+                if (cleanTraits.size() == 0){
+                    cleanTraits.add(traitLine);
+                } else{
+                    if (previousHeader){
+                        cleanTraits.add(traitLine);
+                    } else if (traitLine.contains("#")){
+                        cleanTraits.add(traitLine);
+                        previousHeader = true;
+                    } else if (traitLine.contains("*")){
+                        cleanTraits.add(traitLine);
+                    } else {
+                        String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
+                        cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
+                    }
+                }
+            }
+        }
+
+        HashMap<String, ArrayList<String>> TypeMap = new HashMap<>();
+        String inputPoint = "traits";
+        for (String trait : cleanTraits) {
+            if (trait.contains("#")){
+                String comp = trait.toLowerCase();
+                if (comp.contains("bonus")){
+                    inputPoint = "bonusAction";
+                } else if (comp.contains("reaction")){
+                    inputPoint = "reactions";
+                } else if (comp.contains("legendary")){
+                    inputPoint = "LActions";
+                } else if (comp.contains("mythic")){
+                    inputPoint = "mythicActions";
+                } else if (comp.contains("action")){
+                    inputPoint = "actions";
+                }
+            } else {
+                if (TypeMap.containsKey(inputPoint)) {
+                    ArrayList<String> in = TypeMap.get(inputPoint);
+                    in.add(trait);
+                } else {
+                    ArrayList<String> in = new ArrayList<>();
+                    in.add(trait);
+                    TypeMap.put(inputPoint, in);
+                }
+            }
+        }
+        monster.setTratsSection(TypeMap);
+    }
+
+    private int Contains(String strInput, String query){
+        int originalLen = strInput.length();
+        strInput.replaceAll(query, "");
+        int newLen = strInput.length();
+        return  (originalLen - newLen);
     }
 
     private String ReplaceNonAlphaNumeric(String input){
