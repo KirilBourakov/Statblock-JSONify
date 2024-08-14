@@ -29,7 +29,12 @@ public class CreatureFactory {
         traitsSection = new ArrayList<>();
     }
 
+    public boolean HasInformation(){
+        return linecount > 0;
+    }
+
     public void addtoSection(String line){
+        linecount++;
         line = line.substring(1);
         if (line.replace(" ", "").equals("___")){
             section++;
@@ -56,13 +61,14 @@ public class CreatureFactory {
         }
     }
 
-    public void Construct(){
+    public Creature Construct(){
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
         this.ConstructSaveSection();
         this.ConstructTraits();
-        monster.print();
+
+        return this.monster;
     }
 
     private void ConstructHeaders(){
@@ -124,9 +130,10 @@ public class CreatureFactory {
 
         line = ReplaceNonAlphaNumeric(line).toUpperCase();
         title = title.toUpperCase();
-        
+
         line = line.substring(line.indexOf(title) + title.length()).trim();
         String[] savelist = line.split("\\s+");
+
         for (int i = 0; i < savelist.length; i += 2) {
             String key = savelist[i];
             int value = Integer.parseInt(savelist[i+1]);
