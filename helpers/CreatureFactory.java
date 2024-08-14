@@ -1,5 +1,8 @@
 package helpers;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreatureFactory {
     private int linecount;
@@ -55,6 +58,7 @@ public class CreatureFactory {
     public void Construct(){
         this.ConstructHeaders();
         this.ConstructHpSection();
+        this.ConstructStats();
         monster.print();
     }
 
@@ -76,6 +80,25 @@ public class CreatureFactory {
             finalHPSectionList.add(finalHPSection.strip());
         }
         monster.setHpSection(finalHPSectionList);
+    }
+
+    private void ConstructStats(){
+        String statsStr = statsSection.get(2);
+        String[] parsedStats = statsStr.split("\\)");
+
+        ArrayList<Integer> finalStats = new ArrayList<>();
+        for (String stat : parsedStats){
+            stat = stat.replaceAll("\\|", "");
+            if (stat.length() > 1) {
+                stat = stat.substring(0, stat.indexOf('(')).replaceAll(" ", "");
+                try {
+                    finalStats.add(Integer.parseInt(stat));
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: " + e.getMessage());
+                }
+            }
+        }
+        monster.setStatsSection(finalStats);
     }
 
     private String ReplaceNonAlphaNumeric(String input){
