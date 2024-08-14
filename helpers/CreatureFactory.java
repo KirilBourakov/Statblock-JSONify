@@ -2,8 +2,6 @@ package helpers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CreatureFactory {
     private int linecount;
@@ -222,13 +220,6 @@ public class CreatureFactory {
             }
         }
         monster.setTratsSection(TypeMap);
-    }
-
-    private int Contains(String strInput, String query){
-        int originalLen = strInput.length();
-        strInput.replaceAll(query, "");
-        int newLen = strInput.length();
-        return  (originalLen - newLen);
     }
 
     private String ReplaceNonAlphaNumeric(String input){

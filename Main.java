@@ -2,8 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import helpers.CreatureFactory;
-import helpers.Creature;
 
 public class Main{
     private static Boolean ReadingStatblock = false;
