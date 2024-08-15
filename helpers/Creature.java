@@ -5,10 +5,12 @@ import java.util.HashMap;
 public class Creature {
     private String name; 
     private String type;
+    private String alignment;
     
-    
-    private String AC;
-    private String HP;
+    private int AC;
+    private String ACtype;
+    private int HP;
+    private String HPFormula;
     private String Speed;
 
     private HashMap<String, Integer> stats = new HashMap<>();
@@ -32,12 +34,16 @@ public class Creature {
     public void setHeaders(ArrayList<String> headerList){
         this.name = headerList.get(0);
         this.type = headerList.get(1);
+        this.alignment = headerList.get(2);
     }
 
     public void setHpSection(ArrayList<String> hpSectionList){
-        this.AC = hpSectionList.get(0);
-        this.HP = hpSectionList.get(1);
-        this.Speed = hpSectionList.get(2);
+        this.AC = Integer.parseInt(hpSectionList.get(0));
+        this.ACtype = hpSectionList.get(1);
+        this.HP = Integer.parseInt(hpSectionList.get(2));
+        this.HPFormula = hpSectionList.get(3);
+
+        this.Speed = hpSectionList.get(4);
     }
 
     public void setStatsSection(ArrayList<Integer> statSectionIntList){
@@ -81,9 +87,12 @@ public class Creature {
     public void print(){
         System.out.println("name: " + this.name);
         System.out.println("type: " + this.type);
+        System.out.println("alignment: " + this.alignment);
 
         System.out.println("AC: " + this.AC);
+        System.out.println("AC Type: " + this.ACtype);
         System.out.println("HP: " + this.HP);
+        System.out.println("HPFormula: " + this.HPFormula);
         System.out.println("Speed: " + this.Speed);
 
         System.out.println("stats " + this.stats);

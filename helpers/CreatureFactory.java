@@ -8,6 +8,8 @@ public class CreatureFactory {
     private int section;
     private Creature monster;
 
+    private final ArrayList<String> alignments = new ArrayList<>(Arrays.asList("neu", "law", "cha", "un", "any"));
+
     private ArrayList<String> headerSection;
     private ArrayList<String> hpSection;
     private ArrayList<String> statsSection; 
@@ -65,6 +67,7 @@ public class CreatureFactory {
         this.ConstructStats();
         this.ConstructSaveSection();
         this.ConstructTraits();
+        monster.print();
 
         return this.monster;
     }
@@ -74,19 +77,68 @@ public class CreatureFactory {
         for (String header : headerSection) {
             finalHeaderList.add(this.ReplaceNonAlphaNumeric(header).strip());
         }
+        String unparsedType = finalHeaderList.get(1);
+        String foundCreatureType = "";
+        String foundAlignment = "";
+
+        for (String alignment : alignments) {
+            int splitIndex = unparsedType.lastIndexOf(alignment);
+            if (splitIndex != -1){
+                foundCreatureType = unparsedType.substring(0, splitIndex-1).trim();
+                foundAlignment = unparsedType.substring(splitIndex).trim();
+                break;
+            }
+        }
+
+        if (foundCreatureType.length() == 0){
+            foundCreatureType = "Creature Type Unknown";
+        }
+        if (foundAlignment.length() == 0){
+            foundAlignment = "unaligned";
+        }
+        
+        finalHeaderList.add(1, foundCreatureType);
+        finalHeaderList.add(2, foundAlignment);
 
         monster.setHeaders(finalHeaderList);
     }
 
     private void ConstructHpSection(){
-        ArrayList<String> finalHPSectionList = new ArrayList<>();
+        ArrayList<String> cleanHPSectionList = new ArrayList<>();
         for (String sectionSlice : hpSection) {
             int fi = sectionSlice.indexOf("**");
             int cutpoint = sectionSlice.indexOf("**", fi + "**".length());
             String finalHPSection = sectionSlice.substring(cutpoint+2);
-            finalHPSectionList.add(finalHPSection.strip());
+            cleanHPSectionList.add(finalHPSection.strip());
         }
+
+        ArrayList<String> finalHPSectionList = new ArrayList<>();
+
+        String[] splitAC = this.splitBeforeChar(cleanHPSectionList.get(0), "(");
+        finalHPSectionList.add(RemoveNonNumeric(splitAC[0]));
+        finalHPSectionList.add(splitAC[1]);
+
+        String[] splitHp = this.splitBeforeChar(cleanHPSectionList.get(1), "(");
+        finalHPSectionList.add(RemoveNonNumeric(splitHp[0]));
+        finalHPSectionList.add(splitHp[1]);
+
+        finalHPSectionList.add(cleanHPSectionList.get(2));
+
         monster.setHpSection(finalHPSectionList);
+    }
+
+    private String[] splitBeforeChar(String initial, String target){
+        int splitIndex = initial.lastIndexOf(target);
+        String[] finalList = {"", ""};
+        if (splitIndex != -1){
+            finalList[0] = initial.substring(0, splitIndex-1).trim();
+            finalList[1] = initial.substring(splitIndex).trim();
+        }
+        if (finalList[0].length() == 0){
+            finalList[0] = initial;
+        }
+
+        return finalList;
     }
 
     private void ConstructStats(){
@@ -229,5 +281,8 @@ public class CreatureFactory {
     }
     private int RemoveNonNumericIntify(String input){
         return Integer.parseInt(input.replaceAll("[^\\d.]", ""));
+    }
+    private String RemoveNonNumeric(String input){
+        return input.replaceAll("[^\\d.]", "");
     }
 }
