@@ -95,9 +95,14 @@ public class Creature {
     public HashMap<String, String> getHeaders(){
         HashMap<String, String> hash = new HashMap<>();
         hash.put("name", this.name);
+        hash.put("size", this.size);
         hash.put("type", this.type);
         hash.put("alignment", this.alignment);
         return hash;
+    }
+
+    public ArrayList<String> getTags(){
+        return this.tags;
     }
 
     public void print(){

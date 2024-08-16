@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import helpers.JSONwriter;
+
 public class Main{
     private static Boolean ReadingStatblock = false;
     private static Boolean finishedReading = false;
@@ -10,6 +12,7 @@ public class Main{
     private static String lastline = "";
     private static helpers.CreatureFactory CurrentCreature = new helpers.CreatureFactory();
     private static ArrayList<helpers.Creature> Creatures = new ArrayList<>();
+    private static JSONwriter writer;
 
     public static void main(String[] args){
         try {
@@ -31,6 +34,9 @@ public class Main{
             if (CurrentCreature.HasInformation()){
                 Creatures.add(CurrentCreature.Construct());
             }
+            writer = new JSONwriter(Creatures, args[1]);
+            writer.WriteCreatures();
+
             System.out.println(Creatures);
             reader.close();
         } catch (FileNotFoundException e) {
