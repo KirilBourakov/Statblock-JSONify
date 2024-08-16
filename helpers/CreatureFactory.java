@@ -1,7 +1,11 @@
 package helpers;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreatureFactory {
     private int linecount;
@@ -9,6 +13,7 @@ public class CreatureFactory {
     private Creature monster;
 
     private final ArrayList<String> alignments = new ArrayList<>(Arrays.asList("neu", "law", "cha", "un", "any"));
+    private final ArrayList<String> damageTypeId = new ArrayList<>(Arrays.asList("ac", "blu", "co", "fir", "for", "lig", "nec", "pie", "poi", "psy", "sla", "thu"));
 
     private ArrayList<String> headerSection;
     private ArrayList<String> hpSection;
@@ -122,9 +127,21 @@ public class CreatureFactory {
         finalHPSectionList.add(RemoveNonNumeric(splitHp[0]));
         finalHPSectionList.add(splitHp[1]);
 
-        finalHPSectionList.add(cleanHPSectionList.get(2));
+        String[] unparsedSpeed = cleanHPSectionList.get(2).split(" ");
+        HashMap<String, Integer> speedMap = new HashMap<>();
 
-        monster.setHpSection(finalHPSectionList);
+        String speedType = "walk";
+        for (String speedPortion : unparsedSpeed) {
+            if(!ReplaceNonAlphaNumeric(speedPortion).equalsIgnoreCase("ft")){
+                if (isNumeric(speedPortion)){
+                    speedMap.put(speedType, RemoveNonNumericIntify(speedPortion));
+                } else {
+                    speedType = speedPortion;
+                }
+            }
+        }
+
+        monster.setHpSection(finalHPSectionList, speedMap);
     }
 
     private String[] splitBeforeChar(String initial, String target){
@@ -164,20 +181,26 @@ public class CreatureFactory {
         
         HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
         HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
-        ArrayList<String> DR = this.CommaSeperatedParser("resistances", getSaveSectionLine("resistance"));
-        ArrayList<String> DI = this.CommaSeperatedParser("Immunities", getSaveSectionLine("age im"));
-        ArrayList<String> CI = this.CommaSeperatedParser("Immunities", getSaveSectionLine("condition"));
-        ArrayList<String> senses = this.CommaSeperatedParser("Senses", getSaveSectionLine("sense"));
-        ArrayList<String> languages = this.CommaSeperatedParser("Languages", getSaveSectionLine("lang"));
+        ArrayList<String> DR = this.PunctuationSplitter("resistances", getSaveSectionLine("resistance"));
+        ArrayList<String> DI = this.PunctuationSplitter("Immunities", getSaveSectionLine("age im"));
+        ArrayList<String> CI = this.PunctuationSplitter("Immunities", getSaveSectionLine("condition"));
+        ArrayList<String> languages = this.PunctuationSplitter("Languages", getSaveSectionLine("lang"));
         
+        ArrayList<String> cleanSenses = this.PunctuationSplitter("Senses", getSaveSectionLine("sense"));
+        ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("percep")).collect(Collectors.toList()));
+
+        int passive = cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("percep")).mapToInt(this::RemoveNonNumericIntify).findFirst().orElse(0);
+
         String unparsedCR = getSaveSectionLine("chall");
         int CR = 0;
+
         if (unparsedCR.indexOf("(") > 0){
             CR = this.RemoveNonNumericIntify(unparsedCR.substring(0, unparsedCR.indexOf("(")));
+        } else {
+            CR = this.RemoveNonNumericIntify(unparsedCR);
         }
-        CR = this.RemoveNonNumericIntify(unparsedCR);
 
-        monster.setSavesSection(finalSaves, finalSkills, DR, DI, CI, senses, languages, CR);
+        monster.setSavesSection(finalSaves, finalSkills, DR, DI, CI, senses, passive, languages, CR);
     }
 
     private String getSaveSectionLine(String sectionTitle){
@@ -207,7 +230,19 @@ public class CreatureFactory {
             }   
         }
         return finalMap;
-    }   
+    }  
+
+    private ArrayList<String> PunctuationSplitter(String title, String line){
+        if (line.length() == 0){
+            return new ArrayList<>();
+        }
+        
+        title = title.toUpperCase();
+        line = line.substring(line.toUpperCase().indexOf(title) + title.length()).trim();
+        ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\p{Punct}")));
+        finalList = finalList.stream().map(String::strip).filter(s -> !s.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
+        return finalList;
+    }
 
     private ArrayList<String> CommaSeperatedParser(String title, String line){
         if (line.length() == 0){
@@ -284,5 +319,11 @@ public class CreatureFactory {
     }
     private String RemoveNonNumeric(String input){
         return input.replaceAll("[^\\d.]", "");
+    }
+
+    private boolean isNumeric(String str) {
+         ParsePosition pos = new ParsePosition(0);
+        NumberFormat.getInstance().parse(str, pos);
+        return str.length() == pos.getIndex();
     }
 }

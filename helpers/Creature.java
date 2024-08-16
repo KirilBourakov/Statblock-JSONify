@@ -11,7 +11,7 @@ public class Creature {
     private String ACtype;
     private int HP;
     private String HPFormula;
-    private String Speed;
+    private HashMap<String, Integer> speed = new HashMap<>();
 
     private HashMap<String, Integer> stats = new HashMap<>();
 
@@ -21,6 +21,7 @@ public class Creature {
     private ArrayList<String> DI = new ArrayList<>();
     private ArrayList<String> CI = new ArrayList<>();
     private ArrayList<String> senses = new ArrayList<>();
+    private int passive;
     private ArrayList<String> languages = new ArrayList<>();
     private int CR; 
 
@@ -37,13 +38,13 @@ public class Creature {
         this.alignment = headerList.get(2);
     }
 
-    public void setHpSection(ArrayList<String> hpSectionList){
+    public void setHpSection(ArrayList<String> hpSectionList, HashMap<String, Integer> speedMap){
         this.AC = Integer.parseInt(hpSectionList.get(0));
         this.ACtype = hpSectionList.get(1);
         this.HP = Integer.parseInt(hpSectionList.get(2));
         this.HPFormula = hpSectionList.get(3);
 
-        this.Speed = hpSectionList.get(4);
+        this.speed = speedMap;
     }
 
     public void setStatsSection(ArrayList<Integer> statSectionIntList){
@@ -62,6 +63,7 @@ public class Creature {
         ArrayList<String> DI,
         ArrayList<String> CI,
         ArrayList<String> senses,
+        int passive,
         ArrayList<String> languages,
         int CR
     ){
@@ -71,6 +73,7 @@ public class Creature {
         this.DI = DI;
         this.CI = CI;
         this.senses = senses;
+        this.passive = passive;
         this.languages = languages;
         this.CR = CR;
     }
@@ -93,7 +96,7 @@ public class Creature {
         System.out.println("AC Type: " + this.ACtype);
         System.out.println("HP: " + this.HP);
         System.out.println("HPFormula: " + this.HPFormula);
-        System.out.println("Speed: " + this.Speed);
+        System.out.println("Speed: " + this.speed);
 
         System.out.println("stats " + this.stats);
 
@@ -103,6 +106,7 @@ public class Creature {
         System.out.println("DI " + this.DI);
         System.out.println("CI " + this.CI);
         System.out.println("senses " + this.senses);
+        System.out.println("passive " + this.passive);
         System.out.println("languages " + this.languages);
         System.out.println("CR " + this.CR);
 
