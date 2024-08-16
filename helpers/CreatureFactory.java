@@ -13,7 +13,6 @@ public class CreatureFactory {
     private Creature monster;
 
     private final ArrayList<String> alignments = new ArrayList<>(Arrays.asList("neu", "law", "cha", "un", "any"));
-    private final ArrayList<String> damageTypeId = new ArrayList<>(Arrays.asList("ac", "blu", "co", "fir", "for", "lig", "nec", "pie", "poi", "psy", "sla", "thu"));
 
     private ArrayList<String> headerSection;
     private ArrayList<String> hpSection;
@@ -83,29 +82,50 @@ public class CreatureFactory {
             finalHeaderList.add(this.ReplaceNonAlphaNumeric(header).strip());
         }
         String unparsedType = finalHeaderList.get(1);
-        String foundCreatureType = "";
+        String unparsedTypeWithoutAlignment = "";
         String foundAlignment = "";
 
         for (String alignment : alignments) {
             int splitIndex = unparsedType.lastIndexOf(alignment);
             if (splitIndex != -1){
-                foundCreatureType = unparsedType.substring(0, splitIndex-1).trim();
+                unparsedTypeWithoutAlignment = unparsedType.substring(0, splitIndex-1).trim();
                 foundAlignment = unparsedType.substring(splitIndex).trim();
                 break;
             }
         }
 
-        if (foundCreatureType.length() == 0){
-            foundCreatureType = "Creature Type Unknown";
+        if (unparsedTypeWithoutAlignment.length() == 0){
+            unparsedTypeWithoutAlignment = "unknown unknown";
         }
         if (foundAlignment.length() == 0){
             foundAlignment = "unaligned";
         }
-        
-        finalHeaderList.add(1, foundCreatureType);
-        finalHeaderList.add(2, foundAlignment);
 
-        monster.setHeaders(finalHeaderList);
+
+        HashMap<String, String> finalMap = new HashMap<>();
+        finalMap.put("name", finalHeaderList.get(0));
+        finalMap.put("alignment", foundAlignment);
+
+        String[] finalType = unparsedTypeWithoutAlignment.split(" ");
+        if (finalType.length >= 1) {
+            finalMap.put("size", finalType[0]);
+        } else {
+            finalMap.put("size", "unknown");
+        }
+
+        if (finalType.length >= 2) {
+            finalMap.put("type", finalType[1]);
+        } else {
+            finalMap.put("type", "unknown");
+        }
+
+        ArrayList<String> tags = new ArrayList<>();
+        if (finalType.length > 2){
+            String[] tagsList = Arrays.copyOfRange(finalType, 2, finalType.length);
+            tags = new ArrayList<>(Arrays.asList(tagsList));
+        }
+
+        monster.setHeaders(finalMap, tags);
     }
 
     private void ConstructHpSection(){

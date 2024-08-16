@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 public class Creature {
     private String name; 
+    private String size;
     private String type;
+    private ArrayList<String> tags;
     private String alignment;
     
     private int AC;
@@ -32,10 +34,13 @@ public class Creature {
     private ArrayList<String> LActions = new ArrayList<>();
     private ArrayList<String> mythicActions = new ArrayList<>();
 
-    public void setHeaders(ArrayList<String> headerList){
-        this.name = headerList.get(0);
-        this.type = headerList.get(1);
-        this.alignment = headerList.get(2);
+    public void setHeaders(HashMap<String, String> map, ArrayList<String> tags){
+        this.name = map.get("name");
+        this.type = map.get("type");
+        this.size = map.get("size");
+        this.alignment = map.get("alignment");
+
+        this.tags = tags;
     }
 
     public void setHpSection(ArrayList<String> hpSectionList, HashMap<String, Integer> speedMap){
@@ -87,9 +92,19 @@ public class Creature {
         this.mythicActions = traits.get("mythicActions");
     }
 
+    public HashMap<String, String> getHeaders(){
+        HashMap<String, String> hash = new HashMap<>();
+        hash.put("name", this.name);
+        hash.put("type", this.type);
+        hash.put("alignment", this.alignment);
+        return hash;
+    }
+
     public void print(){
         System.out.println("name: " + this.name);
+        System.out.println("size: " + this.size);
         System.out.println("type: " + this.type);
+        System.out.println("tags: " + this.tags);
         System.out.println("alignment: " + this.alignment);
 
         System.out.println("AC: " + this.AC);
