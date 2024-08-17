@@ -124,6 +124,13 @@ public class Creature {
         return this.stats;
     }
 
+    public HashMap<String, String> getSaves(){
+        return this.saves;
+    }
+    public HashMap<String, String> getSkills(){
+        return this.skills;
+    }
+
     public void print(){
         System.out.println("name: " + this.name);
         System.out.println("size: " + this.size);

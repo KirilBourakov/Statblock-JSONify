@@ -33,6 +33,7 @@ public class JSONwriter {
                 this.WriteHeaders(monster);
                 this.WriteHPSection(monster);
                 this.WriteStatsSection(monster);
+                this.WriteSavesSection(monster);
             }
             writer.close();
         } catch (IOException e) {
@@ -137,22 +138,46 @@ public class JSONwriter {
         }
     }
 
-    private void writeType(HashMap<String,String> hash, Creature creature){
-        WriteNewLitteralLine("type", ": {");
+    private void WriteSavesSection(Creature creature){
+        this.WriteSkillsAndSaves("save", creature.getSaves());
+        this.WriteSkillsAndSaves("skill", creature.getSkills());
+    }
+
+    private void WriteSkillsAndSaves(String title, HashMap<String, String> contents){
+        this.WriteNewLitteralLine(title, ": {");
         this.depth++;
 
-        WriteNewStringLine("type", hash.get("type"));
+        int i = 0;
+        int size = contents.size();
+        for (Map.Entry<String, String> entry : contents.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (++i == size) {
+                this.WriteNewStringLineWithoutCommaEnd(key.toLowerCase(), value);
+            } else {
+                this.WriteNewStringLine(key.toLowerCase(), value);
+            }
+        }   
+        this.depth--;
+        this.WriteOnlyLiteralLine("},");
+    }
+
+    private void writeType(HashMap<String,String> hash, Creature creature){
+        this.WriteNewLitteralLine("type", ": {");
+        this.depth++;
+
+        this.WriteNewStringLine("type", hash.get("type"));
 
         ArrayList<String> tags = creature.getTags();
         if (tags.size() > 0){
-            WriteStringList("tags", tags);
+            this.WriteStringList("tags", tags);
         }
         this.depth--;
-        WriteOnlyLiteralLine("},");
+        this.WriteOnlyLiteralLine("},");
     }
 
     private void WriteStringList(String key, ArrayList<String> values){
-        WriteNewLitteralLine(key, ": [");
+        this.WriteNewLitteralLine(key, ": [");
         this.depth++;
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
@@ -167,7 +192,7 @@ public class JSONwriter {
             }
         }
         this.depth--;
-        WriteOnlyLiteralLine("]");
+        this.WriteOnlyLiteralLine("]");
     }
 
     private void WriteNewStringLineWithoutCommaEnd(String key, String value){
