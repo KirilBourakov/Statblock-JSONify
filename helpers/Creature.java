@@ -17,8 +17,8 @@ public class Creature {
 
     private HashMap<String, Integer> stats = new HashMap<>();
 
-    private HashMap<String, Integer> saves = new HashMap<>();
-    private HashMap <String, Integer> skills = new HashMap<>();
+    private HashMap<String, String> saves = new HashMap<>();
+    private HashMap <String, String> skills = new HashMap<>();
     private ArrayList<String> DR = new ArrayList<>();
     private ArrayList<String> DI = new ArrayList<>();
     private ArrayList<String> CI = new ArrayList<>();
@@ -62,8 +62,8 @@ public class Creature {
     }
 
     public void setSavesSection(
-        HashMap<String, Integer> saves,
-        HashMap <String, Integer> skills,
+        HashMap<String, String> saves,
+        HashMap <String, String> skills,
         ArrayList<String> DR,
         ArrayList<String> DI,
         ArrayList<String> CI,

@@ -199,8 +199,8 @@ public class CreatureFactory {
 
     private void ConstructSaveSection(){
         
-        HashMap<String, Integer> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
-        HashMap<String, Integer> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
+        HashMap<String, String> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
+        HashMap<String, String> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
         ArrayList<String> DR = this.PunctuationSplitter("resistances", getSaveSectionLine("resistance"));
         ArrayList<String> DI = this.PunctuationSplitter("Immunities", getSaveSectionLine("age im"));
         ArrayList<String> CI = this.PunctuationSplitter("Immunities", getSaveSectionLine("condition"));
@@ -234,10 +234,10 @@ public class CreatureFactory {
         return finalSection;
     }
 
-    private HashMap<String, Integer> SkillsAndSavesParser(String title, String line){
-        HashMap<String, Integer> finalMap = new HashMap<>();
+    private HashMap<String, String> SkillsAndSavesParser(String title, String line){
+        HashMap<String, String> finalMap = new HashMap<>();
         if (line.length() != 0){
-            line = ReplaceNonAlphaNumeric(line).toUpperCase();
+            line = ReplaceNonAlphaNumericNotAddOrSubtract(line).toUpperCase();
             title = title.toUpperCase();
 
             line = line.substring(line.indexOf(title) + title.length()).trim();
@@ -245,7 +245,7 @@ public class CreatureFactory {
 
             for (int i = 0; i < savelist.length; i += 2) {
                 String key = savelist[i];
-                int value = Integer.parseInt(savelist[i+1]);
+                String value = savelist[i+1];
                 finalMap.put(key, value);
             }   
         }
@@ -331,6 +331,11 @@ public class CreatureFactory {
 
     private String ReplaceNonAlphaNumeric(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll("  ", " ");
+        input = input.strip(); 
+        return input;
+    }
+    private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
+        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
         input = input.strip(); 
         return input;
     }
