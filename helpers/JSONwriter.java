@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 // TODO: flatten into priority queue before writing?
 public class JSONwriter {
     private ArrayList<Creature> monsters;
@@ -30,6 +31,8 @@ public class JSONwriter {
                 Creature monster = monsters.get(i);
                 this.writeNewCreature();
                 this.WriteHeaders(monster);
+                this.WriteHPSection(monster);
+                this.WriteStatsSection(monster);
             }
             writer.close();
         } catch (IOException e) {
@@ -67,7 +70,71 @@ public class JSONwriter {
             }
         }
         WriteStringList("alignment", alignmentKey);
+        WriteOnlyLiteral(",");
 
+    }
+
+    private void WriteHPSection(Creature creature){
+        HashMap<String, Integer> values = creature.getHPSectionValues();
+        HashMap<String, String> types = creature.getHPSectionTypes();
+        HashMap<String, Integer> speed = creature.getSpeed();
+
+        // Write AC
+        this.WriteNewLitteralLine("ac", ": [");
+        this.depth++;
+        if (types.get("AC").length() > 0){
+            this.WriteOnlyLiteralLine("{");
+            this.depth++;
+            this.WriteNewIntLine("ac", values.get("AC"));
+
+            this.WriteNewLitteralLine("from", ": [");
+            this.depth++;
+            this.WriteOnlyStringLine(types.get("AC"));
+            this.depth--;
+            this.WriteOnlyLiteralLine("]");
+
+            this.depth--;
+            this.WriteOnlyLiteralLine("}");
+        } else {
+            this.depth++;
+            this.WriteOnlyIntLine(values.get("AC"));
+            this.depth--;
+        }
+        this.depth--;
+        this.WriteOnlyLiteralLine("],");
+
+        // Write HP
+        this.WriteNewLitteralLine("hp", ": {");
+        this.depth++;
+        this.WriteNewIntLine("average", values.get("HP"));
+        this.WriteNewStringLineWithoutCommaEnd("formula", types.get("HP"));
+        this.depth--;
+        this.WriteOnlyLiteralLine("},");
+
+        // write Speed
+        this.WriteNewLitteralLine("speed", ": {");
+        this.depth++;
+
+        int size = speed.size();
+        int i = 0;
+        for (Map.Entry<String, Integer> entry : speed.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            if (++i == size) {
+                this.WriteNewIntLineWithoutCommaEnd(key,value);
+            } else {
+                this.WriteNewIntLine(key, value);
+            }
+        }   
+        this.depth--;
+        this.WriteOnlyLiteralLine("},");
+
+    }
+    
+    private void WriteStatsSection(Creature creature){
+        for (Map.Entry<String, Integer> entry : creature.getStats().entrySet()) {
+            this.WriteNewIntLine(entry.getKey(), entry.getValue());
+        }
     }
 
     private void writeType(HashMap<String,String> hash, Creature creature){
@@ -81,7 +148,7 @@ public class JSONwriter {
             WriteStringList("tags", tags);
         }
         this.depth--;
-        WriteOnlyLiteral("},");
+        WriteOnlyLiteralLine("},");
     }
 
     private void WriteStringList(String key, ArrayList<String> values){
@@ -89,7 +156,7 @@ public class JSONwriter {
         this.depth++;
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
-            this.writeOnlyString(value);
+            this.WriteOnlyStringLine(value);
             if (i+1 != values.size()){
                 try {
                     this.writer.write(",");
@@ -100,9 +167,17 @@ public class JSONwriter {
             }
         }
         this.depth--;
-        WriteOnlyLiteral("]");
+        WriteOnlyLiteralLine("]");
     }
 
+    private void WriteNewStringLineWithoutCommaEnd(String key, String value){
+        try {
+            this.StartLine();
+            this.writer.write(formatJSONString(key) + ": " + formatJSONString(value));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void WriteNewStringLine(String key, String value){
         try {
             this.StartLine();
@@ -119,6 +194,23 @@ public class JSONwriter {
             e.printStackTrace();
         }
     }
+    private void WriteNewIntLineWithoutCommaEnd(String key, Integer value){
+        try {
+            this.StartLine();
+            this.writer.write(formatJSONString(key) + ": " + value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void WriteOnlyIntLine(Integer value){
+        try {
+            this.StartLine();
+            this.writer.write(value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void WriteNewLitteralLine(String key, String value){
         try {
@@ -130,7 +222,7 @@ public class JSONwriter {
     }
     
 
-    private void writeOnlyString(String input){
+    private void WriteOnlyStringLine(String input){
         try {
             this.StartLine();
             this.writer.write(formatJSONString(input));
@@ -138,7 +230,7 @@ public class JSONwriter {
             e.printStackTrace();
         }
     }
-    private void WriteOnlyLiteral(String input){
+    private void WriteOnlyLiteralLine(String input){
         try {
             this.StartLine();
             this.writer.write(input);
@@ -146,6 +238,14 @@ public class JSONwriter {
             e.printStackTrace();
         }
     }
+    private void WriteOnlyLiteral(String input){
+        try {
+            this.writer.write(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private String formatForJSONString(String key, String value){
         return (formatJSONString(key) + ": " + formatJSONString(value) + ",");

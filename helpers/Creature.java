@@ -1,7 +1,7 @@
 package helpers;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+// TODO: rework size: it should be a list of possible options.
 public class Creature {
     private String name; 
     private String size;
@@ -100,9 +100,28 @@ public class Creature {
         hash.put("alignment", this.alignment);
         return hash;
     }
-
     public ArrayList<String> getTags(){
         return this.tags;
+    }
+
+    public HashMap<String, Integer> getHPSectionValues(){
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("AC", AC);
+        map.put("HP", HP);
+        return map;
+    }
+    public HashMap<String, String> getHPSectionTypes(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("AC", ACtype);
+        map.put("HP", HPFormula);
+        return map;
+    }
+    public HashMap<String, Integer> getSpeed(){
+        return speed;
+    }
+
+    public HashMap<String, Integer> getStats(){
+        return this.stats;
     }
 
     public void print(){

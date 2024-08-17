@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
+// TODO: Rework size and header parsing in general.
 public class CreatureFactory {
     private int linecount;
     private int section;
@@ -141,7 +141,7 @@ public class CreatureFactory {
 
         String[] splitAC = this.splitBeforeChar(cleanHPSectionList.get(0), "(");
         finalHPSectionList.add(RemoveNonNumeric(splitAC[0]));
-        finalHPSectionList.add(splitAC[1]);
+        finalHPSectionList.add(ReplaceNonAlphaNumeric(splitAC[1]));
 
         String[] splitHp = this.splitBeforeChar(cleanHPSectionList.get(1), "(");
         finalHPSectionList.add(RemoveNonNumeric(splitHp[0]));
