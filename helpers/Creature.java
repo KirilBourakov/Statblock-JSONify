@@ -150,6 +150,25 @@ public class Creature {
         return this.CR;
     }
 
+    public ArrayList<String> getTraits(){
+        return this.traits;
+    }
+    public ArrayList<String> getActions(){
+        return this.actions;
+    }
+    public ArrayList<String> getBonusActions(){
+        return this.bonusAction;
+    }
+    public ArrayList<String> getReactions(){
+        return this.reactions;
+    }
+    public ArrayList<String> getLActions(){
+        return this.LActions;
+    }
+    public ArrayList<String> getMythicActions(){
+        return this.mythicActions;
+    }
+
     public void print(){
         System.out.println("name: " + this.name);
         System.out.println("size: " + this.size);

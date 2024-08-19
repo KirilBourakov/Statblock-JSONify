@@ -286,6 +286,7 @@ public class CreatureFactory {
                 } else{
                     if (previousHeader){
                         cleanTraits.add(traitLine);
+                        previousHeader = false;
                     } else if (traitLine.contains("#")){
                         cleanTraits.add(traitLine);
                         previousHeader = true;

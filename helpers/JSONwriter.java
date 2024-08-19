@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 // TODO: flatten into priority queue before writing?
+// TODO: handle mythic headers
+// TODO: handle legenedary action count
 public class JSONwriter {
     private ArrayList<Creature> monsters;
     private String path;
@@ -27,14 +30,28 @@ public class JSONwriter {
 
     public void WriteCreatures(){
         try {
+            this.startObject();
+
+            this.WriteNewLitteralLine("monster", ": [");
+            this.depth++;
             for (int i = 0; i < monsters.size(); i++) {
                 Creature monster = monsters.get(i);
-                this.writeNewCreature();
+                this.startObject();
                 this.WriteHeaders(monster);
                 this.WriteHPSection(monster);
                 this.WriteStatsSection(monster);
                 this.WriteSavesSection(monster);
+                this.WriteTraitsSection(monster);
+                this.FinishObject();
+
+                if (i+1 != monsters.size()){
+                    this.WriteOnlyLiteral(",");
+                }
             }
+            this.depth--;
+            this.WriteOnlyLiteralLine("]");
+            
+            this.FinishObject();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,14 +59,14 @@ public class JSONwriter {
         
     }
 
-    private void writeNewCreature(){
-        try {
-            this.StartLine();
-            this.writer.write("{\n");
-            this.depth++;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void startObject(){
+        this.WriteOnlyLiteralLine("{");
+        this.depth++;
+    }
+
+    private void FinishObject(){
+        this.depth--;
+        this.WriteOnlyLiteralLine("}");
     }
 
     private void WriteHeaders(Creature creature){
@@ -97,9 +114,7 @@ public class JSONwriter {
             this.depth--;
             this.WriteOnlyLiteralLine("}");
         } else {
-            this.depth++;
             this.WriteOnlyIntLine(values.get("AC"));
-            this.depth--;
         }
         this.depth--;
         this.WriteOnlyLiteralLine("],");
@@ -153,6 +168,76 @@ public class JSONwriter {
         this.WriteNewStringLine("cr", String.valueOf(creature.getCR()));
     }
 
+    private void WriteTraitsSection(Creature creature){
+        if (creature.getTraits() != null){
+            this.WriateTraitsHelper("trait", creature.getTraits());
+        }
+        if (creature.getActions() != null){
+            this.WriteOnlyLiteral(",");
+            this.WriateTraitsHelper("action", creature.getActions());
+        }
+        if (creature.getBonusActions() != null){
+            this.WriteOnlyLiteral(",");
+            this.WriateTraitsHelper("bonus", creature.getBonusActions());
+        }
+        if (creature.getReactions() != null){
+            this.WriteOnlyLiteral(",");
+            this.WriateTraitsHelper("reaction", creature.getReactions());
+        }
+        if (creature.getLActions() != null){
+            this.WriteOnlyLiteral(",");
+            this.WriateTraitsHelper("legendary", creature.getLActions());
+        }
+        if (creature.getMythicActions() != null){
+            this.WriteOnlyLiteral(",");
+            this.WriateTraitsHelper("mythic", creature.getMythicActions());
+        }
+    }
+
+    private void WriateTraitsHelper(String traitName, ArrayList<String> traitList){
+        this.WriteNewLitteralLine(traitName, ": [");
+        this.depth++;
+
+        int size = traitList.size();
+        int i = 0;
+
+        for (String trait : traitList) {
+            this.WriteOnlyLiteralLine("{");
+            this.depth++;
+
+            HashMap<String, String> parsed = this.ParseATrait(trait);
+            this.WriteNewStringLine("name", parsed.get("name"));
+            this.WriteStringListCommaEnd("entries", new ArrayList<String>(Arrays.asList(parsed.get("description"))));
+            this.WriteNewIntLineWithoutCommaEnd("sort", i);
+            this.depth--;
+            if (++i == size) {
+                this.WriteOnlyLiteralLine("}");
+            } else {
+                this.WriteOnlyLiteralLine("},");
+            }
+        }
+
+        this.depth--;
+        this.WriteOnlyLiteralLine("]");
+    }
+
+    private HashMap<String, String> ParseATrait(String trait){
+        int lastIndex = trait.lastIndexOf("*");
+        String name;
+        String description; 
+        if (lastIndex == -1){
+            name = "unknown";
+            description = trait;
+        } else{
+            name = trait.substring(0, lastIndex);
+            description = trait.substring(lastIndex + 1);
+        }
+        return new HashMap<String, String>(){{
+            put("name", name.replaceAll("\\*", "").strip());
+            put("description", description.strip());
+        }};
+    }
+
     private void WriteSkillsAndSaves(String title, HashMap<String, String> contents){
         this.WriteNewLitteralLine(title, ": {");
         this.depth++;
@@ -173,17 +258,19 @@ public class JSONwriter {
     }
 
     private void writeType(HashMap<String,String> hash, Creature creature){
-        this.WriteNewLitteralLine("type", ": {");
-        this.depth++;
+        if (creature.getTags().size() == 0){
+            this.WriteNewStringLine("type", hash.get("type"));
+        } else {
+            this.WriteNewLitteralLine("type", ": {");
+            this.depth++;
 
-        this.WriteNewStringLine("type", hash.get("type"));
+            this.WriteNewStringLine("type", hash.get("type"));
 
-        ArrayList<String> tags = creature.getTags();
-        if (tags.size() > 0){
-            this.WriteStringList("tags", tags);
+            this.WriteStringList("tags", creature.getTags());
+
+            this.depth--;
+            this.WriteOnlyLiteralLine("},");
         }
-        this.depth--;
-        this.WriteOnlyLiteralLine("},");
     }
 
     private void WriteStringList(String key, ArrayList<String> values){
@@ -228,6 +315,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatJSONString(key) + ": " + formatJSONString(value));
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -236,6 +324,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatForJSONString(key, value));
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -244,6 +333,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatForJSONInt(key, value));
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -252,6 +342,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatJSONString(key) + ": " + value);
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -259,7 +350,8 @@ public class JSONwriter {
     private void WriteOnlyIntLine(Integer value){
         try {
             this.StartLine();
-            this.writer.write(value);
+            this.writer.write(value.toString());
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,6 +362,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatJSONString(key) + value);
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -280,6 +373,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(formatJSONString(input));
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -288,6 +382,7 @@ public class JSONwriter {
         try {
             this.StartLine();
             this.writer.write(input);
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,6 +390,7 @@ public class JSONwriter {
     private void WriteOnlyLiteral(String input){
         try {
             this.writer.write(input);
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -313,6 +409,7 @@ public class JSONwriter {
             for (int i = 0; i < depth; i++) {
                 this.writer.write("   ");
             }
+            this.writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
