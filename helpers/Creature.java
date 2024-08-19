@@ -130,6 +130,25 @@ public class Creature {
     public HashMap<String, String> getSkills(){
         return this.skills;
     }
+    public ArrayList<String> getSenses(){
+        return this.senses;
+    }
+    public int getPassive(){
+        return this.passive;
+    }
+    public HashMap<String, ArrayList<String>> getResandIm(){
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        map.put("DR", this.DR);
+        map.put("DI", this.DI);
+        map.put("CI", this.CI);
+        return map;
+    }
+    public ArrayList<String> getLanguages(){
+        return this.languages;
+    }
+    public int getCR(){
+        return this.CR;
+    }
 
     public void print(){
         System.out.println("name: " + this.name);

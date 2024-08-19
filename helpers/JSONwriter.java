@@ -141,6 +141,16 @@ public class JSONwriter {
     private void WriteSavesSection(Creature creature){
         this.WriteSkillsAndSaves("save", creature.getSaves());
         this.WriteSkillsAndSaves("skill", creature.getSkills());
+        this.WriteStringListCommaEnd("senses", creature.getSenses());
+        this.WriteNewIntLine("passive", creature.getPassive());
+
+        HashMap<String, ArrayList<String>> getResandImMap = creature.getResandIm();
+        this.WriteStringListCommaEnd("resist", getResandImMap.get("DR"));
+        this.WriteStringListCommaEnd("immune", getResandImMap.get("DI"));
+        this.WriteStringListCommaEnd("conditionImmune", getResandImMap.get("CI"));
+
+        this.WriteStringListCommaEnd("languages", creature.getLanguages());
+        this.WriteNewStringLine("cr", String.valueOf(creature.getCR()));
     }
 
     private void WriteSkillsAndSaves(String title, HashMap<String, String> contents){
@@ -193,6 +203,25 @@ public class JSONwriter {
         }
         this.depth--;
         this.WriteOnlyLiteralLine("]");
+    }
+
+    private void WriteStringListCommaEnd(String key, ArrayList<String> values){
+        this.WriteNewLitteralLine(key, ": [");
+        this.depth++;
+        for (int i = 0; i < values.size(); i++) {
+            String value = values.get(i);
+            this.WriteOnlyStringLine(value);
+            if (i+1 != values.size()){
+                try {
+                    this.writer.write(",");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        }
+        this.depth--;
+        this.WriteOnlyLiteralLine("],");
     }
 
     private void WriteNewStringLineWithoutCommaEnd(String key, String value){
