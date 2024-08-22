@@ -130,8 +130,8 @@ public class JSONwriter {
         this.WriteNewStringLine("source", this.filename);
         this.WriteNewIntLine("page", 0);
 
-        String size = String.valueOf(hash.get("size").charAt(0));
-        WriteNewStringLine("size", hash.get(size));
+        String size = String.valueOf(hash.get("size").charAt(0)).toUpperCase();
+        WriteStringListCommaEnd("size", new ArrayList<>(Arrays.asList(size)));
 
         this.writeType(hash, creature);
 
@@ -203,21 +203,31 @@ public class JSONwriter {
     
     private void WriteStatsSection(Creature creature){
         for (Map.Entry<String, Integer> entry : creature.getStats().entrySet()) {
-            this.WriteNewIntLine(entry.getKey(), entry.getValue());
+            this.WriteNewIntLine(entry.getKey().toLowerCase(), entry.getValue());
         }
     }
 
     private void WriteSavesSection(Creature creature){
-        this.WriteSkillsAndSaves("save", creature.getSaves());
-        this.WriteSkillsAndSaves("skill", creature.getSkills());
+        if (creature.getSaves().size() > 0){
+            this.WriteSkillsAndSaves("save", creature.getSaves());
+        }
+        if (creature.getSkills().size() > 0){
+            this.WriteSkillsAndSaves("skill", creature.getSkills());
+        }
         this.WriteStringListCommaEnd("senses", creature.getSenses());
         this.WriteNewIntLine("passive", creature.getPassive());
 
         HashMap<String, ArrayList<String>> getResandImMap = creature.getResandIm();
-        this.WriteStringListCommaEnd("resist", getResandImMap.get("DR"));
-        this.WriteStringListCommaEnd("immune", getResandImMap.get("DI"));
-        this.WriteStringListCommaEnd("conditionImmune", getResandImMap.get("CI"));
-
+        if (getResandImMap.get("DR").size() > 0) {
+            this.WriteStringListCommaEnd("resist", getResandImMap.get("DR"));
+        }
+        if (getResandImMap.get("DI").size() > 0) {
+            this.WriteStringListCommaEnd("immune", getResandImMap.get("DI"));
+        }
+        if (getResandImMap.get("CI").size() > 0) {
+            this.WriteStringListCommaEnd("conditionImmune", getResandImMap.get("CI"));
+        }
+    
         this.WriteStringListCommaEnd("languages", creature.getLanguages());
         this.WriteNewStringLine("cr", String.valueOf(creature.getCR()));
     }

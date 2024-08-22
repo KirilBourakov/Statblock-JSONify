@@ -145,7 +145,7 @@ public class CreatureFactory {
 
         String[] splitHp = this.splitBeforeChar(cleanHPSectionList.get(1), "(");
         finalHPSectionList.add(RemoveNonNumeric(splitHp[0]));
-        finalHPSectionList.add(splitHp[1]);
+        finalHPSectionList.add(splitHp[1].replace("(", "").replace(")", ""));
 
         String[] unparsedSpeed = cleanHPSectionList.get(2).split(" ");
         HashMap<String, Integer> speedMap = new HashMap<>();
