@@ -3,22 +3,28 @@ package helpers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 // TODO: flatten into priority queue before writing?
 // TODO: handle mythic headers
 // TODO: handle legenedary action count
 public class JSONwriter {
     private ArrayList<Creature> monsters;
     private String path;
+    private String filename;
     private int depth;
     FileWriter writer;
+
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
-    public JSONwriter(ArrayList<Creature> monsters, String path){
+    public JSONwriter(ArrayList<Creature> monsters, String path, String filename){
         this.monsters = monsters;
         this.path = path;
+        this.filename = filename;
         this.depth = 0;
 
         try {
@@ -31,6 +37,7 @@ public class JSONwriter {
     public void WriteCreatures(){
         try {
             this.startObject();
+            this.WriteMeta();
 
             this.WriteNewLitteralLine("monster", ": [");
             this.depth++;
@@ -59,6 +66,53 @@ public class JSONwriter {
         
     }
 
+    private void WriteMeta(){
+        this.WriteNewLitteralLine("_meta", ": {");
+        this.depth++;
+
+        this.WriteNewLitteralLine("sources", ": [");
+        this.depth++;
+
+        this.WriteOnlyLiteralLine("{");
+        this.depth++;
+
+        this.WriteNewStringLine("json", generateRandomString(5));
+        this.WriteNewStringLine("abbreviation", this.filename);
+        this.WriteNewStringLine("full", this.filename);
+
+        this.WriteStringListCommaEnd("authors", new ArrayList<>(Arrays.asList("unknown")));
+        this.WriteStringListCommaEnd("convertedBy", new ArrayList<>(Arrays.asList("auto")));
+
+        this.WriteNewStringLine("version", "1.0");
+        this.WriteNewStringLine("url","");
+        this.WriteNewStringLineWithoutCommaEnd("targetSchema", "1.0");
+
+        this.depth--;
+        this.WriteOnlyLiteralLine("}");
+
+        this.depth--;
+        this.WriteOnlyLiteralLine("],");
+
+        int time = (int) Instant.now().toEpochMilli();
+        this.WriteNewIntLine("dateAdded", time);
+        this.WriteNewIntLineWithoutCommaEnd("dateLastModified", time);
+
+        this.depth--;
+        this.WriteOnlyLiteralLine("},");
+    }
+
+    public static String generateRandomString(int length) {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(index));
+        }
+
+        return sb.toString();
+    }
+
     private void startObject(){
         this.WriteOnlyLiteralLine("{");
         this.depth++;
@@ -73,7 +127,7 @@ public class JSONwriter {
         HashMap<String,String> hash = creature.getHeaders();
  
         this.WriteNewStringLine("name", hash.get("name"));
-        this.WriteNewStringLine("source", "AUTO CREATED; SOURCE UNKNOWN");
+        this.WriteNewStringLine("source", this.filename);
         this.WriteNewIntLine("page", 0);
 
         String size = String.valueOf(hash.get("size").charAt(0));

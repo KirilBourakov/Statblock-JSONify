@@ -34,7 +34,7 @@ public class Main{
             if (CurrentCreature.HasInformation()){
                 Creatures.add(CurrentCreature.Construct());
             }
-            writer = new JSONwriter(Creatures, args[1]);
+            writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
             writer.WriteCreatures();
 
             System.out.println(Creatures);
