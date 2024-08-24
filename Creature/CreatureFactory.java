@@ -1,7 +1,5 @@
 package Creature;
 
-import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,6 +18,8 @@ public class CreatureFactory {
     private ArrayList<String> statsSection; 
     private ArrayList<String> saveSection;
     private ArrayList<String> traitsSection;
+
+    private helpers.Parser parser = new helpers.Parser();
 
     public CreatureFactory(){
         linecount = 0;
@@ -68,7 +68,7 @@ public class CreatureFactory {
 
     public CreatureManager Construct(){
         this.ConstructHeaders();
-        // this.ConstructHpSection();
+        this.ConstructHpSection();
         // this.ConstructStats();
         // this.ConstructSaveSection();
         // this.ConstructTraits();
@@ -80,7 +80,7 @@ public class CreatureFactory {
     private void ConstructHeaders(){
         ArrayList<String> finalHeaderList = new ArrayList<>();
         for (String header : headerSection) {
-            finalHeaderList.add(this.ReplaceNonAlphaNumeric(header).strip());
+            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip());
         }
         String unparsedType = finalHeaderList.get(1);
         String unparsedTypeWithoutAlignment = "";
@@ -127,6 +127,7 @@ public class CreatureFactory {
         }
 
         // insert
+        // TODO: certain lists have to be reduced to their first character
         creature.insertStringNode("name", finalMap.get("name"), true);
         creature.instertLiteralList("size", new ArrayList<>(Arrays.asList(finalMap.get("size"))), true);
         creature.instertLiteralList("alignment", new ArrayList<>(Arrays.asList(finalMap.get("alignment"))), true);
@@ -136,62 +137,63 @@ public class CreatureFactory {
             CreatureNode typeNode = new CreatureNode("type", finalMap.get("type"), true);
             CreatureNode tagNode = creature.createLiteralList("tags", tags, true);
             typeNode.setChild(tagNode);
-            CreatureNode typeOwner = new CreatureNode("type", typeNode);
-            creature.insertAtEnd(typeOwner);
+            creature.insertCreatedNode("type", typeNode);
         } else {
             creature.insertStringNode("type", finalMap.get("type"), true);
         }
     }
 
-    // private void ConstructHpSection(){
-    //     ArrayList<String> cleanHPSectionList = new ArrayList<>();
-    //     for (String sectionSlice : hpSection) {
-    //         int fi = sectionSlice.indexOf("**");
-    //         int cutpoint = sectionSlice.indexOf("**", fi + "**".length());
-    //         String finalHPSection = sectionSlice.substring(cutpoint+2);
-    //         cleanHPSectionList.add(finalHPSection.strip());
-    //     }
+    private void ConstructHpSection(){
+        ArrayList<String> cleanHPSectionList = new ArrayList<>();
+        for (String sectionSlice : hpSection) {
+            int fi = sectionSlice.indexOf("**");
+            int cutpoint = sectionSlice.indexOf("**", fi + "**".length());
+            String finalHPSection = sectionSlice.substring(cutpoint+2);
+            cleanHPSectionList.add(finalHPSection.strip());
+        }
 
-    //     ArrayList<String> finalHPSectionList = new ArrayList<>();
+        // handle AC
+        // TODO: handle several AC values
+        String[] splitAC = this.parser.splitBeforeChar(cleanHPSectionList.get(0), "(");
+        String ACvalue = this.parser.RemoveNonNumeric(splitAC[0]);
+        String ACtype = this.parser.ReplaceNonAlphaNumeric(splitAC[1]);
 
-    //     String[] splitAC = this.splitBeforeChar(cleanHPSectionList.get(0), "(");
-    //     finalHPSectionList.add(RemoveNonNumeric(splitAC[0]));
-    //     finalHPSectionList.add(ReplaceNonAlphaNumeric(splitAC[1]));
+        if (!ACtype.isEmpty()){
+            CreatureNode ACvalueNode = new CreatureNode("ac", ACvalue, false);
+            CreatureNode ACtypeNode = creature.createLiteralList("type", new ArrayList<>(Arrays.asList(ACtype)), true);
+            ACvalueNode.setChild(ACtypeNode);
+            CreatureNode AcObj = new CreatureNode(null, ACvalueNode);
+            creature.insertNodeList("ac", new ArrayList<>(Arrays.asList(AcObj)));
+        } else {
+            creature.instertLiteralList("ac", new ArrayList<>(Arrays.asList(ACvalue)), false);
+        }
 
-    //     String[] splitHp = this.splitBeforeChar(cleanHPSectionList.get(1), "(");
-    //     finalHPSectionList.add(RemoveNonNumeric(splitHp[0]));
-    //     finalHPSectionList.add(splitHp[1].replace("(", "").replace(")", ""));
+        //handle HP
+        String[] splitHp = this.parser.splitBeforeChar(cleanHPSectionList.get(1), "(");
+        String hpValue = this.parser.RemoveNonNumeric(splitHp[0]);
+        String hpFormula = splitHp[1].replace("(", "").replace(")", "");
 
-    //     String[] unparsedSpeed = cleanHPSectionList.get(2).split(" ");
-    //     HashMap<String, Integer> speedMap = new HashMap<>();
+        CreatureNode hpValueNode = new CreatureNode("average", hpValue, false);
+        CreatureNode hpFormulaNode = new CreatureNode("formula", hpFormula, true);
+        hpValueNode.setChild(hpFormulaNode);
+        creature.insertCreatedNode("hp", hpValueNode);
 
-    //     String speedType = "walk";
-    //     for (String speedPortion : unparsedSpeed) {
-    //         if(!ReplaceNonAlphaNumeric(speedPortion).equalsIgnoreCase("ft")){
-    //             if (isNumeric(speedPortion)){
-    //                 speedMap.put(speedType, RemoveNonNumericIntify(speedPortion));
-    //             } else {
-    //                 speedType = speedPortion;
-    //             }
-    //         }
-    //     }
+        //handle speeds
+        String[] unparsedSpeed = cleanHPSectionList.get(2).split(" ");
+        HashMap<String, String> speedMap = new HashMap<>();
+        String speedType = "walk";
+        for (String speedPortion : unparsedSpeed) {
+            if(!this.parser.ReplaceNonAlphaNumeric(speedPortion).equalsIgnoreCase("ft")){
+                if (this.parser.isNumeric(speedPortion)){
+                    speedMap.put(speedType, this.parser.ReplaceNonAlphaNumeric(speedPortion));
+                } else {
+                    speedType = speedPortion;
+                }
+            }
+        }
 
-    //     monster.setHpSection(finalHPSectionList, speedMap);
-    // }
-
-    // private String[] splitBeforeChar(String initial, String target){
-    //     int splitIndex = initial.lastIndexOf(target);
-    //     String[] finalList = {"", ""};
-    //     if (splitIndex != -1){
-    //         finalList[0] = initial.substring(0, splitIndex-1).trim();
-    //         finalList[1] = initial.substring(splitIndex).trim();
-    //     }
-    //     if (finalList[0].length() == 0){
-    //         finalList[0] = initial;
-    //     }
-
-    //     return finalList;
-    // }
+        creature.insertFromHashMap("speed", speedMap, true);
+    }
 
     // private void ConstructStats(){
     //     String statsStr = statsSection.get(2);
@@ -345,26 +347,9 @@ public class CreatureFactory {
     //     monster.setTratsSection(TypeMap);
     // }
 
-    private String ReplaceNonAlphaNumeric(String input){
-        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll("  ", " ");
-        input = input.strip(); 
-        return input;
-    }
-    private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
-        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
-        input = input.strip(); 
-        return input;
-    }
-    private int RemoveNonNumericIntify(String input){
-        return Integer.parseInt(input.replaceAll("[^\\d.]", ""));
-    }
-    private String RemoveNonNumeric(String input){
-        return input.replaceAll("[^\\d.]", "");
-    }
-
-    private boolean isNumeric(String str) {
-         ParsePosition pos = new ParsePosition(0);
-        NumberFormat.getInstance().parse(str, pos);
-        return str.length() == pos.getIndex();
-    }
+    // private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
+    //     input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
+    //     input = input.strip(); 
+    //     return input;
+    // }
 }
