@@ -126,12 +126,21 @@ public class CreatureFactory {
             tags = new ArrayList<>(Arrays.asList(tagsList));
         }
 
-        // 
+        // insert
         creature.insertStringNode("name", finalMap.get("name"), true);
         creature.instertLiteralList("size", new ArrayList<>(Arrays.asList(finalMap.get("size"))), true);
-        creature.insertStringNode("type", finalMap.get("type"), true);
         creature.instertLiteralList("alignment", new ArrayList<>(Arrays.asList(finalMap.get("alignment"))), true);
-        
+
+        // insert type
+        if (tags.size() > 0){
+            CreatureNode typeNode = new CreatureNode("type", finalMap.get("type"), true);
+            CreatureNode tagNode = creature.createLiteralList("tags", tags, true);
+            typeNode.setChild(tagNode);
+            CreatureNode typeOwner = new CreatureNode("type", typeNode);
+            creature.insertAtEnd(typeOwner);
+        } else {
+            creature.insertStringNode("type", finalMap.get("type"), true);
+        }
     }
 
     // private void ConstructHpSection(){

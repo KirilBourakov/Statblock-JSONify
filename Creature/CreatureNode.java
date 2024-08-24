@@ -20,6 +20,10 @@ public class CreatureNode {
         this.listValue = listValue;
         this.printValueAsString = printValueAsString;
     }
+    public CreatureNode(String name, CreatureNode leftPointer){
+        this.name = name;
+        this.objectValue = leftPointer;
+    }
 
     public void setChild(CreatureNode newChild){
         this.child = newChild;
@@ -65,7 +69,7 @@ public class CreatureNode {
         if (type == "literal"){
             return this.name + ": " + this.value;
         } else if (type == "object"){
-            return this.name + ": " + this.objectValue;
+            return this.name + ": {" + this.objectValue + "} (children not shown)";
         } else if (type == "list"){
             return this.name + ": " + this.listValue;
         }

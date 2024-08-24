@@ -11,6 +11,10 @@ public class CreatureManager {
         this.insertAtEnd(node);
     }
     public void instertLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
+        CreatureNode node = this.createLiteralList(name, values, printValueAsString);
+        this.insertAtEnd(node);
+    }
+    public CreatureNode createLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
         ArrayList<CreatureNode> finalList = new ArrayList<>(); 
 
         CreatureNode last = null;
@@ -22,11 +26,9 @@ public class CreatureManager {
             finalList.add(tmpNode);
             last = tmpNode;
         }
-
         CreatureNode node = new CreatureNode(name, finalList, printValueAsString);
-        this.insertAtEnd(node);
+        return node;
     }
-
     public void insertAtEnd(CreatureNode node){
         if (head == null){
             this.head = node;
