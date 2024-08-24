@@ -10,8 +10,8 @@ public class Main{
     private static Boolean finishedReading = false;
     private static String line = "";
     private static String lastline = "";
-    private static helpers.CreatureFactory CurrentCreature = new helpers.CreatureFactory();
-    private static ArrayList<helpers.Creature> Creatures = new ArrayList<>();
+    private static Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
+    private static ArrayList<Creature.CreatureManager> Creatures = new ArrayList<>();
     private static JSONwriter writer;
 
     public static void main(String[] args){
@@ -27,15 +27,15 @@ public class Main{
                 if (finishedReading){
                     Creatures.add(CurrentCreature.Construct());
                     finishedReading = false;
-                    CurrentCreature = new helpers.CreatureFactory();
+                    CurrentCreature = new Creature.CreatureFactory();
                 }
                 lastline = line;
             }
             if (CurrentCreature.HasInformation()){
                 Creatures.add(CurrentCreature.Construct());
             }
-            writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
-            writer.WriteCreatures();
+            // writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
+            // writer.WriteCreatures();
 
             System.out.println(Creatures);
             reader.close();
