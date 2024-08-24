@@ -57,7 +57,7 @@ public class CreatureManager {
         return node;
     }
 
-    public void insertAtEnd(CreatureNode node){
+    private void insertAtEnd(CreatureNode node){
         if (head == null){
             this.head = node;
         }

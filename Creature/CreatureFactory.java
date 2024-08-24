@@ -69,7 +69,7 @@ public class CreatureFactory {
     public CreatureManager Construct(){
         this.ConstructHeaders();
         this.ConstructHpSection();
-        // this.ConstructStats();
+        this.ConstructStats();
         // this.ConstructSaveSection();
         // this.ConstructTraits();
         creature.print();
@@ -195,24 +195,28 @@ public class CreatureFactory {
         creature.insertFromHashMap("speed", speedMap, true);
     }
 
-    // private void ConstructStats(){
-    //     String statsStr = statsSection.get(2);
-    //     String[] parsedStats = statsStr.split("\\)");
-
-    //     ArrayList<Integer> finalStats = new ArrayList<>();
-    //     for (String stat : parsedStats){
-    //         stat = stat.replaceAll("\\|", "");
-    //         if (stat.length() > 1) {
-    //             stat = stat.substring(0, stat.indexOf('(')).replaceAll(" ", "");
-    //             try {
-    //                 finalStats.add(Integer.parseInt(stat));
-    //             } catch (NumberFormatException e) {
-    //                 System.out.println("Invalid input: " + e.getMessage());
-    //             }
-    //         }
-    //     }
-    //     monster.setStatsSection(finalStats);
-    // }
+    private void ConstructStats(){
+        String statsStr = statsSection.get(2);
+        String[] parsedStats = statsStr.split("\\)");
+        ArrayList<String> finalStats = new ArrayList<>();
+        for (String stat : parsedStats){
+            stat = stat.replaceAll("\\|", "");
+            if (stat.length() > 1) {
+                stat = stat.substring(0, stat.indexOf('(')).replaceAll(" ", "");
+                try {
+                    finalStats.add(stat);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: " + e.getMessage());
+                }
+            }
+        }
+        creature.insertStringNode("STR", finalStats.get(0), false);
+        creature.insertStringNode("DEX", finalStats.get(1), false);
+        creature.insertStringNode("CON", finalStats.get(2), false);
+        creature.insertStringNode("INT", finalStats.get(3), false);
+        creature.insertStringNode("WIS", finalStats.get(4), false);
+        creature.insertStringNode("CHA", finalStats.get(5), false);
+    }
 
     // private void ConstructSaveSection(){
         
