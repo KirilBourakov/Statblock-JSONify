@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import helpers.JSONwriter;
+import helpers.NodeWriter;
 
 public class Main{
     private static Boolean ReadingStatblock = false;
@@ -12,12 +13,12 @@ public class Main{
     private static String lastline = "";
     private static Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
     private static ArrayList<Creature.CreatureManager> Creatures = new ArrayList<>();
-    private static JSONwriter writer;
 
     public static void main(String[] args){
         try {
             File file = new File(args[0]);
             Scanner reader = new Scanner(file);
+            NodeWriter writer = new NodeWriter(args[1], args[0], null);
             while (reader.hasNextLine()) {
                 line = reader.nextLine().strip();
                 UpdateReadingStatus();
@@ -25,14 +26,20 @@ public class Main{
                     CurrentCreature.addtoSection(line);
                 }
                 if (finishedReading){
-                    Creatures.add(CurrentCreature.Construct());
+                    Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                    writer.setManager(newCreature);
+                    writer.WriteCreature();
+                    writer.finish();
                     finishedReading = false;
                     CurrentCreature = new Creature.CreatureFactory();
                 }
                 lastline = line;
             }
             if (CurrentCreature.HasInformation()){
-                Creatures.add(CurrentCreature.Construct());
+                Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                writer.setManager(newCreature);
+                writer.WriteCreature();
+                writer.finish();
             }
             // writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
             // writer.WriteCreatures();
