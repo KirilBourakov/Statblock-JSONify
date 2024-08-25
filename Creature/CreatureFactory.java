@@ -71,7 +71,7 @@ public class CreatureFactory {
         this.ConstructHpSection();
         this.ConstructStats();
         this.ConstructSaveSection();
-        // this.ConstructTraits();
+        this.ConstructTraits();
         creature.print();
 
         return this.creature;
@@ -269,69 +269,58 @@ public class CreatureFactory {
         creature.insertStringNode("cr", CR, true);
     }
 
-    // private ArrayList<String> CommaSeperatedParser(String title, String line){
-    //     if (line.length() == 0){
-    //         return new ArrayList<>();
-    //     }
-        
-    //     line = ReplaceNonAlphaNumeric(line).toUpperCase();
-    //     title = title.toUpperCase();
-    //     line = line.substring(line.indexOf(title) + title.length()).trim();
-    //     ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\s+")));
-    //     return finalList;
-    // }
+    private void ConstructTraits(){
+        ArrayList<String> cleanTraits = new ArrayList<>();
+        boolean previousHeader = false;
+        for (String traitLine : traitsSection) {
+            if (traitLine.length() != 0){
+                if (cleanTraits.size() == 0){
+                    cleanTraits.add(traitLine);
+                } else{
+                    if (previousHeader){
+                        cleanTraits.add(traitLine);
+                        previousHeader = false;
+                    } else if (traitLine.contains("#")){
+                        cleanTraits.add(traitLine);
+                        previousHeader = true;
+                    } else if (traitLine.contains("*")){
+                        cleanTraits.add(traitLine);
+                    } else {
+                        String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
+                        cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
+                    }
+                }
+            }
+        }
 
-    // private void ConstructTraits(){
-    //     ArrayList<String> cleanTraits = new ArrayList<>();
-    //     boolean previousHeader = false;
-    //     for (String traitLine : traitsSection) {
-    //         if (traitLine.length() != 0){
-    //             if (cleanTraits.size() == 0){
-    //                 cleanTraits.add(traitLine);
-    //             } else{
-    //                 if (previousHeader){
-    //                     cleanTraits.add(traitLine);
-    //                     previousHeader = false;
-    //                 } else if (traitLine.contains("#")){
-    //                     cleanTraits.add(traitLine);
-    //                     previousHeader = true;
-    //                 } else if (traitLine.contains("*")){
-    //                     cleanTraits.add(traitLine);
-    //                 } else {
-    //                     String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
-    //                     cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     HashMap<String, ArrayList<String>> TypeMap = new HashMap<>();
-    //     String inputPoint = "traits";
-    //     for (String trait : cleanTraits) {
-    //         if (trait.contains("#")){
-    //             String comp = trait.toLowerCase();
-    //             if (comp.contains("bonus")){
-    //                 inputPoint = "bonusAction";
-    //             } else if (comp.contains("reaction")){
-    //                 inputPoint = "reactions";
-    //             } else if (comp.contains("legendary")){
-    //                 inputPoint = "LActions";
-    //             } else if (comp.contains("mythic")){
-    //                 inputPoint = "mythicActions";
-    //             } else if (comp.contains("action")){
-    //                 inputPoint = "actions";
-    //             }
-    //         } else {
-    //             if (TypeMap.containsKey(inputPoint)) {
-    //                 ArrayList<String> in = TypeMap.get(inputPoint);
-    //                 in.add(trait);
-    //             } else {
-    //                 ArrayList<String> in = new ArrayList<>();
-    //                 in.add(trait);
-    //                 TypeMap.put(inputPoint, in);
-    //             }
-    //         }
-    //     }
-    //     monster.setTratsSection(TypeMap);
-    // }
+        // Todo: handle mythic headers
+        HashMap<String, ArrayList<HashMap<String, String>>> TypeMap = new HashMap<>();
+        String inputPoint = "trait";
+        for (String trait : cleanTraits) {
+            if (trait.contains("#")){
+                String comp = trait.toLowerCase();
+                if (comp.contains("bonus")){
+                    inputPoint = "bonus";
+                } else if (comp.contains("reaction")){
+                    inputPoint = "reaction";
+                } else if (comp.contains("legendary")){
+                    inputPoint = "legendary";
+                } else if (comp.contains("mythic")){
+                    inputPoint = "mythic";
+                } else if (comp.contains("action")){
+                    inputPoint = "action";
+                }
+            } else {
+                if (TypeMap.containsKey(inputPoint)) {
+                    ArrayList<HashMap<String, String>> in = TypeMap.get(inputPoint);
+                    in.add(parser.ParseATrait(trait));
+                } else {
+                    ArrayList<HashMap<String, String>> in = new ArrayList<>();
+                    in.add(parser.ParseATrait(trait));
+                    TypeMap.put(inputPoint, in);
+                }
+            }
+        }
+        creature.insertFromMapListofMaps(TypeMap);
+    }
 }

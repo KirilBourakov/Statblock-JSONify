@@ -77,6 +77,23 @@ public class Parser {
         return finalList;
     }
 
+    public HashMap<String, String> ParseATrait(String trait){
+        int lastIndex = trait.lastIndexOf("*");
+        String name;
+        String description; 
+        if (lastIndex == -1){
+            name = "unknown";
+            description = trait;
+        } else{
+            name = trait.substring(0, lastIndex);
+            description = trait.substring(lastIndex + 1);
+        }
+        return new HashMap<String, String>(){{
+            put("name", name.replaceAll("\\*", "").strip());
+            put("description", description.strip());
+        }};
+    }
+
     private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
         input = input.strip(); 

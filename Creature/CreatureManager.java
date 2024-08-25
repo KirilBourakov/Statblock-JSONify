@@ -1,6 +1,7 @@
 package Creature;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class CreatureManager {
@@ -35,6 +36,26 @@ public class CreatureManager {
         };
         CreatureNode node = new CreatureNode(name, head);
         this.insertAtEnd(node);
+    }
+
+    public void insertFromMapListofMaps(HashMap<String, ArrayList<HashMap<String, String>>> traitMap){
+        for (String key : traitMap.keySet()) {
+            ArrayList<CreatureNode> traitsForKey = new ArrayList<>();
+            int i = 0;
+            for (HashMap<String, String> trait : traitMap.get(key)) {
+                CreatureNode name = new CreatureNode("name", trait.get("name"), true);
+                CreatureNode entries = this.createLiteralList("entries", new ArrayList<>(Arrays.asList(trait.get("description"))), true);
+                CreatureNode sort = new CreatureNode("sort", String.valueOf(i), false);
+                
+                entries.setChild(sort);
+                name.setChild(entries);
+
+                traitsForKey.add(entries);
+                i++;
+            }   
+
+            this.insertNodeList(key, traitsForKey);
+        }
     }
 
     public void instertLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
