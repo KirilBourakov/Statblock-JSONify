@@ -72,7 +72,7 @@ public class Parser {
         }
         title = title.toUpperCase();
         line = line.substring(line.toUpperCase().indexOf(title) + title.length()).trim();
-        ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\p{Punct}")));
+        ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("[\\p{Punct}&&[^']]")));
         finalList = finalList.stream().map(String::strip).map(String::toLowerCase).filter(s -> !s.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
         return finalList;
     }

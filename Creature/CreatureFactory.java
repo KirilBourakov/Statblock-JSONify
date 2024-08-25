@@ -233,28 +233,39 @@ public class CreatureFactory {
         // Damage resistances 
         // TODO: handle conditionals
         ArrayList<String> DR = this.parser.PunctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
-        creature.instertLiteralList("resist", DR, true);
+        if (DR.size() > 0) {
+            creature.instertLiteralList("resist", DR, true);
+        }
 
         // Damage immunities
         // TODO: handle conditionals
         ArrayList<String> DI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
-        creature.instertLiteralList("immune", DI, true);
-        
+        if (DI.size() > 0) {
+            creature.instertLiteralList("immune", DI, true);
+        }
+
         // Condition Immunities
         // TODO: handle conditionals
         ArrayList<String> CI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
-        creature.instertLiteralList("conditionImmune", CI, true);
+        if (CI.size() > 0) {
+            creature.instertLiteralList("conditionImmune", CI, true);
+        }
 
         // languages
         ArrayList<String> languages = this.parser.PunctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
-        creature.instertLiteralList("languages", languages, true);
-        
+        if (languages.size() > 0) {
+            creature.instertLiteralList("languages", languages, true);
+        }
+
         // senses and passive
+        
         ArrayList<String> cleanSenses = this.parser.PunctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
        
         ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
         String passive = this.parser.RemoveNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
-        creature.instertLiteralList("senses", senses, true);
+        if (senses.size() > 0) {
+            creature.instertLiteralList("senses", senses, true);
+        }
         creature.insertStringNode("passive", passive, false);
 
         // Challange Rating

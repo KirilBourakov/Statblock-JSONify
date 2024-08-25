@@ -16,7 +16,7 @@ public class Main{
         try {
             File file = new File(args[0]);
             Scanner reader = new Scanner(file);
-            NodeWriter writer = new NodeWriter(args[1], args[0], null);
+            NodeWriter writer = new NodeWriter(args[1], file.getName(), null);
             writer.start();
             while (reader.hasNextLine()) {
                 line = reader.nextLine().strip();

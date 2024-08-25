@@ -47,6 +47,13 @@ public class NodeWriter {
         this.writer.startLine();
         this.writer.startDepthIncreasingSection(null, '{');
         this.WalkAndWriteFromNode(node);
+
+        this.writer.writeComma();
+        this.writer.startLine();
+        this.writer.writeKeyValue("source", this.inputFile, true);
+        this.writer.writeComma();
+        this.writer.startLine();
+        this.writer.writeKeyValue("page", "0", false);
         this.writer.endDepthIncreasingSection('}');
 
         this.haveWrittenOne = true;
