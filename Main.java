@@ -3,21 +3,21 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import helpers.JSONwriter;
+import helpers.NodeWriter;
 
 public class Main{
     private static Boolean ReadingStatblock = false;
     private static Boolean finishedReading = false;
     private static String line = "";
     private static String lastline = "";
-    private static helpers.CreatureFactory CurrentCreature = new helpers.CreatureFactory();
-    private static ArrayList<helpers.Creature> Creatures = new ArrayList<>();
-    private static JSONwriter writer;
+    private static Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
 
     public static void main(String[] args){
         try {
             File file = new File(args[0]);
             Scanner reader = new Scanner(file);
+            NodeWriter writer = new NodeWriter(args[1], file.getName(), null);
+            writer.start();
             while (reader.hasNextLine()) {
                 line = reader.nextLine().strip();
                 UpdateReadingStatus();
@@ -25,19 +25,21 @@ public class Main{
                     CurrentCreature.addtoSection(line);
                 }
                 if (finishedReading){
-                    Creatures.add(CurrentCreature.Construct());
+                    Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                    writer.setManager(newCreature);
+                    writer.WriteCreature();
+                    
                     finishedReading = false;
-                    CurrentCreature = new helpers.CreatureFactory();
+                    CurrentCreature = new Creature.CreatureFactory();
                 }
                 lastline = line;
             }
             if (CurrentCreature.HasInformation()){
-                Creatures.add(CurrentCreature.Construct());
+                Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                writer.setManager(newCreature);
+                writer.WriteCreature();
             }
-            writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
-            writer.WriteCreatures();
-
-            System.out.println(Creatures);
+            writer.finish();
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("No such file exists");
