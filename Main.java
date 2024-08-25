@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import helpers.JSONwriter;
 import helpers.NodeWriter;
 
 public class Main{
@@ -12,7 +11,6 @@ public class Main{
     private static String line = "";
     private static String lastline = "";
     private static Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
-    private static ArrayList<Creature.CreatureManager> Creatures = new ArrayList<>();
 
     public static void main(String[] args){
         try {
