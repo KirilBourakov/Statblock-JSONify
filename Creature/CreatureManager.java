@@ -57,7 +57,9 @@ public class CreatureManager {
                 entries.setChild(sort);
                 name.setChild(entries);
 
-                traitsForKey.add(name);
+                CreatureNode parent = new CreatureNode(null, name);
+
+                traitsForKey.add(parent);
                 i++;
             }   
 

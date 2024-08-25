@@ -141,6 +141,7 @@ public class NodeWriter {
         this.writer.writeKeyValue("dateLastModified", timeValue, true);
 
         this.writer.endDepthIncreasingSection('}');
+        this.writer.writeComma();
     }
 
     private String generateRandomString(int length) {
