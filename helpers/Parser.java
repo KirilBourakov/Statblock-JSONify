@@ -94,6 +94,18 @@ public class Parser {
         }};
     }
 
+    public ArrayList<String> getFirstLetters(String input){
+        ArrayList<String> letters = new ArrayList<>();
+
+        String[] words = input.split("\\s+");
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                letters.add(String.valueOf(word.charAt(0)).toUpperCase());
+            }
+        }
+        return letters;
+    }
+
     private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
         input = input.strip(); 

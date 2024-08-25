@@ -127,10 +127,9 @@ public class CreatureFactory {
         }
 
         // insert
-        // TODO: certain lists have to be reduced to their first character
         creature.insertStringNode("name", finalMap.get("name"), true);
-        creature.instertLiteralList("size", new ArrayList<>(Arrays.asList(finalMap.get("size"))), true);
-        creature.instertLiteralList("alignment", new ArrayList<>(Arrays.asList(finalMap.get("alignment"))), true);
+        creature.instertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
+        creature.instertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
 
         // insert type
         if (tags.size() > 0){
