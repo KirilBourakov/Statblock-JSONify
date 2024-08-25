@@ -70,7 +70,7 @@ public class CreatureFactory {
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
-        // this.ConstructSaveSection();
+        this.ConstructSaveSection();
         // this.ConstructTraits();
         creature.print();
 
@@ -218,72 +218,56 @@ public class CreatureFactory {
         creature.insertStringNode("CHA", finalStats.get(5), false);
     }
 
-    // private void ConstructSaveSection(){
+    private void ConstructSaveSection(){
+        // saves
+        HashMap<String, String> finalSaves = this.parser.SkillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
+        if (finalSaves.size() > 0) {
+            creature.insertFromHashMap("save", finalSaves, true);
+        }
+
+        // skills
+        HashMap<String, String> finalSkills = this.parser.SkillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
+        if (finalSkills.size() > 0) {
+            creature.insertFromHashMap("skill", finalSkills, true);
+        }
+
+        // Damage resistances 
+        // TODO: handle conditionals
+        ArrayList<String> DR = this.parser.PunctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
+        creature.instertLiteralList("resist", DR, true);
+
+        // Damage immunities
+        // TODO: handle conditionals
+        ArrayList<String> DI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
+        creature.instertLiteralList("immune", DI, true);
         
-    //     HashMap<String, String> finalSaves = this.SkillsAndSavesParser("throws", getSaveSectionLine("saving"));
-    //     HashMap<String, String> finalSkills = this.SkillsAndSavesParser("skills", getSaveSectionLine("skill"));
-    //     ArrayList<String> DR = this.PunctuationSplitter("resistances", getSaveSectionLine("resistance"));
-    //     ArrayList<String> DI = this.PunctuationSplitter("Immunities", getSaveSectionLine("age im"));
-    //     ArrayList<String> CI = this.PunctuationSplitter("Immunities", getSaveSectionLine("condition"));
-    //     ArrayList<String> languages = this.PunctuationSplitter("Languages", getSaveSectionLine("lang"));
+        // Condition Immunities
+        // TODO: handle conditionals
+        ArrayList<String> CI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
+        creature.instertLiteralList("conditionImmune", CI, true);
+
+        // languages
+        ArrayList<String> languages = this.parser.PunctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
+        creature.instertLiteralList("languages", languages, true);
         
-    //     ArrayList<String> cleanSenses = this.PunctuationSplitter("Senses", getSaveSectionLine("sense"));
-    //     ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("percep")).collect(Collectors.toList()));
+        // senses and passive
+        ArrayList<String> cleanSenses = this.parser.PunctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
+        ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("percep")).collect(Collectors.toList()));
+        String passive = this.parser.RemoveNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("percep")).findFirst().orElse("0"));
+        creature.instertLiteralList("senses", senses, true);
+        creature.insertStringNode("passive", passive, false);
 
-    //     int passive = cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("percep")).mapToInt(this::RemoveNonNumericIntify).findFirst().orElse(0);
-
-    //     String unparsedCR = getSaveSectionLine("chall");
-    //     int CR = 0;
-
-    //     if (unparsedCR.indexOf("(") > 0){
-    //         CR = this.RemoveNonNumericIntify(unparsedCR.substring(0, unparsedCR.indexOf("(")));
-    //     } else {
-    //         CR = this.RemoveNonNumericIntify(unparsedCR);
-    //     }
-
-    //     monster.setSavesSection(finalSaves, finalSkills, DR, DI, CI, senses, passive, languages, CR);
-    // }
-
-    // private String getSaveSectionLine(String sectionTitle){
-    //     String finalSection = "";
-    //     for (String section : saveSection) {
-    //         if (section.toLowerCase().contains(sectionTitle.toLowerCase().strip())){
-    //             finalSection = section;
-    //             break;
-    //         }
-    //     }
-    //     return finalSection;
-    // }
-
-    // private HashMap<String, String> SkillsAndSavesParser(String title, String line){
-    //     HashMap<String, String> finalMap = new HashMap<>();
-    //     if (line.length() != 0){
-    //         line = ReplaceNonAlphaNumericNotAddOrSubtract(line).toUpperCase();
-    //         title = title.toUpperCase();
-
-    //         line = line.substring(line.indexOf(title) + title.length()).trim();
-    //         String[] savelist = line.split("\\s+");
-
-    //         for (int i = 0; i < savelist.length; i += 2) {
-    //             String key = savelist[i];
-    //             String value = savelist[i+1];
-    //             finalMap.put(key, value);
-    //         }   
-    //     }
-    //     return finalMap;
-    // }  
-
-    // private ArrayList<String> PunctuationSplitter(String title, String line){
-    //     if (line.length() == 0){
-    //         return new ArrayList<>();
-    //     }
-        
-    //     title = title.toUpperCase();
-    //     line = line.substring(line.toUpperCase().indexOf(title) + title.length()).trim();
-    //     ArrayList<String> finalList =  new ArrayList<>(Arrays.asList(line.split("\\p{Punct}")));
-    //     finalList = finalList.stream().map(String::strip).map(String::toLowerCase).filter(s -> !s.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
-    //     return finalList;
-    // }
+        // Challange Rating
+        // TODO: handle special CRs (above 30, increase in lair, etc)
+        String unparsedCR = this.parser.getSaveSectionLine("chall", this.saveSection);
+        String CR = "0";
+        if (unparsedCR.indexOf("(") > 0){
+            CR = this.parser.RemoveNonNumeric(unparsedCR.substring(0, unparsedCR.indexOf("(")));
+        } else {
+            CR = this.parser.RemoveNonNumeric(unparsedCR);
+        }
+        creature.insertStringNode("cr", CR, true);
+    }
 
     // private ArrayList<String> CommaSeperatedParser(String title, String line){
     //     if (line.length() == 0){
@@ -349,11 +333,5 @@ public class CreatureFactory {
     //         }
     //     }
     //     monster.setTratsSection(TypeMap);
-    // }
-
-    // private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
-    //     input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
-    //     input = input.strip(); 
-    //     return input;
     // }
 }
