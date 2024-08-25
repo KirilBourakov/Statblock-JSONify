@@ -56,6 +56,15 @@ public class NodeWriter {
                 }
             }
 
+            if (node.getObjectValue() != null){
+                this.writer.startDepthIncreasingSection(null, '{');
+                this.WalkAndWriteFromNode(node.getObjectValue());
+                this.writer.endDepthIncreasingSection('}');
+                if (node.getChild() != null){
+                    this.writer.writeComma();
+                }
+            }
+
             node = node.getChild();
         }
     }
