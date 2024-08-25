@@ -34,13 +34,15 @@ public class CreatureManager {
         CreatureNode current = null;
         CreatureNode head = current;
         for (String key : values.keySet()) {
-            if (current == null){
-                current = new CreatureNode(key, values.get(key), printValueAsString);
-                head = current;
+            CreatureNode newNode = new CreatureNode(key, values.get(key), printValueAsString);
+            if (head == null) {
+                head = newNode;
+                current = head;
+            } else {
+                current.child = newNode;
+                current = newNode;
             }
-            current.child = new CreatureNode(key, values.get(key), printValueAsString);
-            current = current.child;
-        };
+        }
         CreatureNode node = new CreatureNode(name, head);
         this.insertAtEnd(node);
     }
@@ -74,14 +76,9 @@ public class CreatureManager {
     public CreatureNode createLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
         ArrayList<CreatureNode> finalList = new ArrayList<>(); 
 
-        CreatureNode last = null;
         for (String value : values) {
             CreatureNode tmpNode = new CreatureNode(null, value, printValueAsString);
-            if (last != null){
-                last.setChild(tmpNode);
-            }
             finalList.add(tmpNode);
-            last = tmpNode;
         }
         CreatureNode node = new CreatureNode(name, finalList, printValueAsString);
         return node;

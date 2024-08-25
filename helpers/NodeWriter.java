@@ -43,6 +43,7 @@ public class NodeWriter {
         
     }
     private void WalkAndWriteFromNode(CreatureNode node){
+        // TODO: ADD support for writing stuff like page and source tag on the monster
         while (node != null) {
             this.writer.startLine();
             if (node.getName() != null) {
