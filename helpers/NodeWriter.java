@@ -51,18 +51,28 @@ public class NodeWriter {
 
             if (node.getValue() != null){
                 this.writer.writeValue(node.getValue(), node.getPrintValueAsString());
-                if (node.getChild() != null){
-                    this.writer.writeComma();
+            }
+
+            if (node.getListValue() != null){
+                this.writer.startDepthIncreasingSection(null, '[');
+                int i = 0;
+                for (CreatureNode listNode : node.getListValue() ) {
+                    this.WalkAndWriteFromNode(listNode);
+                    if (++i < node.getListValue().size()){
+                        this.writer.writeComma();
+                    }
                 }
+                this.writer.endDepthIncreasingSection(']');
             }
 
             if (node.getObjectValue() != null){
                 this.writer.startDepthIncreasingSection(null, '{');
                 this.WalkAndWriteFromNode(node.getObjectValue());
                 this.writer.endDepthIncreasingSection('}');
-                if (node.getChild() != null){
-                    this.writer.writeComma();
-                }
+            }
+
+            if (node.getChild() != null){
+                this.writer.writeComma();
             }
 
             node = node.getChild();
