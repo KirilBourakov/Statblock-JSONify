@@ -27,7 +27,7 @@ public class NodeWriter {
         this.writer = new WriterAPI(outputFile);
     }
     public void start(){
-        this.writer.StartUnnamedDepthIncreasingSection('{');
+        this.writer.startDepthIncreasingSection(null, '{');
         this.WriteMeta();
     }
     public void finish(){
@@ -39,73 +39,108 @@ public class NodeWriter {
 
     public void WriteCreature(){
         CreatureNode node = manager.getPointer();
-        this.WalkAndWriteFromNode(node);
+        // this.WalkAndWriteFromNode(node);
         
     }
-    private void WalkAndWriteFromNode(CreatureNode node){
-        while (node != null) {
-            if (node.getName() != null) {
-                this.writer.WriteName(node.getName());
-            }
-            node = node.getChild();
-        }
-    }
+    // private void WalkAndWriteFromNode(CreatureNode node){
+    //     while (node != null) {
+    //         this.writer.startLine();
+    //         if (node.getName() != null) {
+    //             this.writer.WriteName(node.getName());
+    //         }
 
-    private void handleObject(CreatureNode node){
-        if (node.getName() == null){
-            this.writer.StartUnnamedDepthIncreasingSection('{');
-        } else {
-            this.writer.StartNamedDepthIncreasingSection(node.getName(), '{');
-        }
-    }
+    //         if (node.getValue() != null){
+    //             this.writer.writeValue(node.getValue(), node.getPrintValueAsString());
+    //         }
 
-    private void handleLiteral(CreatureNode node){
-        if (node.getName() == null) {
-            if (node.getChild() == null) {
-                this.writer.writeValueLineNoComma(node.getValue(), node.getPrintValueAsString());
-            } else {
-                this.writer.writeValueLine(node.getValue(), node.getPrintValueAsString());
-            }
-        } else {
-            if (node.getChild() == null) {
-                this.writer.WriteNewKeyValueLineNoComma(node.getName(), node.getValue(), node.getPrintValueAsString());
-            } else {
-                this.writer.WriteNewKeyValueLine(node.getName(), node.getValue(), node.getPrintValueAsString());
-            } 
-        }
-    }
+    //         if (node.getListValue() != null){
+    //             this.writer.StartUnnamedDepthIncreasingSection('[');
+    //             for (CreatureNode listNode : node.getListValue()) {
+    //                 this.WalkAndWriteFromNode(listNode);
+    //             }
+    //             if (node.getChild() == null){
+    //                 this.writer.EndDepthIncreasingSectionNoComma(']');
+    //             } else {
+    //                 this.writer.EndDepthIncreasingSection(']');
+    //             }
+    //         }
+
+    //         if (node.getObjectValue() != null){
+    //             this.writer.StartUnnamedDepthIncreasingSection('{');
+    //             this.WalkAndWriteFromNode(node.getObjectValue());
+    //             if (node.getChild() == null){
+    //                 this.writer.EndDepthIncreasingSectionNoComma('}');
+    //             } else {
+    //                 this.writer.EndDepthIncreasingSection('}');
+    //             }
+    //         }
+
+    //         node = node.getChild();
+    //     }
+    // }
 
     private void WriteMeta(){
-        this.writer.StartNamedDepthIncreasingSection("_meta", '{');
-        this.writer.StartNamedDepthIncreasingSection("sources", '[');
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection("_meta", '{');
 
-        this.writer.StartUnnamedDepthIncreasingSection('{');
-        this.writer.WriteNewKeyValueLine("json", generateRandomString(5), true);
-        this.writer.WriteNewKeyValueLine("abbreviation", this.inputFile, true);
-        this.writer.WriteNewKeyValueLine("full", this.inputFile, true);
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection("sources", '[');
 
-        this.writer.StartNamedDepthIncreasingSection("authors", '[');
-        this.writer.writeValueLineNoComma("unknown", true);
-        this.writer.EndDepthIncreasingSection(']');
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection(null, '{');
 
-        this.writer.StartNamedDepthIncreasingSection("convertedBy", '[');
-        this.writer.writeValueLineNoComma("auto", true);
-        this.writer.EndDepthIncreasingSection(']');
+        this.writer.startLine();
+        this.writer.writeKeyValue("json", generateRandomString(5), true);
+        this.writer.writeComma();
 
-        this.writer.WriteNewKeyValueLine("version", "1.0", true);
-        this.writer.WriteNewKeyValueLine("url", "", true);
-        this.writer.WriteNewKeyValueLine("targetSchema", "1.0", true);
+        this.writer.startLine();
+        this.writer.writeKeyValue("abbreviation", this.inputFile, true);
+        this.writer.writeComma();
 
-        this.writer.EndDepthIncreasingSectionNoComma('}');
-        this.writer.EndDepthIncreasingSection(']');
+        this.writer.startLine();
+        this.writer.writeKeyValue("full", this.inputFile, true);
+        this.writer.writeComma();
 
-        
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection("authors", '[');
+        this.writer.startLine();
+        this.writer.writeValue("unknown", true);
+        this.writer.startLine();
+        this.writer.endDepthIncreasingSection(']');
+        this.writer.writeComma();
+
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection("convertedBy", '[');
+        this.writer.startLine();
+        this.writer.writeValue("auto", true);
+        this.writer.endDepthIncreasingSection(']');
+        this.writer.writeComma();
+
+        this.writer.startLine();
+        this.writer.writeKeyValue("version", "1.0", true);
+        this.writer.writeComma();
+
+        this.writer.startLine();
+        this.writer.writeKeyValue("url", "", true);
+        this.writer.writeComma();
+
+        this.writer.startLine();
+        this.writer.writeKeyValue("targetSchema", "1.0", true);
+
+        this.writer.endDepthIncreasingSection('}');
+        this.writer.endDepthIncreasingSection(']');
+        this.writer.writeComma();
+
         int time = (int) Instant.now().toEpochMilli();
         String timeValue = String.valueOf(time);
-        this.writer.WriteNewKeyValueLine("dateAdded", timeValue, true);
-        this.writer.WriteNewKeyValueLine("dateLastModified", timeValue, true);
+        this.writer.startLine();
+        this.writer.writeKeyValue("dateAdded", timeValue, true);
+        this.writer.writeComma();
 
-        this.writer.EndDepthIncreasingSection('}');
+        this.writer.startLine();
+        this.writer.writeKeyValue("dateLastModified", timeValue, true);
+
+        this.writer.endDepthIncreasingSection('}');
     }
 
     private String generateRandomString(int length) {
