@@ -58,7 +58,7 @@ public class Parser {
             String[] savelist = line.split("\\s+");
 
             for (int i = 0; i < savelist.length; i += 2) {
-                String key = savelist[i];
+                String key = savelist[i].toLowerCase();
                 String value = savelist[i+1];
                 finalMap.put(key, value);
             }   

@@ -210,12 +210,12 @@ public class CreatureFactory {
                 }
             }
         }
-        creature.insertStringNode("STR", finalStats.get(0), false);
-        creature.insertStringNode("DEX", finalStats.get(1), false);
-        creature.insertStringNode("CON", finalStats.get(2), false);
-        creature.insertStringNode("INT", finalStats.get(3), false);
-        creature.insertStringNode("WIS", finalStats.get(4), false);
-        creature.insertStringNode("CHA", finalStats.get(5), false);
+        creature.insertStringNode("str", finalStats.get(0), false);
+        creature.insertStringNode("dex", finalStats.get(1), false);
+        creature.insertStringNode("con", finalStats.get(2), false);
+        creature.insertStringNode("int", finalStats.get(3), false);
+        creature.insertStringNode("wis", finalStats.get(4), false);
+        creature.insertStringNode("cha", finalStats.get(5), false);
     }
 
     private void ConstructSaveSection(){
@@ -252,8 +252,9 @@ public class CreatureFactory {
         
         // senses and passive
         ArrayList<String> cleanSenses = this.parser.PunctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
-        ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("percep")).collect(Collectors.toList()));
-        String passive = this.parser.RemoveNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("percep")).findFirst().orElse("0"));
+       
+        ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
+        String passive = this.parser.RemoveNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
         creature.instertLiteralList("senses", senses, true);
         creature.insertStringNode("passive", passive, false);
 
