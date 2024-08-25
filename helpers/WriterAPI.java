@@ -23,11 +23,19 @@ public class WriterAPI {
             e.printStackTrace();
         }
     }
-
-    public void WriteNewKeyValueLine(String key, String value, boolean WriteLiteral){
+    public void WriteName(String name){
         try {
             this.StartLine();
-            if (WriteLiteral){
+            this.writer.write(this.formatJSONString(name) + ": ");
+            this.writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void WriteNewKeyValueLine(String key, String value, boolean WriteAsString){
+        try {
+            this.StartLine();
+            if (!WriteAsString){
                 this.writer.write(this.formatJSONString(key) + ": " + value + ",");
             } else {
                 this.writer.write(this.formatJSONString(key) + ": " + this.formatJSONString(value) + ",");
@@ -37,11 +45,24 @@ public class WriterAPI {
             e.printStackTrace();
         }
     }
-
-    public void writeValueLine(String value, boolean WriteLiteral){
+    public void WriteNewKeyValueLineNoComma(String key, String value, boolean WriteAsString){
         try {
             this.StartLine();
-            if (WriteLiteral){
+            if (!WriteAsString){
+                this.writer.write(this.formatJSONString(key) + ": " + value + ",");
+            } else {
+                this.writer.write(this.formatJSONString(key) + ": " + this.formatJSONString(value));
+            }
+            this.writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeValueLine(String value, boolean WriteAsString){
+        try {
+            this.StartLine();
+            if (!WriteAsString){
                 this.writer.write(value + ",");
             } else {
                 this.writer.write(this.formatJSONString(value) + ",");
@@ -51,10 +72,10 @@ public class WriterAPI {
             e.printStackTrace();
         }
     }
-    public void writeValueLineNoComma(String value, boolean WriteLiteral){
+    public void writeValueLineNoComma(String value, boolean WriteAsString){
         try {
             this.StartLine();
-            if (WriteLiteral){
+            if (!WriteAsString){
                 this.writer.write(value);
             } else {
                 this.writer.write(this.formatJSONString(value));

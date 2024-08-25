@@ -8,6 +8,13 @@ public class CreatureManager {
     CreatureNode head = null;
     CreatureNode tail = null; 
 
+    public CreatureNode getPointer(){
+        return head;
+    }
+    public void moveointer(){
+        head = head.child;
+    }
+
     public void insertCreatedNode(String name, CreatureNode node){
         CreatureNode owner = new CreatureNode(name, node);
         this.insertAtEnd(owner);

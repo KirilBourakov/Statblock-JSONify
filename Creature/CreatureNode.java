@@ -28,9 +28,23 @@ public class CreatureNode {
     public void setChild(CreatureNode newChild){
         this.child = newChild;
     }
-
+    public CreatureNode getChild(){
+        return this.child;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public String getValue(){
+        return this.value;
+    }
     public CreatureNode getObjectValue(){
-        return objectValue;
+        return this.objectValue;
+    }
+    public ArrayList<CreatureNode> getListValue(){
+        return this.listValue;
+    }
+    public boolean getPrintValueAsString(){
+        return this.printValueAsString;
     }
 
     public boolean isValid(){

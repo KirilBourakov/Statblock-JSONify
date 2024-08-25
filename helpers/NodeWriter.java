@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import Creature.CreatureManager;
+import Creature.CreatureNode;
 
 public class NodeWriter {
     private CreatureManager manager;
@@ -25,6 +26,10 @@ public class NodeWriter {
         this.manager = manager;
         this.writer = new WriterAPI(outputFile);
     }
+    public void start(){
+        this.writer.StartUnnamedDepthIncreasingSection('{');
+        this.WriteMeta();
+    }
     public void finish(){
         this.writer.Close();
     }
@@ -33,10 +38,40 @@ public class NodeWriter {
     }
 
     public void WriteCreature(){
-        if (!haveWrittenMeta){
-            System.out.println("WRITING");
-            this.WriteMeta();
-            haveWrittenMeta = true;
+        CreatureNode node = manager.getPointer();
+        this.WalkAndWriteFromNode(node);
+        
+    }
+    private void WalkAndWriteFromNode(CreatureNode node){
+        while (node != null) {
+            if (node.getName() != null) {
+                this.writer.WriteName(node.getName());
+            }
+            node = node.getChild();
+        }
+    }
+
+    private void handleObject(CreatureNode node){
+        if (node.getName() == null){
+            this.writer.StartUnnamedDepthIncreasingSection('{');
+        } else {
+            this.writer.StartNamedDepthIncreasingSection(node.getName(), '{');
+        }
+    }
+
+    private void handleLiteral(CreatureNode node){
+        if (node.getName() == null) {
+            if (node.getChild() == null) {
+                this.writer.writeValueLineNoComma(node.getValue(), node.getPrintValueAsString());
+            } else {
+                this.writer.writeValueLine(node.getValue(), node.getPrintValueAsString());
+            }
+        } else {
+            if (node.getChild() == null) {
+                this.writer.WriteNewKeyValueLineNoComma(node.getName(), node.getValue(), node.getPrintValueAsString());
+            } else {
+                this.writer.WriteNewKeyValueLine(node.getName(), node.getValue(), node.getPrintValueAsString());
+            } 
         }
     }
 
@@ -45,21 +80,21 @@ public class NodeWriter {
         this.writer.StartNamedDepthIncreasingSection("sources", '[');
 
         this.writer.StartUnnamedDepthIncreasingSection('{');
-        this.writer.WriteNewKeyValueLine("json", generateRandomString(5), false);
-        this.writer.WriteNewKeyValueLine("abbreviation", this.inputFile, false);
-        this.writer.WriteNewKeyValueLine("full", this.inputFile, false);
+        this.writer.WriteNewKeyValueLine("json", generateRandomString(5), true);
+        this.writer.WriteNewKeyValueLine("abbreviation", this.inputFile, true);
+        this.writer.WriteNewKeyValueLine("full", this.inputFile, true);
 
         this.writer.StartNamedDepthIncreasingSection("authors", '[');
-        this.writer.writeValueLineNoComma("unknown", false);
+        this.writer.writeValueLineNoComma("unknown", true);
         this.writer.EndDepthIncreasingSection(']');
 
         this.writer.StartNamedDepthIncreasingSection("convertedBy", '[');
-        this.writer.writeValueLineNoComma("auto", false);
+        this.writer.writeValueLineNoComma("auto", true);
         this.writer.EndDepthIncreasingSection(']');
 
-        this.writer.WriteNewKeyValueLine("version", "1.0", false);
-        this.writer.WriteNewKeyValueLine("url", "", false);
-        this.writer.WriteNewKeyValueLine("targetSchema", "1.0", false);
+        this.writer.WriteNewKeyValueLine("version", "1.0", true);
+        this.writer.WriteNewKeyValueLine("url", "", true);
+        this.writer.WriteNewKeyValueLine("targetSchema", "1.0", true);
 
         this.writer.EndDepthIncreasingSectionNoComma('}');
         this.writer.EndDepthIncreasingSection(']');

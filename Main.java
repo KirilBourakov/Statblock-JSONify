@@ -19,6 +19,7 @@ public class Main{
             File file = new File(args[0]);
             Scanner reader = new Scanner(file);
             NodeWriter writer = new NodeWriter(args[1], args[0], null);
+            writer.start();
             while (reader.hasNextLine()) {
                 line = reader.nextLine().strip();
                 UpdateReadingStatus();
@@ -29,7 +30,7 @@ public class Main{
                     Creature.CreatureManager newCreature = CurrentCreature.Construct();
                     writer.setManager(newCreature);
                     writer.WriteCreature();
-                    writer.finish();
+                    
                     finishedReading = false;
                     CurrentCreature = new Creature.CreatureFactory();
                 }
@@ -41,10 +42,7 @@ public class Main{
                 writer.WriteCreature();
                 writer.finish();
             }
-            // writer = new JSONwriter(Creatures, args[1], file.getName().replaceFirst("[.][^.]+$", ""));
-            // writer.WriteCreatures();
-
-            System.out.println(Creatures);
+            writer.finish();
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("No such file exists");
