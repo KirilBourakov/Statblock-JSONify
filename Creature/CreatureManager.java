@@ -50,7 +50,7 @@ public class CreatureManager {
                 entries.setChild(sort);
                 name.setChild(entries);
 
-                traitsForKey.add(entries);
+                traitsForKey.add(name);
                 i++;
             }   
 
