@@ -29,6 +29,10 @@ public class CreatureNode {
         this.child = newChild;
     }
 
+    public CreatureNode getObjectValue(){
+        return objectValue;
+    }
+
     public boolean isValid(){
         int count = 0;
         if (this.value != null){
@@ -69,7 +73,7 @@ public class CreatureNode {
         if (type == "literal"){
             return this.name + ": " + this.value;
         } else if (type == "object"){
-            return this.name + ": {" + this.objectValue + "} (children not shown)";
+            return this.name + ":";
         } else if (type == "list"){
             return this.name + ": " + this.listValue;
         }

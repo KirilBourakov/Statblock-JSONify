@@ -72,7 +72,7 @@ public class CreatureFactory {
         this.ConstructStats();
         this.ConstructSaveSection();
         this.ConstructTraits();
-        creature.print();
+        creature.print(null, 0);
 
         return this.creature;
     }

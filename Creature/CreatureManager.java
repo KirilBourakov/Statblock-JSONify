@@ -90,12 +90,22 @@ public class CreatureManager {
         }
     }
 
-    public void print(){
-        System.out.println("----------------");
-        CreatureNode current = this.head;
-        while (current != null ) {
-            System.out.println(current);
-            current = current.child;
+    public void print(CreatureNode pointer, int depth){
+        if (pointer == null){
+            pointer = this.head;
+        }
+        if (depth == 0){
+            System.out.println("-------");
+        }
+        while (pointer != null ) {
+            for (int i = 0; i < depth; i++) {
+                System.out.print("  ");
+            }
+            System.out.println(pointer);
+            if (pointer.getType().equals("object")) {
+                this.print(pointer.getObjectValue(), depth+1);
+            }
+            pointer = pointer.child;
         }   
     }
 }
