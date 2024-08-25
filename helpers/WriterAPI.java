@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class WriterAPI {
-    FileWriter writer;
+    public FileWriter writer;
     private int depth;
 
     public WriterAPI(String outputString){

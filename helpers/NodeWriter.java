@@ -1,10 +1,6 @@
 package helpers;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import Creature.CreatureManager;
@@ -12,7 +8,7 @@ import Creature.CreatureNode;
 
 public class NodeWriter {
     private CreatureManager manager;
-    private boolean haveWrittenMeta = false;
+    private boolean haveWrittenOne = false;
 
     private WriterAPI writer;
     private String outputFile;
@@ -29,8 +25,12 @@ public class NodeWriter {
     public void start(){
         this.writer.startDepthIncreasingSection(null, '{');
         this.WriteMeta();
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection("monster", '[');
     }
     public void finish(){
+        this.writer.endDepthIncreasingSection(']');
+        this.writer.endDepthIncreasingSection('}');
         this.writer.Close();
     }
     public void setManager(CreatureManager manager){
@@ -39,8 +39,17 @@ public class NodeWriter {
 
     public void WriteCreature(){
         CreatureNode node = manager.getPointer();
+
+        if (haveWrittenOne){
+            this.writer.writeComma();
+        }
+
+        this.writer.startLine();
+        this.writer.startDepthIncreasingSection(null, '{');
         this.WalkAndWriteFromNode(node);
-        
+        this.writer.endDepthIncreasingSection('}');
+
+        this.haveWrittenOne = true;
     }
     private void WalkAndWriteFromNode(CreatureNode node){
         // TODO: ADD support for writing stuff like page and source tag on the monster

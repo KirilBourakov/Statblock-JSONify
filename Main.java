@@ -38,7 +38,6 @@ public class Main{
                 Creature.CreatureManager newCreature = CurrentCreature.Construct();
                 writer.setManager(newCreature);
                 writer.WriteCreature();
-                writer.finish();
             }
             writer.finish();
             reader.close();
