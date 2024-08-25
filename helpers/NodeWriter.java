@@ -39,45 +39,26 @@ public class NodeWriter {
 
     public void WriteCreature(){
         CreatureNode node = manager.getPointer();
-        // this.WalkAndWriteFromNode(node);
+        this.WalkAndWriteFromNode(node);
         
     }
-    // private void WalkAndWriteFromNode(CreatureNode node){
-    //     while (node != null) {
-    //         this.writer.startLine();
-    //         if (node.getName() != null) {
-    //             this.writer.WriteName(node.getName());
-    //         }
+    private void WalkAndWriteFromNode(CreatureNode node){
+        while (node != null) {
+            this.writer.startLine();
+            if (node.getName() != null) {
+                this.writer.WriteName(node.getName());
+            }
 
-    //         if (node.getValue() != null){
-    //             this.writer.writeValue(node.getValue(), node.getPrintValueAsString());
-    //         }
+            if (node.getValue() != null){
+                this.writer.writeValue(node.getValue(), node.getPrintValueAsString());
+                if (node.getChild() != null){
+                    this.writer.writeComma();
+                }
+            }
 
-    //         if (node.getListValue() != null){
-    //             this.writer.StartUnnamedDepthIncreasingSection('[');
-    //             for (CreatureNode listNode : node.getListValue()) {
-    //                 this.WalkAndWriteFromNode(listNode);
-    //             }
-    //             if (node.getChild() == null){
-    //                 this.writer.EndDepthIncreasingSectionNoComma(']');
-    //             } else {
-    //                 this.writer.EndDepthIncreasingSection(']');
-    //             }
-    //         }
-
-    //         if (node.getObjectValue() != null){
-    //             this.writer.StartUnnamedDepthIncreasingSection('{');
-    //             this.WalkAndWriteFromNode(node.getObjectValue());
-    //             if (node.getChild() == null){
-    //                 this.writer.EndDepthIncreasingSectionNoComma('}');
-    //             } else {
-    //                 this.writer.EndDepthIncreasingSection('}');
-    //             }
-    //         }
-
-    //         node = node.getChild();
-    //     }
-    // }
+            node = node.getChild();
+        }
+    }
 
     private void WriteMeta(){
         this.writer.startLine();
