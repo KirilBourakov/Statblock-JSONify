@@ -1,60 +1,64 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import helpers.NodeWriter;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
-public class Main{
-    private static Boolean ReadingStatblock = false;
-    private static Boolean finishedReading = false;
-    private static String line = "";
-    private static String lastline = "";
-    private static Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
+import helpers.Runner;
+
+public class Main {
+    static JFrame frame = new JFrame();;
+    static HashMap<String, JTextField> textfields = new HashMap<>();
+    static Runner runner = new Runner();
 
     public static void main(String[] args){
-        try {
-            File file = new File(args[0]);
-            Scanner reader = new Scanner(file);
-            NodeWriter writer = new NodeWriter(args[1], file.getName(), null);
-            writer.start();
-            while (reader.hasNextLine()) {
-                line = reader.nextLine().strip();
-                UpdateReadingStatus();
-                if (ReadingStatblock){
-                    CurrentCreature.addtoSection(line);
-                }
-                if (finishedReading){
-                    Creature.CreatureManager newCreature = CurrentCreature.Construct();
-                    writer.setManager(newCreature);
-                    writer.WriteCreature();
-                    
-                    finishedReading = false;
-                    CurrentCreature = new Creature.CreatureFactory();
-                }
-                lastline = line;
-            }
-            if (CurrentCreature.HasInformation()){
-                Creature.CreatureManager newCreature = CurrentCreature.Construct();
-                writer.setManager(newCreature);
-                writer.WriteCreature();
-            }
-            writer.finish();
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No such file exists");
-            e.printStackTrace();
-        }
+        createGUI();
     }
 
-    private static void UpdateReadingStatus(){
-        if (line.length() > 1 && lastline.equals("___") && line.charAt(0) == '>'){
-            ReadingStatblock = true;
-        }
-        boolean endOfStatBlockFound = (line.length() == 0 || line.charAt(0) != '>');
-        if (ReadingStatblock && endOfStatBlockFound){
-            ReadingStatblock = false;
-            finishedReading = true;
-        }
+    private static void createGUI(){
+        frame.setLayout(new GridLayout(3,1));
+
+        CreateFilePathInput("Input Filename");
+        CreateFilePathInput("Output Filename");
+        CreateSubmitButton();
+        
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private static void CreateFilePathInput(String labelText){
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(0,30,10,30));
+        inputPanel.setLayout(new GridLayout(1,1));
+        
+        JLabel label = new JLabel(labelText);
+        inputPanel.add(label);
+
+        JTextField inputFile = new JTextField(20);
+        inputPanel.add(inputFile);
+
+        textfields.put(labelText, inputFile);
+        frame.add(inputPanel);
+    }
+
+    private static void CreateSubmitButton(){
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                runner.runLogic(textfields.get("Input Filename").getText(), textfields.get("Output Filename").getText());
+            }
+        });
+
+        frame.add(submit);
     }
 }
