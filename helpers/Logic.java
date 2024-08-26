@@ -4,14 +4,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Runner{
+public class Logic{
     private Boolean ReadingStatblock = false;
     private Boolean finishedReading = false;
     private String line = "";
     private String lastline = "";
     private Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
 
-    public void runLogic(String inputFile, String outputFile){
+    public boolean txtToJSON(String inputFile, String outputFile){
         try {
             File file = new File(inputFile);
             Scanner reader = new Scanner(file);
@@ -40,9 +40,11 @@ public class Runner{
             }
             writer.finish();
             reader.close();
+            return true;
         } catch (FileNotFoundException e) {
             System.out.println("No such file exists");
             e.printStackTrace();
+            return false;
         }
     }
 

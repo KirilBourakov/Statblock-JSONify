@@ -9,14 +9,15 @@ import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 import java.util.HashMap;
 
-import helpers.Runner;
+import helpers.Logic;
 
 public class Main {
     static JFrame frame = new JFrame();;
     static HashMap<String, JTextField> textfields = new HashMap<>();
-    static Runner runner = new Runner();
+    static Logic logic = new Logic();
 
     public static void main(String[] args){
         createGUI();
@@ -32,6 +33,7 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -55,10 +57,19 @@ public class Main {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                runner.runLogic(textfields.get("Input Filename").getText(), textfields.get("Output Filename").getText());
+                boolean response = logic.txtToJSON(textfields.get("Input Filename").getText(), textfields.get("Output Filename").getText());
+                if (response) {
+                    JOptionPane.showMessageDialog(frame, "Success.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Something went wrong.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
-        frame.add(submit);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(submit);
+
+        frame.add(buttonPanel);
     }
 }
