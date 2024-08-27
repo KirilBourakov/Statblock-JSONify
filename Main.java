@@ -1,6 +1,7 @@
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -52,6 +53,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -67,7 +69,8 @@ public class Main {
         inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         inputPanel.add(inputFile);
 
-        JButton explorerButton = new JButton("Browse");
+        ImageIcon folder = new ImageIcon("assets/folder.png");
+        JButton explorerButton = new JButton(folder);
         explorerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
