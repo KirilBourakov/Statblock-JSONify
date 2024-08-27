@@ -7,11 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class scriptRunner {
-    private String pathToPython;
+public class OcrController {
+    private static String pathToPython;
 
-    public void read(){
-        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "ocr.py");
+    public static void read(String filepath){
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "ocr.py", filepath);
 
         try {
             Process process = processBuilder.start();
@@ -29,7 +29,7 @@ public class scriptRunner {
         }
     }
 
-    public void setup(){
+    public static void setup(){
         ProcessBuilder processBuilder = new ProcessBuilder("python", "setup_script.py");
         try {
             Process process = processBuilder.start();
@@ -48,7 +48,7 @@ public class scriptRunner {
         }
     }
 
-    public boolean isFile(String pathString) {
+    private static boolean isFile(String pathString) {
         Path path = Paths.get(pathString);
         return Files.isRegularFile(path);
     }
