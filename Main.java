@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridLayout;
@@ -25,12 +27,22 @@ import java.util.HashMap;
 import helpers.Logic;
 
 public class Main {
-    static JFrame frame = new JFrame();
+    static JFrame frame;
     static HashMap<String, JTextField> textfields = new HashMap<>();
     static Logic logic = new Logic();
-    static JFileChooser fileChooser = new JFileChooser(".");
+    static JFileChooser fileChooser;
 
     public static void main(String[] args){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        frame = new JFrame();
+        fileChooser = new JFileChooser(".");
+        
         createGUI();
     }
 
