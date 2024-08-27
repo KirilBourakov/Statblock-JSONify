@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import helpers.writer.NodeWriter;
+
 public class Logic{
     private Boolean ReadingStatblock = false;
     private Boolean finishedReading = false;
