@@ -1,4 +1,4 @@
-package helpers;
+package helpers.writer;
 
 import java.time.Instant;
 import java.util.Random;
