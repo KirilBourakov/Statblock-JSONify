@@ -9,5 +9,6 @@ TODO:
  - Use proper upper and lowercasing.
  - add ability to handle several .txt at the same time
  - add updating of module is given an existing json target as output
+ - handle errors in OCR
 
 Assets taken from [Iconpacks.net](https://www.iconpacks.net/)
