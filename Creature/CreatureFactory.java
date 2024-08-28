@@ -66,13 +66,41 @@ public class CreatureFactory {
         }
     }
 
+    public void addByAssumedSection(String line, String section){
+        switch (section) {
+            case "headerSection":
+                headerSection.add(line);
+                break;
+            case "hpSection":
+                hpSection.add(line);
+                break;
+            case "statsSection":
+                statsSection.add(line);
+                break;
+            case "saveSection":
+                saveSection.add(line);
+                break;
+            case "traitsSection":
+                traitsSection.add(line);
+                break;
+            default:
+                break;
+        }
+    }
+
     public CreatureManager Construct(){
+        // System.out.println(this.headerSection);
+        // System.out.println(this.hpSection);
+        // System.out.println(this.statsSection);
+        // System.out.println(this.saveSection);
+        // System.out.println(this.traitsSection);
+
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
         this.ConstructSaveSection();
         this.ConstructTraits();
-        creature.print(null, 0);
+        // creature.print(null, 0);
 
         return this.creature;
     }
@@ -80,8 +108,9 @@ public class CreatureFactory {
     private void ConstructHeaders(){
         ArrayList<String> finalHeaderList = new ArrayList<>();
         for (String header : headerSection) {
-            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip());
+            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip().toLowerCase());
         }
+        System.out.println(finalHeaderList);
         String unparsedType = finalHeaderList.get(1);
         String unparsedTypeWithoutAlignment = "";
         String foundAlignment = "";
@@ -127,7 +156,7 @@ public class CreatureFactory {
         }
 
         // insert
-        creature.insertStringNode("name", finalMap.get("name"), true);
+        creature.insertStringNode("name", this.parser.toTitleCase(finalMap.get("name")), true);
         creature.instertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
         creature.instertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
 
@@ -182,33 +211,48 @@ public class CreatureFactory {
         HashMap<String, String> speedMap = new HashMap<>();
         String speedType = "walk";
         for (String speedPortion : unparsedSpeed) {
-            if(!this.parser.ReplaceNonAlphaNumeric(speedPortion).equalsIgnoreCase("ft")){
-                if (this.parser.isNumeric(speedPortion)){
-                    speedMap.put(speedType, this.parser.ReplaceNonAlphaNumeric(speedPortion));
-                } else {
+            speedPortion = this.parser.ReplaceNonAlphaNumeric(speedPortion).strip();
+            if(!speedPortion.equalsIgnoreCase("ft")){
+                if (this.parser.isNumeric(speedPortion.replace("ft", ""))){
+                    speedMap.put(speedType, this.parser.RemoveNonNumeric(speedPortion));
+                } 
+                //
+                else if(!speedPortion.equalsIgnoreCase("ft")){
                     speedType = speedPortion;
                 }
             }
         }
 
-        creature.insertFromHashMap("speed", speedMap, true);
+        creature.insertFromHashMap("speed", speedMap, false);
     }
 
     private void ConstructStats(){
-        String statsStr = statsSection.get(2);
+        String statsStr = statsSection.get(statsSection.size()-1);
+        
         String[] parsedStats = statsStr.split("\\)");
+
         ArrayList<String> finalStats = new ArrayList<>();
-        for (String stat : parsedStats){
-            stat = stat.replaceAll("\\|", "");
-            if (stat.length() > 1) {
-                stat = stat.substring(0, stat.indexOf('(')).replaceAll(" ", "");
-                try {
-                    finalStats.add(stat);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input: " + e.getMessage());
+        try{
+            for (String stat : parsedStats){
+                stat = stat.replaceAll("\\|", "");
+                if (!stat.isEmpty() && stat.contains("(")) {
+                    int indexOfParen = stat.indexOf('(');
+                    if (indexOfParen > 0) {
+                        stat = stat.substring(0, indexOfParen).replaceAll(" ", "").trim();
+                        finalStats.add(stat);
+                    }
                 }
             }
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e){
+            finalStats = this.parser.handleMalformedStats(statsStr);
         }
+        if (finalStats.size() != 6) {
+            finalStats = this.parser.handleMalformedStats(statsStr);
+        }
+
+        System.out.println("________________________");
+        System.out.println(finalStats);
+        
         creature.insertStringNode("str", finalStats.get(0), false);
         creature.insertStringNode("dex", finalStats.get(1), false);
         creature.insertStringNode("con", finalStats.get(2), false);
