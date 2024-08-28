@@ -3,6 +3,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,10 +29,13 @@ import helpers.Logic;
 
 public class Main {
     static JFrame frame;
+    static JFileChooser fileChooser;
+    static JCheckBox OCRBox;
+    static JLabel converstionStatus;
+
     static HashMap<String, JTextField> textfields = new HashMap<>();
     static Logic logic = new Logic();
-    static JFileChooser fileChooser;
-
+    
     public static void main(String[] args){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -47,7 +51,7 @@ public class Main {
     }
 
     private static void createGUI(){
-        frame.setLayout(new GridLayout(5,1));
+        frame.setLayout(new GridLayout(0,1));
 
         createFilePathInput("Input file", "file", "input");
         JLabel inputDisclaimer = new JLabel("The input file should be a .txt, with statblocks using the homebrewery markdown style");
@@ -59,9 +63,14 @@ public class Main {
         outputDisclaimer.setBorder(new EmptyBorder(0, 10, 10, 10));
         frame.add(outputDisclaimer);
 
-        createSubmitButton();
-        
+        OCRBox = new JCheckBox("Use OCR");
+        frame.add(OCRBox);
 
+        createSubmitButton();
+
+        converstionStatus = new JLabel();
+        frame.add(converstionStatus);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
@@ -127,7 +136,15 @@ public class Main {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean response = logic.txtToJSON(textfields.get("input").getText(), textfields.get("output").getText());
+                String inputFile = textfields.get("input").getText();
+                String outputFile = textfields.get("output").getText();
+                boolean response;
+                if (OCRBox.isSelected()){
+                    response = logic.imgToJSON(inputFile, outputFile, converstionStatus);
+                } else {
+                    response = logic.txtToJSON(inputFile, outputFile);
+                }
+                
                 if (response) {
                     JOptionPane.showMessageDialog(frame, "Success.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 } else {

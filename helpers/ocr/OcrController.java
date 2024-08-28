@@ -11,7 +11,8 @@ public class OcrController {
     private static String pathToPython;
 
     public static void read(String filepath){
-        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "ocr.py", filepath);
+        System.out.println(pathToPython);
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/reader_script.py", filepath);
 
         try {
             Process process = processBuilder.start();
@@ -22,6 +23,7 @@ public class OcrController {
                 System.out.println(line);
             }
             int exitCode = process.waitFor();
+            System.out.println("Exit Code: " + exitCode);
             // TODO: handle exitCode
             
         } catch (IOException | InterruptedException e) {
@@ -30,19 +32,21 @@ public class OcrController {
     }
 
     public static void setup(){
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "setup_script.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "helpers/ocr/setup_script.py");
+
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.toLowerCase().indexOf("error") != -1 && isFile(line)) {
+                if (isFile(line)) {
                     pathToPython = line;
                 }
-                // TODO: handle errors
             }
-            int exitCode = process.waitFor();
-            // TODO: handle exitCode
+            
+            // Wait for the process to complete
+            // TODO: handle errors, and clean up how python treats them
+            int exitCode = process.waitFor();    
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

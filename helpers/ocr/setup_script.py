@@ -16,7 +16,7 @@ def setup(venv_dir: str, packages: list):
     except:
         print("ERROR, sys")
         return
-    
+
     # check if venv exists
     def is_venv_exists(venv_dir):
         return os.path.isdir(venv_dir) and os.path.isdir(os.path.join(venv_dir, 'Scripts' if os.name == 'nt' else 'bin'))
@@ -31,7 +31,7 @@ def setup(venv_dir: str, packages: list):
         except subprocess.CalledProcessError as e:
             print(f"ERROR, checking installed packages: {e}")
             return False
-    
+
     # create venv
     if not is_venv_exists(venv_dir):
         subprocess.check_call([sys.executable, '-m', 'venv', venv_dir])
@@ -45,4 +45,4 @@ def setup(venv_dir: str, packages: list):
     print(python_executable)
 
 if __name__ == "__main__":
-    setup("ocr_venv", ["pytesseract", "PIL"])
+    setup("userInfo/ocr_venv", ["pytesseract", "pillow"])

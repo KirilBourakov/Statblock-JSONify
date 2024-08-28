@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JLabel;
+
 import helpers.writer.NodeWriter;
+import helpers.ocr.OcrController;
 
 public class Logic{
     private Boolean ReadingStatblock = false;
@@ -48,6 +51,14 @@ public class Logic{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean imgToJSON(String inputFile, String outputFile, JLabel converstionStatus){
+        converstionStatus.setText("Preparing OCR script...");
+        OcrController.setup();
+        converstionStatus.setText("Converting File...");
+        OcrController.read(inputFile);
+        return true;
     }
 
     private void UpdateReadingStatus(){
