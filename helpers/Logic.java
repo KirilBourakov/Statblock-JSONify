@@ -24,7 +24,7 @@ public class Logic{
             writer.start();
             while (reader.hasNextLine()) {
                 line = reader.nextLine().strip();
-                UpdateReadingStatus();
+                textToJSONUpdateReadingStatus();
                 if (ReadingStatblock){
                     CurrentCreature.addtoSection(line);
                 }
@@ -53,15 +53,7 @@ public class Logic{
         }
     }
 
-    public boolean imgToJSON(String inputFile, String outputFile, JLabel converstionStatus){
-        converstionStatus.setText("Preparing OCR script...");
-        OcrController.setup();
-        converstionStatus.setText("Converting File...");
-        OcrController.read(inputFile);
-        return true;
-    }
-
-    private void UpdateReadingStatus(){
+    private void textToJSONUpdateReadingStatus(){
         if (line.length() > 1 && lastline.equals("___") && line.charAt(0) == '>'){
             ReadingStatblock = true;
         }
@@ -70,5 +62,68 @@ public class Logic{
             ReadingStatblock = false;
             finishedReading = true;
         }
+    }
+
+    public boolean imgToJSON(String inputFile, String outputFile, JLabel converstionStatus){
+        converstionStatus.setText("Preparing OCR script...");
+        OcrController.setup();
+        converstionStatus.setText("Converting File...");
+        ArrayList<String> lines = OcrController.read(inputFile);
+
+        int lineCount = 0;
+        boolean sawStats = false;
+        boolean addedStats = false;
+        boolean addedCR = false;
+        for (String line : lines) {
+            line = line.strip();
+            if (!line.isBlank()) {
+                // first three lines of a statblock should be header section
+                if (lineCount < 2) {
+                    CurrentCreature.addByAssumedSection(line, "headerSection");
+                } 
+                // next three lines of a statblock should be hpSection
+                else if (lineCount < 5) {
+                    if (line.toLowerCase().contains("speed")) {
+                        line = line.toLowerCase().replace("speed", "**speed**");
+                    }
+                    CurrentCreature.addByAssumedSection(line, "hpSection");
+                }   
+
+                // add statsection, which should be one line after hpSection
+                else if (lineCount < 7){
+                    CurrentCreature.addByAssumedSection(line, "statsSection");
+                    addedStats = true;
+                }
+
+                // after addingstats, add to saveSection until we see challange rating
+                else if (addedStats && !addedCR){
+                    CurrentCreature.addByAssumedSection(line, "saveSection");
+
+                    if (line.toLowerCase().contains("challenge")) {
+                        addedCR = true;
+                    }
+                }
+
+                // everything past cr is a trait
+                else {
+                    CurrentCreature.addByAssumedSection(line, "traitsSection");
+                }
+
+                lineCount++;
+            }
+        }
+
+        File file = new File(inputFile);
+        NodeWriter writer = new NodeWriter(outputFile, file.getName(), null);
+        Creature.CreatureManager newCreature = CurrentCreature.Construct();
+
+
+        writer.setManager(newCreature);
+
+        writer.start();
+        writer.WriteCreature();
+        writer.finish();
+
+        return true;
     }
 }

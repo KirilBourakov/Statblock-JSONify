@@ -6,29 +6,31 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class OcrController {
     private static String pathToPython;
 
-    public static void read(String filepath){
+    public static ArrayList<String> read(String filepath){
         System.out.println(pathToPython);
         ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/scripts/reader.py", filepath);
 
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            // TODO handle lines. Have script write into a text?
+            
             String line;
+            ArrayList<String> lines = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                lines.add(line);
             }
             int exitCode = process.waitFor();
-            System.out.println("Exit Code: " + exitCode);
-            // TODO: handle exitCode
+            return lines;
             
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return new ArrayList<>();
     }
 
     public static void setup(){

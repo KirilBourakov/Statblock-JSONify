@@ -66,7 +66,35 @@ public class CreatureFactory {
         }
     }
 
+    public void addByAssumedSection(String line, String section){
+        switch (section) {
+            case "headerSection":
+                headerSection.add(line);
+                break;
+            case "hpSection":
+                hpSection.add(line);
+                break;
+            case "statsSection":
+                statsSection.add(line);
+                break;
+            case "saveSection":
+                saveSection.add(line);
+                break;
+            case "traitsSection":
+                traitsSection.add(line);
+                break;
+            default:
+                break;
+        }
+    }
+
     public CreatureManager Construct(){
+        System.out.println(this.headerSection);
+        System.out.println(this.hpSection);
+        System.out.println(this.statsSection);
+        System.out.println(this.saveSection);
+        System.out.println(this.traitsSection);
+
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
@@ -182,20 +210,25 @@ public class CreatureFactory {
         HashMap<String, String> speedMap = new HashMap<>();
         String speedType = "walk";
         for (String speedPortion : unparsedSpeed) {
-            if(!this.parser.ReplaceNonAlphaNumeric(speedPortion).equalsIgnoreCase("ft")){
-                if (this.parser.isNumeric(speedPortion)){
-                    speedMap.put(speedType, this.parser.ReplaceNonAlphaNumeric(speedPortion));
-                } else {
+            speedPortion = this.parser.ReplaceNonAlphaNumeric(speedPortion).strip();
+            if(!speedPortion.equalsIgnoreCase("ft")){
+                if (this.parser.isNumeric(speedPortion.replace("ft", ""))){
+                    System.out.println("size " + speedPortion);
+                    speedMap.put(speedType, this.parser.RemoveNonNumeric(speedPortion));
+                } 
+                //
+                else if(!speedPortion.equalsIgnoreCase("ft")){
+                    System.out.println("type " + speedPortion);
                     speedType = speedPortion;
                 }
             }
         }
 
-        creature.insertFromHashMap("speed", speedMap, true);
+        creature.insertFromHashMap("speed", speedMap, false);
     }
 
     private void ConstructStats(){
-        String statsStr = statsSection.get(2);
+        String statsStr = statsSection.get(statsSection.size()-1);
         String[] parsedStats = statsStr.split("\\)");
         ArrayList<String> finalStats = new ArrayList<>();
         for (String stat : parsedStats){

@@ -20,9 +20,9 @@ public class NodeWriter {
         this.outputFile = outputFile;
         this.inputFile = inputFile;
         this.manager = manager;
-        this.writer = new WriterAPI(outputFile);
     }
     public void start(){
+        this.writer = new WriterAPI(this.outputFile);
         this.writer.startDepthIncreasingSection(null, '{');
         this.WriteMeta();
         this.writer.startLine();
