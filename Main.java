@@ -53,8 +53,8 @@ public class Main {
     private static void createGUI(){
         frame.setLayout(new GridLayout(0,1));
 
-        createFilePathInput("Input file", "file", "input");
-        JLabel inputDisclaimer = new JLabel("The input file should be a .txt, with statblocks using the homebrewery markdown style");
+        createFilePathInput("Input", "both", "input");
+        JLabel inputDisclaimer = new JLabel("The input can be either a folder of a file. Files should be a .txt, or .jpg/.png using OCR. Folder inputs will try to convert all files within the folder.");
         inputDisclaimer.setBorder(new EmptyBorder(0, 10, 10, 10));
         frame.add(inputDisclaimer);
 
@@ -136,13 +136,13 @@ public class Main {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String inputFile = textfields.get("input").getText();
+                String input = textfields.get("input").getText();
                 String outputFile = textfields.get("output").getText();
                 boolean response;
                 if (OCRBox.isSelected()){
-                    response = logic.imgToJSON(inputFile, outputFile, converstionStatus);
+                    response = logic.imgToJSON(input, outputFile, converstionStatus);
                 } else {
-                    response = logic.txtToJSON(inputFile, outputFile);
+                    response = logic.txtToJSON(input, outputFile);
                 }
                 
                 if (response) {
