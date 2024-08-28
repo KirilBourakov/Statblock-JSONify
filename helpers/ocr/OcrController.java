@@ -12,7 +12,7 @@ public class OcrController {
 
     public static void read(String filepath){
         System.out.println(pathToPython);
-        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/reader_script.py", filepath);
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/scripts/reader.py", filepath);
 
         try {
             Process process = processBuilder.start();
@@ -32,7 +32,7 @@ public class OcrController {
     }
 
     public static void setup(){
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "helpers/ocr/setup_script.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "helpers/ocr/scripts/setup.py");
 
         try {
             Process process = processBuilder.start();
