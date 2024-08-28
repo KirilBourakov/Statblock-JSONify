@@ -106,6 +106,24 @@ public class Parser {
         return letters;
     }
 
+    public String toTitleCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        String[] words = input.split("\\s+");
+
+        String titlecased = "";
+        for (String word : words) {
+            if (word.length() > 0) {
+                String titleCasedWord = word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+                titlecased = titlecased + titleCasedWord + " ";
+            }
+        }
+
+        return titlecased.toString().trim();
+    }
+
     private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
         input = input.strip(); 

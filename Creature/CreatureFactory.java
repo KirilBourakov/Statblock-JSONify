@@ -108,8 +108,9 @@ public class CreatureFactory {
     private void ConstructHeaders(){
         ArrayList<String> finalHeaderList = new ArrayList<>();
         for (String header : headerSection) {
-            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip());
+            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip().toLowerCase());
         }
+        System.out.println(finalHeaderList);
         String unparsedType = finalHeaderList.get(1);
         String unparsedTypeWithoutAlignment = "";
         String foundAlignment = "";
@@ -155,7 +156,7 @@ public class CreatureFactory {
         }
 
         // insert
-        creature.insertStringNode("name", finalMap.get("name"), true);
+        creature.insertStringNode("name", this.parser.toTitleCase(finalMap.get("name")), true);
         creature.instertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
         creature.instertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
 
