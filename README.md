@@ -7,5 +7,7 @@ TODO:
  - add tests
  - Use static where it should be used
  - Use proper upper and lowercasing.
+ - add ability to handle several .txt at the same time
+ - add updating of module is given an existing json target as output
 
 Assets taken from [Iconpacks.net](https://www.iconpacks.net/)
