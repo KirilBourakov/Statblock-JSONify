@@ -12,7 +12,6 @@ public class OcrController {
     private static String pathToPython;
 
     public static ArrayList<String> read(String filepath){
-        System.out.println(pathToPython);
         ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/scripts/reader.py", filepath);
 
         try {

@@ -89,18 +89,18 @@ public class CreatureFactory {
     }
 
     public CreatureManager Construct(){
-        System.out.println(this.headerSection);
-        System.out.println(this.hpSection);
-        System.out.println(this.statsSection);
-        System.out.println(this.saveSection);
-        System.out.println(this.traitsSection);
+        // System.out.println(this.headerSection);
+        // System.out.println(this.hpSection);
+        // System.out.println(this.statsSection);
+        // System.out.println(this.saveSection);
+        // System.out.println(this.traitsSection);
 
         this.ConstructHeaders();
         this.ConstructHpSection();
         this.ConstructStats();
         this.ConstructSaveSection();
         this.ConstructTraits();
-        creature.print(null, 0);
+        // creature.print(null, 0);
 
         return this.creature;
     }
@@ -214,12 +214,10 @@ public class CreatureFactory {
             speedPortion = this.parser.ReplaceNonAlphaNumeric(speedPortion).strip();
             if(!speedPortion.equalsIgnoreCase("ft")){
                 if (this.parser.isNumeric(speedPortion.replace("ft", ""))){
-                    System.out.println("size " + speedPortion);
                     speedMap.put(speedType, this.parser.RemoveNonNumeric(speedPortion));
                 } 
                 //
                 else if(!speedPortion.equalsIgnoreCase("ft")){
-                    System.out.println("type " + speedPortion);
                     speedType = speedPortion;
                 }
             }
@@ -230,19 +228,31 @@ public class CreatureFactory {
 
     private void ConstructStats(){
         String statsStr = statsSection.get(statsSection.size()-1);
+        
         String[] parsedStats = statsStr.split("\\)");
+
         ArrayList<String> finalStats = new ArrayList<>();
-        for (String stat : parsedStats){
-            stat = stat.replaceAll("\\|", "");
-            if (stat.length() > 1) {
-                stat = stat.substring(0, stat.indexOf('(')).replaceAll(" ", "");
-                try {
-                    finalStats.add(stat);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input: " + e.getMessage());
+        try{
+            for (String stat : parsedStats){
+                stat = stat.replaceAll("\\|", "");
+                if (!stat.isEmpty() && stat.contains("(")) {
+                    int indexOfParen = stat.indexOf('(');
+                    if (indexOfParen > 0) {
+                        stat = stat.substring(0, indexOfParen).replaceAll(" ", "").trim();
+                        finalStats.add(stat);
+                    }
                 }
             }
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e){
+            finalStats = this.parser.handleMalformedStats(statsStr);
         }
+        if (finalStats.size() != 6) {
+            finalStats = this.parser.handleMalformedStats(statsStr);
+        }
+
+        System.out.println("________________________");
+        System.out.println(finalStats);
+        
         creature.insertStringNode("str", finalStats.get(0), false);
         creature.insertStringNode("dex", finalStats.get(1), false);
         creature.insertStringNode("con", finalStats.get(2), false);

@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -122,6 +123,59 @@ public class Parser {
         }
 
         return titlecased.toString().trim();
+    }
+
+    // This method handles malformed stats, likely resulting from an OCR failing to read them properly
+    // it works by collapsing the stat into it's raw numbers, then starting at the end and backtracking finding first the mod, then the stat that caused it
+    public ArrayList<String> handleMalformedStats(String statsStr){
+        ArrayList<String> finalStats = new ArrayList<>();
+
+        // start by turing what we have into a list of numbers
+        String statNumbers = this.ReplaceNonAlphaNumeric(statsStr).replaceAll("\\s", "");
+        
+        // starting at the back, where the first modifier is
+        int i = statNumbers.length() - 1;
+        while (i >= 0) {
+
+            // find the mod
+            char c = statNumbers.charAt(i);
+
+            // find the stat
+            String stat = "" + statNumbers.charAt(i-1);
+            i--;
+            if(Character.getNumericValue(c) == Math.abs(roundDownDivision(Integer.parseInt(stat)))){
+                finalStats.add(stat);
+            } else {
+                stat = this.reverseString(stat + statNumbers.charAt(i-1));
+                System.out.println("stats: " + stat);
+                i--;
+                if(Character.getNumericValue(c) == Math.abs(roundDownDivision(Integer.parseInt(stat)))){
+                    finalStats.add(stat);
+                } else {
+                    finalStats.add("30");
+                }
+            }
+            i--;
+        }
+        // reverse the list as we found cha first and str last
+        Collections.reverse(finalStats);
+        return finalStats;
+    }
+
+    private int roundDownDivision(int x) {
+        x = x - 10;
+        if (x >= 0) {
+            return x / 2;
+        } else {
+            return (x - 1) / 2;
+        }
+    }
+
+    private String reverseString(String input) {
+        if (input == null) {
+            return null;
+        }
+        return new StringBuilder(input).reverse().toString();
     }
 
     private String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
