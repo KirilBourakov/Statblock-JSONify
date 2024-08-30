@@ -41,4 +41,4 @@ build/
 *.class
 output.json
 /userInfo/*
-/src/main/java/org/example/tests/
+/src/test/tests/
