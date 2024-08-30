@@ -1,4 +1,4 @@
-package Creature;
+package org.example.Creature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class CreatureFactory {
     private ArrayList<String> saveSection;
     private ArrayList<String> traitsSection;
 
-    private helpers.Parser parser = new helpers.Parser();
+    private org.example.helpers.Parser parser = new org.example.helpers.Parser();
 
     public CreatureFactory(){
         linecount = 0;

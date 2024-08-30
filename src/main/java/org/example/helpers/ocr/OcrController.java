@@ -1,4 +1,4 @@
-package helpers.ocr;
+package org.example.helpers.ocr;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +12,8 @@ public class OcrController {
     private static String pathToPython;
 
     public static ArrayList<String> read(String filepath){
-        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "helpers/ocr/scripts/reader.py", filepath);
-
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "target/scripts/ocr/reader.py", filepath);
+        System.out.println(pathToPython);
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -33,13 +33,14 @@ public class OcrController {
     }
 
     public static void setup(){
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "helpers/ocr/scripts/setup.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "target/scripts/ocr/setup.py");
 
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
+                System.out.println(line);
                 if (isFile(line)) {
                     pathToPython = line;
                 }
@@ -47,7 +48,8 @@ public class OcrController {
             
             // Wait for the process to complete
             // TODO: handle errors, and clean up how python treats them
-            int exitCode = process.waitFor();    
+            int exitCode = process.waitFor();
+            System.out.println(exitCode);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

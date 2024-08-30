@@ -1,4 +1,4 @@
-import javax.swing.BorderFactory;
+package org.example;import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,7 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-import helpers.Logic;
+import org.example.helpers.Logic;
 
 public class Main {
     static JFrame frame;
@@ -39,9 +39,7 @@ public class Main {
     public static void main(String[] args){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         frame = new JFrame();
@@ -90,7 +88,7 @@ public class Main {
         inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         inputPanel.add(inputFile);
 
-        ImageIcon folder = new ImageIcon("assets/folder.png");
+        ImageIcon folder = new ImageIcon(Main.class.getResource("/images/folder.png"));
         JButton explorerButton = new JButton(folder);
         explorerButton.addActionListener(new ActionListener() {
             @Override

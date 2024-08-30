@@ -1,4 +1,4 @@
-package helpers;
+package org.example.helpers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,15 +12,17 @@ import java.util.stream.Collectors;
 
 import javax.swing.JLabel;
 
-import helpers.writer.NodeWriter;
-import helpers.ocr.OcrController;
+import org.example.helpers.writer.NodeWriter;
+import org.example.helpers.ocr.OcrController;
+import org.example.Creature.CreatureFactory;
+import org.example.Creature.CreatureManager;
 
 public class Logic{
     private Boolean ReadingStatblock = false;
     private Boolean finishedReading = false;
     private String line = "";
     private String lastline = "";
-    private Creature.CreatureFactory CurrentCreature = new Creature.CreatureFactory();
+    private CreatureFactory CurrentCreature = new CreatureFactory();
 
     public boolean txtToJSON(String inputFile, String outputFile){
         try {
@@ -35,17 +37,17 @@ public class Logic{
                     CurrentCreature.addtoSection(line);
                 }
                 if (finishedReading){
-                    Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                    CreatureManager newCreature = CurrentCreature.Construct();
                     writer.setManager(newCreature);
                     writer.WriteCreature();
                     
                     finishedReading = false;
-                    CurrentCreature = new Creature.CreatureFactory();
+                    CurrentCreature = new CreatureFactory();
                 }
                 lastline = line;
             }
             if (CurrentCreature.HasInformation()){
-                Creature.CreatureManager newCreature = CurrentCreature.Construct();
+                CreatureManager newCreature = CurrentCreature.Construct();
                 writer.setManager(newCreature);
                 writer.WriteCreature();
             }
@@ -139,11 +141,11 @@ public class Logic{
                 }
             }
 
-            Creature.CreatureManager newCreature = CurrentCreature.Construct();
+            CreatureManager newCreature = CurrentCreature.Construct();
             writer.setManager(newCreature);
             writer.WriteCreature();
 
-            CurrentCreature = new Creature.CreatureFactory();
+            CurrentCreature = new CreatureFactory();
         }
 
         writer.finish();

@@ -34,10 +34,12 @@ def setup(venv_dir: str, packages: list):
 
     # create venv
     if not is_venv_exists(venv_dir):
+        print("creating")
         subprocess.check_call([sys.executable, '-m', 'venv', venv_dir])
 
     # create packages
     if not are_packages_installed(venv_dir, packages):
+        print("installing")
         pip_path = os.path.join(venv_dir, 'Scripts', 'pip.exe') if os.name == 'nt' else os.path.join(venv_dir, 'bin', 'pip')
         subprocess.check_call([pip_path, 'install'] + packages)
 
@@ -45,4 +47,4 @@ def setup(venv_dir: str, packages: list):
     print(python_executable)
 
 if __name__ == "__main__":
-    setup("userInfo/ocr_venv", ["pytesseract", "pillow"])
+    setup("target/scripts/ocr_venv", ["pytesseract", "pillow"])

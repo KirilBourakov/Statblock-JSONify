@@ -1,10 +1,10 @@
-package helpers.writer;
+package org.example.helpers.writer;
 
 import java.time.Instant;
 import java.util.Random;
 
-import Creature.CreatureManager;
-import Creature.CreatureNode;
+import org.example.Creature.CreatureManager;
+import org.example.Creature.CreatureNode;
 
 public class NodeWriter {
     private CreatureManager manager;

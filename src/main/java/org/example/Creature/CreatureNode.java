@@ -1,4 +1,4 @@
-package Creature;
+package org.example.Creature;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package helpers;
+package org.example.helpers;
 
 import java.text.NumberFormat;
 import java.text.ParsePosition;
