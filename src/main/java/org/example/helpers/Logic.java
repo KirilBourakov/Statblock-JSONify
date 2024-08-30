@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -34,22 +33,22 @@ public class Logic{
                 line = reader.nextLine().strip();
                 textToJSONUpdateReadingStatus();
                 if (ReadingStatblock){
-                    CurrentCreature.addtoSection(line);
+                    CurrentCreature.addToSection(line);
                 }
                 if (finishedReading){
-                    CreatureManager newCreature = CurrentCreature.Construct();
+                    CreatureManager newCreature = CurrentCreature.construct();
                     writer.setManager(newCreature);
-                    writer.WriteCreature();
+                    writer.writeCreature();
                     
                     finishedReading = false;
                     CurrentCreature = new CreatureFactory();
                 }
                 lastline = line;
             }
-            if (CurrentCreature.HasInformation()){
-                CreatureManager newCreature = CurrentCreature.Construct();
+            if (CurrentCreature.hasInformation()){
+                CreatureManager newCreature = CurrentCreature.construct();
                 writer.setManager(newCreature);
-                writer.WriteCreature();
+                writer.writeCreature();
             }
             writer.finish();
             reader.close();
@@ -141,9 +140,9 @@ public class Logic{
                 }
             }
 
-            CreatureManager newCreature = CurrentCreature.Construct();
+            CreatureManager newCreature = CurrentCreature.construct();
             writer.setManager(newCreature);
-            writer.WriteCreature();
+            writer.writeCreature();
 
             CurrentCreature = new CreatureFactory();
         }

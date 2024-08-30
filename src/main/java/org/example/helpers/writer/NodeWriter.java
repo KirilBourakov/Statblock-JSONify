@@ -24,20 +24,20 @@ public class NodeWriter {
     public void start(){
         this.writer = new WriterAPI(this.outputFile);
         this.writer.startDepthIncreasingSection(null, '{');
-        this.WriteMeta();
+        this.writeMeta();
         this.writer.startLine();
         this.writer.startDepthIncreasingSection("monster", '[');
     }
     public void finish(){
         this.writer.endDepthIncreasingSection(']');
         this.writer.endDepthIncreasingSection('}');
-        this.writer.Close();
+        this.writer.close();
     }
     public void setManager(CreatureManager manager){
         this.manager = manager;
     }
 
-    public void WriteCreature(){
+    public void writeCreature(){
         CreatureNode node = manager.getPointer();
 
         if (haveWrittenOne){
@@ -46,7 +46,7 @@ public class NodeWriter {
 
         this.writer.startLine();
         this.writer.startDepthIncreasingSection(null, '{');
-        this.WalkAndWriteFromNode(node);
+        this.walkAndWriteFromNode(node);
 
         this.writer.writeComma();
         this.writer.startLine();
@@ -58,12 +58,12 @@ public class NodeWriter {
 
         this.haveWrittenOne = true;
     }
-    private void WalkAndWriteFromNode(CreatureNode node){
+    private void walkAndWriteFromNode(CreatureNode node){
         // TODO: ADD support for writing stuff like page and source tag on the monster
         while (node != null) {
             this.writer.startLine();
             if (node.getName() != null) {
-                this.writer.WriteName(node.getName());
+                this.writer.writeName(node.getName());
             }
 
             if (node.getValue() != null){
@@ -74,7 +74,7 @@ public class NodeWriter {
                 this.writer.startDepthIncreasingSection(null, '[');
                 int i = 0;
                 for (CreatureNode listNode : node.getListValue() ) {
-                    this.WalkAndWriteFromNode(listNode);
+                    this.walkAndWriteFromNode(listNode);
                     if (++i < node.getListValue().size()){
                         this.writer.writeComma();
                     }
@@ -84,7 +84,7 @@ public class NodeWriter {
 
             if (node.getObjectValue() != null){
                 this.writer.startDepthIncreasingSection(null, '{');
-                this.WalkAndWriteFromNode(node.getObjectValue());
+                this.walkAndWriteFromNode(node.getObjectValue());
                 this.writer.endDepthIncreasingSection('}');
             }
 
@@ -96,7 +96,7 @@ public class NodeWriter {
         }
     }
 
-    private void WriteMeta(){
+    private void writeMeta(){
         this.writer.startLine();
         this.writer.startDepthIncreasingSection("_meta", '{');
 

@@ -3,7 +3,6 @@ package org.example.Creature;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Collectors;
 // TODO: Rework size and header parsing in general.
 public class CreatureFactory {
@@ -34,11 +33,11 @@ public class CreatureFactory {
         traitsSection = new ArrayList<>();
     }
 
-    public boolean HasInformation(){
+    public boolean hasInformation(){
         return linecount > 0;
     }
 
-    public void addtoSection(String line){
+    public void addToSection(String line){
         linecount++;
         line = line.substring(1);
         if (line.replace(" ", "").equals("___")){
@@ -88,27 +87,27 @@ public class CreatureFactory {
         }
     }
 
-    public CreatureManager Construct(){
+    public CreatureManager construct(){
         // System.out.println(this.headerSection);
         // System.out.println(this.hpSection);
         // System.out.println(this.statsSection);
         // System.out.println(this.saveSection);
         // System.out.println(this.traitsSection);
 
-        this.ConstructHeaders();
-        this.ConstructHpSection();
-        this.ConstructStats();
-        this.ConstructSaveSection();
-        this.ConstructTraits();
+        this.constructHeaders();
+        this.constructHpSection();
+        this.constructStats();
+        this.constructSaveSection();
+        this.constructTraits();
         // creature.print(null, 0);
 
         return this.creature;
     }
 
-    private void ConstructHeaders(){
+    private void constructHeaders(){
         ArrayList<String> finalHeaderList = new ArrayList<>();
         for (String header : headerSection) {
-            finalHeaderList.add(this.parser.ReplaceNonAlphaNumeric(header).strip().toLowerCase());
+            finalHeaderList.add(this.parser.replaceNonAlphaNumeric(header).strip().toLowerCase());
         }
         System.out.println(finalHeaderList);
         String unparsedType = finalHeaderList.get(1);
@@ -124,10 +123,10 @@ public class CreatureFactory {
             }
         }
 
-        if (unparsedTypeWithoutAlignment.length() == 0){
+        if (unparsedTypeWithoutAlignment.isEmpty()){
             unparsedTypeWithoutAlignment = "unknown unknown";
         }
-        if (foundAlignment.length() == 0){
+        if (foundAlignment.isEmpty()){
             foundAlignment = "unaligned";
         }
 
@@ -171,7 +170,7 @@ public class CreatureFactory {
         }
     }
 
-    private void ConstructHpSection(){
+    private void constructHpSection(){
         ArrayList<String> cleanHPSectionList = new ArrayList<>();
         for (String sectionSlice : hpSection) {
             int fi = sectionSlice.indexOf("**");
@@ -183,8 +182,8 @@ public class CreatureFactory {
         // handle AC
         // TODO: handle several AC values
         String[] splitAC = this.parser.splitBeforeChar(cleanHPSectionList.get(0), "(");
-        String ACvalue = this.parser.RemoveNonNumeric(splitAC[0]);
-        String ACtype = this.parser.ReplaceNonAlphaNumeric(splitAC[1]);
+        String ACvalue = this.parser.removeNonNumeric(splitAC[0]);
+        String ACtype = this.parser.replaceNonAlphaNumeric(splitAC[1]);
 
         if (!ACtype.isEmpty()){
             CreatureNode ACvalueNode = new CreatureNode("ac", ACvalue, false);
@@ -198,7 +197,7 @@ public class CreatureFactory {
 
         //handle HP
         String[] splitHp = this.parser.splitBeforeChar(cleanHPSectionList.get(1), "(");
-        String hpValue = this.parser.RemoveNonNumeric(splitHp[0]);
+        String hpValue = this.parser.removeNonNumeric(splitHp[0]);
         String hpFormula = splitHp[1].replace("(", "").replace(")", "");
 
         CreatureNode hpValueNode = new CreatureNode("average", hpValue, false);
@@ -211,10 +210,10 @@ public class CreatureFactory {
         HashMap<String, String> speedMap = new HashMap<>();
         String speedType = "walk";
         for (String speedPortion : unparsedSpeed) {
-            speedPortion = this.parser.ReplaceNonAlphaNumeric(speedPortion).strip();
+            speedPortion = this.parser.replaceNonAlphaNumeric(speedPortion).strip();
             if(!speedPortion.equalsIgnoreCase("ft")){
                 if (this.parser.isNumeric(speedPortion.replace("ft", ""))){
-                    speedMap.put(speedType, this.parser.RemoveNonNumeric(speedPortion));
+                    speedMap.put(speedType, this.parser.removeNonNumeric(speedPortion));
                 } 
                 //
                 else if(!speedPortion.equalsIgnoreCase("ft")){
@@ -226,7 +225,7 @@ public class CreatureFactory {
         creature.insertFromHashMap("speed", speedMap, false);
     }
 
-    private void ConstructStats(){
+    private void constructStats(){
         String statsStr = statsSection.get(statsSection.size()-1);
         
         String[] parsedStats = statsStr.split("\\)");
@@ -261,92 +260,71 @@ public class CreatureFactory {
         creature.insertStringNode("cha", finalStats.get(5), false);
     }
 
-    private void ConstructSaveSection(){
+    private void constructSaveSection(){
         // saves
-        HashMap<String, String> finalSaves = this.parser.SkillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
-        if (finalSaves.size() > 0) {
+        HashMap<String, String> finalSaves = this.parser.skillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
+        if (!finalSaves.isEmpty()) {
             creature.insertFromHashMap("save", finalSaves, true);
         }
 
         // skills
-        HashMap<String, String> finalSkills = this.parser.SkillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
-        if (finalSkills.size() > 0) {
+        HashMap<String, String> finalSkills = this.parser.skillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
+        if (!finalSkills.isEmpty()) {
             creature.insertFromHashMap("skill", finalSkills, true);
         }
 
         // Damage resistances 
         // TODO: handle conditionals
-        ArrayList<String> DR = this.parser.PunctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
-        if (DR.size() > 0) {
+        ArrayList<String> DR = this.parser.punctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
+        if (!DR.isEmpty()) {
             creature.instertLiteralList("resist", DR, true);
         }
 
         // Damage immunities
         // TODO: handle conditionals
-        ArrayList<String> DI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
-        if (DI.size() > 0) {
+        ArrayList<String> DI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
+        if (!DI.isEmpty()) {
             creature.instertLiteralList("immune", DI, true);
         }
 
         // Condition Immunities
         // TODO: handle conditionals
-        ArrayList<String> CI = this.parser.PunctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
-        if (CI.size() > 0) {
+        ArrayList<String> CI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
+        if (!CI.isEmpty()) {
             creature.instertLiteralList("conditionImmune", CI, true);
         }
 
         // languages
-        ArrayList<String> languages = this.parser.PunctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
-        if (languages.size() > 0) {
+        ArrayList<String> languages = this.parser.punctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
+        if (!languages.isEmpty()) {
             creature.instertLiteralList("languages", languages, true);
         }
 
         // senses and passive
         
-        ArrayList<String> cleanSenses = this.parser.PunctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
+        ArrayList<String> cleanSenses = this.parser.punctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
        
         ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
-        String passive = this.parser.RemoveNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
-        if (senses.size() > 0) {
+        String passive = this.parser.removeNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
+        if (!senses.isEmpty()) {
             creature.instertLiteralList("senses", senses, true);
         }
         creature.insertStringNode("passive", passive, false);
 
-        // Challange Rating
+        // Challenge Rating
         // TODO: handle special CRs (above 30, increase in lair, etc)
         String unparsedCR = this.parser.getSaveSectionLine("chall", this.saveSection);
         String CR = "0";
         if (unparsedCR.indexOf("(") > 0){
-            CR = this.parser.RemoveNonNumeric(unparsedCR.substring(0, unparsedCR.indexOf("(")));
+            CR = this.parser.removeNonNumeric(unparsedCR.substring(0, unparsedCR.indexOf("(")));
         } else {
-            CR = this.parser.RemoveNonNumeric(unparsedCR);
+            CR = this.parser.removeNonNumeric(unparsedCR);
         }
         creature.insertStringNode("cr", CR, true);
     }
 
-    private void ConstructTraits(){
-        ArrayList<String> cleanTraits = new ArrayList<>();
-        boolean previousHeader = false;
-        for (String traitLine : traitsSection) {
-            if (traitLine.length() != 0){
-                if (cleanTraits.size() == 0){
-                    cleanTraits.add(traitLine);
-                } else{
-                    if (previousHeader){
-                        cleanTraits.add(traitLine);
-                        previousHeader = false;
-                    } else if (traitLine.contains("#")){
-                        cleanTraits.add(traitLine);
-                        previousHeader = true;
-                    } else if (traitLine.contains("*")){
-                        cleanTraits.add(traitLine);
-                    } else {
-                        String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
-                        cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
-                    }
-                }
-            }
-        }
+    private void constructTraits(){
+        ArrayList<String> cleanTraits = getCleanTraits();
 
         // Todo: handle mythic headers
         HashMap<String, ArrayList<HashMap<String, String>>> TypeMap = new HashMap<>();
@@ -368,14 +346,39 @@ public class CreatureFactory {
             } else {
                 if (TypeMap.containsKey(inputPoint)) {
                     ArrayList<HashMap<String, String>> in = TypeMap.get(inputPoint);
-                    in.add(parser.ParseATrait(trait));
+                    in.add(parser.parseATrait(trait));
                 } else {
                     ArrayList<HashMap<String, String>> in = new ArrayList<>();
-                    in.add(parser.ParseATrait(trait));
+                    in.add(parser.parseATrait(trait));
                     TypeMap.put(inputPoint, in);
                 }
             }
         }
         creature.insertFromMapListofMaps(TypeMap);
+    }
+    private ArrayList<String> getCleanTraits() {
+        ArrayList<String> cleanTraits = new ArrayList<>();
+        boolean previousHeader = false;
+        for (String traitLine : traitsSection) {
+            if (!traitLine.isEmpty()){
+                if (cleanTraits.isEmpty()){
+                    cleanTraits.add(traitLine);
+                } else{
+                    if (previousHeader){
+                        cleanTraits.add(traitLine);
+                        previousHeader = false;
+                    } else if (traitLine.contains("#")){
+                        cleanTraits.add(traitLine);
+                        previousHeader = true;
+                    } else if (traitLine.contains("*")){
+                        cleanTraits.add(traitLine);
+                    } else {
+                        String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
+                        cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
+                    }
+                }
+            }
+        }
+        return cleanTraits;
     }
 }

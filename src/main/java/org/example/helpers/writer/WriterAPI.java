@@ -16,14 +16,14 @@ public class WriterAPI {
         }
     }
 
-    public void Close(){
+    public void close(){
         try {
             this.writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void WriteName(String name){
+    public void writeName(String name){
         try {
             this.writer.write(this.formatJSONString(name) + ": ");
             this.writer.flush();

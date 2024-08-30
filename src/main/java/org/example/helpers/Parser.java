@@ -23,13 +23,13 @@ public class Parser {
         return finalList;
     }
 
-    public String ReplaceNonAlphaNumeric(String input){
+    public String replaceNonAlphaNumeric(String input){
         input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll("  ", " ");
         input = input.strip(); 
         return input;
     }
 
-    public String RemoveNonNumeric(String input){
+    public String removeNonNumeric(String input){
         return input.replaceAll("[^\\d.]", "");
     }
 
@@ -49,7 +49,7 @@ public class Parser {
         }
         return finalSection;
     }
-    public HashMap<String, String> SkillsAndSavesParser(String title, String line){
+    public HashMap<String, String> skillsAndSavesParser(String title, String line){
         HashMap<String, String> finalMap = new HashMap<>();
         if (line.length() != 0){
             line = this.ReplaceNonAlphaNumericNotAddOrSubtract(line).toUpperCase();
@@ -67,7 +67,7 @@ public class Parser {
         return finalMap;
     }  
 
-    public ArrayList<String> PunctuationSplitter(String title, String line){
+    public ArrayList<String> punctuationSplitter(String title, String line){
         if (line.length() == 0){
             return new ArrayList<>();
         }
@@ -78,7 +78,7 @@ public class Parser {
         return finalList;
     }
 
-    public HashMap<String, String> ParseATrait(String trait){
+    public HashMap<String, String> parseATrait(String trait){
         int lastIndex = trait.lastIndexOf("*");
         String name;
         String description; 
@@ -131,7 +131,7 @@ public class Parser {
         ArrayList<String> finalStats = new ArrayList<>();
 
         // start by turing what we have into a list of numbers
-        String statNumbers = this.ReplaceNonAlphaNumeric(statsStr).replaceAll("\\s", "");
+        String statNumbers = this.replaceNonAlphaNumeric(statsStr).replaceAll("\\s", "");
         
         // starting at the back, where the first modifier is
         int i = statNumbers.length() - 1;

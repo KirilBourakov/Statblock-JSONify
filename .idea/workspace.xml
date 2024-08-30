@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="149d9c83-392a-457e-9ad6-0f97967ce383" name="Changes" comment="Updated setup.py to have better venv location" />
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Moved manuel tests into tests">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/Logic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/Logic.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,112 +17,44 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="2lO2FdLk9ctSWMqsf9eaEfQixIN" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2lODC959JY4fsVHYHxvZU7J2AYo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "maven",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Core/Desktop/Projects/homebrewery to json",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\main\resources\images" />
-      <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\main\resources" />
-      <recent name="D:\Core\Desktop\Projects\homebrewery to json" />
-    </key>
-  </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="149d9c83-392a-457e-9ad6-0f97967ce383" name="Changes" comment="" />
-      <created>1725036700316</created>
+      <changelist id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Moved manuel tests into tests" />
+      <created>1725042099207</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1725036700316</updated>
+      <updated>1725042099207</updated>
     </task>
-    <task id="LOCAL-00001" summary="Restructured Files to be more maveny">
-      <option name="closed" value="true" />
-      <created>1725037691001</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1725037691001</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Updated Imports">
-      <option name="closed" value="true" />
-      <created>1725037947512</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1725037947512</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Continued refactor">
-      <option name="closed" value="true" />
-      <created>1725039337244</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1725039337244</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Finished conversion to Mavean">
-      <option name="closed" value="true" />
-      <created>1725040623673</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1725040623673</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Updated setup.py to have better venv location">
-      <option name="closed" value="true" />
-      <created>1725041011558</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1725041011558</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Restructured Files to be more maveny" />
-    <MESSAGE value="Continued refactor" />
-    <MESSAGE value="Updated Imports" />
-    <MESSAGE value="Finished conversion to Mavean" />
-    <MESSAGE value="Updated setup.py to have better venv location" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated setup.py to have better venv location" />
   </component>
 </project>
