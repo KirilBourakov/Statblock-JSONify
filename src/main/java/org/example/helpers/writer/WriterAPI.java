@@ -1,4 +1,4 @@
-package helpers.writer;
+package org.example.helpers.writer;
 
 import java.io.FileWriter;
 import java.io.IOException;
