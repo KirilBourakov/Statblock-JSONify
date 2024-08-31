@@ -32,7 +32,7 @@ public class OcrController {
         return new ArrayList<>();
     }
 
-    public static void setup(){
+    public static int setup(){
         ProcessBuilder processBuilder = new ProcessBuilder("python", "target/scripts/ocr/setup.py");
 
         try {
@@ -48,11 +48,11 @@ public class OcrController {
             
             // Wait for the process to complete
             // TODO: handle errors, and clean up how python treats them
-            int exitCode = process.waitFor();
-            System.out.println(exitCode);
+            return process.waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return 3;
     }
 
     private static boolean isFile(String pathString) {
