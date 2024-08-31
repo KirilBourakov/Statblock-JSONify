@@ -4,22 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Moved manuel tests into tests">
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="refactored Parser">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/helpers/ParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/Logic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/Logic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KirilBourakov&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/thepug432/homebreweryJSON-converter.git&quot;,
+    &quot;accountId&quot;: &quot;6ddfdffa-1330-4cfc-a81a-d39f0a7d28b0&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2lODC959JY4fsVHYHxvZU7J2AYo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,13 +53,128 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.CreatureManagerTest.executor": "Run",
+    "JUnit.CreatureManagerTest.getPointer.executor": "Run",
+    "JUnit.CreatureManagerTest.insertFromMapListOfMaps.executor": "Run",
+    "JUnit.CreatureManagerTest.insertLiteralList.executor": "Run",
+    "JUnit.CreatureManagerTest.movePointer.executor": "Run",
+    "JUnit.CreatureNodeTest.executor": "Coverage",
+    "JUnit.CreatureNodeTest.getObjectValue.executor": "Run",
+    "JUnit.CreatureNodeTest.setChild.executor": "Run",
+    "JUnit.OcrControllerTest.ReaderReadsProperly.executor": "Run",
+    "JUnit.OcrControllerTest.SetupReturns0.executor": "Run",
+    "JUnit.ParserTest.getFirstLetters.executor": "Run",
+    "JUnit.ParserTest.isNumeric.executor": "Run",
+    "JUnit.ParserTest.punctuationSplitter.executor": "Run",
+    "JUnit.ParserTest.removeNonNumeric.executor": "Run",
+    "JUnit.ParserTest.replaceNonAlphaNumeric.executor": "Run",
+    "JUnit.ParserTest.splitBeforeChar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Tests",
     "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources\images" />
+      <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.helpers" />
+      <recent name="org.example.Creature" />
+      <recent name="org.example.helpers.ocr" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ParserTest.handleMalformedStats">
+    <configuration name="ParserTest.getFirstLetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="getFirstLetters" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.handleMalformedStats" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="handleMalformedStats" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.isNumeric" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="isNumeric" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.punctuationSplitter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="punctuationSplitter" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.toTitleCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="toTitleCase" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -45,6 +186,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ParserTest.handleMalformedStats" />
+        <item itemvalue="JUnit.ParserTest.toTitleCase" />
+        <item itemvalue="JUnit.ParserTest.punctuationSplitter" />
+        <item itemvalue="JUnit.ParserTest.getFirstLetters" />
+        <item itemvalue="JUnit.ParserTest.isNumeric" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -55,6 +205,84 @@
       <option name="presentableId" value="Default" />
       <updated>1725042099207</updated>
     </task>
+    <task id="LOCAL-00001" summary="Refactored method names">
+      <option name="closed" value="true" />
+      <created>1725051243328</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1725051243328</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added Junit 5">
+      <option name="closed" value="true" />
+      <created>1725061877428</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1725061877428</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added tests for CreatureNode">
+      <option name="closed" value="true" />
+      <created>1725143970287</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1725143970287</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added tests for CreatureManagerTest">
+      <option name="closed" value="true" />
+      <created>1725145263244</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725145263244</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactored Parser">
+      <option name="closed" value="true" />
+      <created>1725145476090</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1725145476090</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactored method names" />
+    <MESSAGE value="Added Junit 5" />
+    <MESSAGE value="Added tests for CreatureNode" />
+    <MESSAGE value="Added tests for CreatureManagerTest" />
+    <MESSAGE value="refactored Parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored Parser" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/helpers/ocr/OcrControllerTest.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureNodeTest.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureNodeTest.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/homebrewery_to_json$CreatureNodeTest.ic" NAME="CreatureNodeTest Coverage Results" MODIFIED="1725143841411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.Creature.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/homebrewery_to_json$OcrControllerTest_ReaderReadsProperly.ic" NAME="OcrControllerTest.ReaderReadsProperly Coverage Results" MODIFIED="1725064588198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.helpers.ocr.*</FILTER>
+    </SUITE>
   </component>
 </project>

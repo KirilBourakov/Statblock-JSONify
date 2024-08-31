@@ -11,7 +11,7 @@ public class CreatureManager {
     public CreatureNode getPointer(){
         return head;
     }
-    public void moveointer(){
+    public void movePointer(){
         head = head.child;
     }
 
@@ -47,7 +47,7 @@ public class CreatureManager {
         this.insertAtEnd(node);
     }
 
-    public void insertFromMapListofMaps(HashMap<String, ArrayList<HashMap<String, String>>> traitMap){
+    public void insertFromMapListOfMaps(HashMap<String, ArrayList<HashMap<String, String>>> traitMap){
         for (String key : traitMap.keySet()) {
             ArrayList<CreatureNode> traitsForKey = new ArrayList<>();
             int i = 0;
@@ -69,7 +69,7 @@ public class CreatureManager {
         }
     }
 
-    public void instertLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
+    public void insertLiteralList(String name, ArrayList<String> values, boolean printValueAsString){
         CreatureNode node = this.createLiteralList(name, values, printValueAsString);
         this.insertAtEnd(node);
     }
