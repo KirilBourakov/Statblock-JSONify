@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Added tests for CreatureNode">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureManagerTest.java" afterDir="false" />
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="refactored Parser">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/helpers/ParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +53,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.CreatureManagerTest.executor": "Run",
     "JUnit.CreatureManagerTest.getPointer.executor": "Run",
+    "JUnit.CreatureManagerTest.insertFromMapListOfMaps.executor": "Run",
     "JUnit.CreatureManagerTest.insertLiteralList.executor": "Run",
     "JUnit.CreatureManagerTest.movePointer.executor": "Run",
     "JUnit.CreatureNodeTest.executor": "Coverage",
@@ -63,6 +63,12 @@
     "JUnit.CreatureNodeTest.setChild.executor": "Run",
     "JUnit.OcrControllerTest.ReaderReadsProperly.executor": "Run",
     "JUnit.OcrControllerTest.SetupReturns0.executor": "Run",
+    "JUnit.ParserTest.getFirstLetters.executor": "Run",
+    "JUnit.ParserTest.isNumeric.executor": "Run",
+    "JUnit.ParserTest.punctuationSplitter.executor": "Run",
+    "JUnit.ParserTest.removeNonNumeric.executor": "Run",
+    "JUnit.ParserTest.replaceNonAlphaNumeric.executor": "Run",
+    "JUnit.ParserTest.splitBeforeChar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
@@ -83,85 +89,87 @@
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.helpers" />
       <recent name="org.example.Creature" />
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CreatureManagerTest">
-    <configuration name="CreatureManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ParserTest.handleMalformedStats">
+    <configuration name="ParserTest.getFirstLetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="PATTERN" value="org.example.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.Creature" />
-      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CreatureManagerTest.getPointer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.Creature.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.Creature" />
-      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
-      <option name="METHOD_NAME" value="getPointer" />
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="getFirstLetters" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CreatureManagerTest.insertFromMapListOfMaps" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ParserTest.handleMalformedStats" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="PATTERN" value="org.example.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.Creature" />
-      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
-      <option name="METHOD_NAME" value="insertFromMapListOfMaps" />
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="handleMalformedStats" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CreatureManagerTest.insertLiteralList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ParserTest.isNumeric" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="PATTERN" value="org.example.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.Creature" />
-      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
-      <option name="METHOD_NAME" value="insertLiteralList" />
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="isNumeric" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CreatureManagerTest.movePointer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ParserTest.punctuationSplitter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="PATTERN" value="org.example.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.Creature" />
-      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
-      <option name="METHOD_NAME" value="movePointer" />
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="punctuationSplitter" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.toTitleCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="toTitleCase" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -180,11 +188,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CreatureManagerTest" />
-        <item itemvalue="JUnit.CreatureManagerTest.insertFromMapListOfMaps" />
-        <item itemvalue="JUnit.CreatureManagerTest.insertLiteralList" />
-        <item itemvalue="JUnit.CreatureManagerTest.getPointer" />
-        <item itemvalue="JUnit.CreatureManagerTest.movePointer" />
+        <item itemvalue="JUnit.ParserTest.handleMalformedStats" />
+        <item itemvalue="JUnit.ParserTest.toTitleCase" />
+        <item itemvalue="JUnit.ParserTest.punctuationSplitter" />
+        <item itemvalue="JUnit.ParserTest.getFirstLetters" />
+        <item itemvalue="JUnit.ParserTest.isNumeric" />
       </list>
     </recent_temporary>
   </component>
@@ -221,14 +229,32 @@
       <option name="project" value="LOCAL" />
       <updated>1725143970287</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added tests for CreatureManagerTest">
+      <option name="closed" value="true" />
+      <created>1725145263244</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725145263244</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactored Parser">
+      <option name="closed" value="true" />
+      <created>1725145476090</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1725145476090</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored method names" />
     <MESSAGE value="Added Junit 5" />
     <MESSAGE value="Added tests for CreatureNode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests for CreatureNode" />
+    <MESSAGE value="Added tests for CreatureManagerTest" />
+    <MESSAGE value="refactored Parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored Parser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
