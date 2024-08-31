@@ -105,10 +105,10 @@ public class Main {
     }
 
     private static void createFileExplorer(String type, String selectionTarget){
-        if (type == "folder"){
+        if (type.equals("folder")){
             fileChooser.setDialogTitle("Select a Folder");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        } else if (type == "file") {
+        } else if (type.equals("file")) {
             fileChooser.setDialogTitle("Select a File");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         } else {

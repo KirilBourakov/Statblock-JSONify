@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class OcrControllerTest {
 
     @Test
-    public void SetupExitsWith0(){
+    public void setupExitsWith0(){
         int code = OcrController.setup();
         assertEquals(0, code);
     }
 
     @Test
-    public void ReaderReadsProperly(){
+    public void readerReadsProperly(){
         String fileName = "images/testBlock1.png";
         File file;
         try {
