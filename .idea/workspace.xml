@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Added Junit 5">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/helpers/ocr/OcrControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/images/testBlock1.png" afterDir="false" />
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Added tests for CreatureNode">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Creature/CreatureManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,24 +30,24 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "KirilBourakov"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KirilBourakov&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/thepug432/homebreweryJSON-converter.git",
-    "accountId": "6ddfdffa-1330-4cfc-a81a-d39f0a7d28b0"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/thepug432/homebreweryJSON-converter.git&quot;,
+    &quot;accountId&quot;: &quot;6ddfdffa-1330-4cfc-a81a-d39f0a7d28b0&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2lODC959JY4fsVHYHxvZU7J2AYo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -56,6 +55,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.CreatureManagerTest.getPointer.executor": "Run",
+    "JUnit.CreatureManagerTest.insertLiteralList.executor": "Run",
+    "JUnit.CreatureManagerTest.movePointer.executor": "Run",
+    "JUnit.CreatureNodeTest.executor": "Coverage",
+    "JUnit.CreatureNodeTest.getObjectValue.executor": "Run",
+    "JUnit.CreatureNodeTest.setChild.executor": "Run",
     "JUnit.OcrControllerTest.ReaderReadsProperly.executor": "Run",
     "JUnit.OcrControllerTest.SetupReturns0.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -78,37 +83,85 @@
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.Creature" />
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.OcrControllerTest.ReaderReadsProperly">
-    <configuration name="OcrControllerTest.ReaderReadsProperly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CreatureManagerTest">
+    <configuration name="CreatureManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.helpers.ocr.*" />
+          <option name="PATTERN" value="org.example.Creature.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.helpers.ocr" />
-      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ocr.OcrControllerTest" />
-      <option name="METHOD_NAME" value="ReaderReadsProperly" />
+      <option name="PACKAGE_NAME" value="org.example.Creature" />
+      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreatureManagerTest.getPointer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.Creature" />
+      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
+      <option name="METHOD_NAME" value="getPointer" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OcrControllerTest.SetupReturns0" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CreatureManagerTest.insertFromMapListOfMaps" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.helpers.ocr.*" />
+          <option name="PATTERN" value="org.example.Creature.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.helpers.ocr" />
-      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ocr.OcrControllerTest" />
-      <option name="METHOD_NAME" value="SetupReturns0" />
+      <option name="PACKAGE_NAME" value="org.example.Creature" />
+      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
+      <option name="METHOD_NAME" value="insertFromMapListOfMaps" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreatureManagerTest.insertLiteralList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.Creature" />
+      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
+      <option name="METHOD_NAME" value="insertLiteralList" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreatureManagerTest.movePointer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.Creature.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.Creature" />
+      <option name="MAIN_CLASS_NAME" value="org.example.Creature.CreatureManagerTest" />
+      <option name="METHOD_NAME" value="movePointer" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -127,8 +180,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.OcrControllerTest.ReaderReadsProperly" />
-        <item itemvalue="JUnit.OcrControllerTest.SetupReturns0" />
+        <item itemvalue="JUnit.CreatureManagerTest" />
+        <item itemvalue="JUnit.CreatureManagerTest.insertFromMapListOfMaps" />
+        <item itemvalue="JUnit.CreatureManagerTest.insertLiteralList" />
+        <item itemvalue="JUnit.CreatureManagerTest.getPointer" />
+        <item itemvalue="JUnit.CreatureManagerTest.movePointer" />
       </list>
     </recent_temporary>
   </component>
@@ -157,13 +213,22 @@
       <option name="project" value="LOCAL" />
       <updated>1725061877428</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added tests for CreatureNode">
+      <option name="closed" value="true" />
+      <created>1725143970287</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1725143970287</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored method names" />
     <MESSAGE value="Added Junit 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Junit 5" />
+    <MESSAGE value="Added tests for CreatureNode" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added tests for CreatureNode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -173,10 +238,23 @@
           <line>30</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureNodeTest.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureNodeTest.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/homebrewery_to_json$CreatureNodeTest.ic" NAME="CreatureNodeTest Coverage Results" MODIFIED="1725143841411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.Creature.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/homebrewery_to_json$OcrControllerTest_ReaderReadsProperly.ic" NAME="OcrControllerTest.ReaderReadsProperly Coverage Results" MODIFIED="1725064588198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.helpers.ocr.*</FILTER>
     </SUITE>

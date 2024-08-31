@@ -156,8 +156,8 @@ public class CreatureFactory {
 
         // insert
         creature.insertStringNode("name", this.parser.toTitleCase(finalMap.get("name")), true);
-        creature.instertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
-        creature.instertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
+        creature.insertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
+        creature.insertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
 
         // insert type
         if (tags.size() > 0){
@@ -192,7 +192,7 @@ public class CreatureFactory {
             CreatureNode AcObj = new CreatureNode(null, ACvalueNode);
             creature.insertNodeList("ac", new ArrayList<>(Arrays.asList(AcObj)));
         } else {
-            creature.instertLiteralList("ac", new ArrayList<>(Arrays.asList(ACvalue)), false);
+            creature.insertLiteralList("ac", new ArrayList<>(Arrays.asList(ACvalue)), false);
         }
 
         //handle HP
@@ -277,27 +277,27 @@ public class CreatureFactory {
         // TODO: handle conditionals
         ArrayList<String> DR = this.parser.punctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
         if (!DR.isEmpty()) {
-            creature.instertLiteralList("resist", DR, true);
+            creature.insertLiteralList("resist", DR, true);
         }
 
         // Damage immunities
         // TODO: handle conditionals
         ArrayList<String> DI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
         if (!DI.isEmpty()) {
-            creature.instertLiteralList("immune", DI, true);
+            creature.insertLiteralList("immune", DI, true);
         }
 
         // Condition Immunities
         // TODO: handle conditionals
         ArrayList<String> CI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
         if (!CI.isEmpty()) {
-            creature.instertLiteralList("conditionImmune", CI, true);
+            creature.insertLiteralList("conditionImmune", CI, true);
         }
 
         // languages
         ArrayList<String> languages = this.parser.punctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
         if (!languages.isEmpty()) {
-            creature.instertLiteralList("languages", languages, true);
+            creature.insertLiteralList("languages", languages, true);
         }
 
         // senses and passive
@@ -307,7 +307,7 @@ public class CreatureFactory {
         ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
         String passive = this.parser.removeNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
         if (!senses.isEmpty()) {
-            creature.instertLiteralList("senses", senses, true);
+            creature.insertLiteralList("senses", senses, true);
         }
         creature.insertStringNode("passive", passive, false);
 
@@ -354,7 +354,7 @@ public class CreatureFactory {
                 }
             }
         }
-        creature.insertFromMapListofMaps(TypeMap);
+        creature.insertFromMapListOfMaps(TypeMap);
     }
     private ArrayList<String> getCleanTraits() {
         ArrayList<String> cleanTraits = new ArrayList<>();
