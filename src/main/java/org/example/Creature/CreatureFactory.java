@@ -263,47 +263,47 @@ public class CreatureFactory {
 
     private void constructSaveSection(){
         // saves
-        HashMap<String, String> finalSaves = Parser.skillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
+        HashMap<String, String> finalSaves = Parser.skillsAndSavesParser("throws", Parser.getSaveSectionLine("saving", this.saveSection));
         if (!finalSaves.isEmpty()) {
             creature.insertFromHashMap("save", finalSaves, true);
         }
 
         // skills
-        HashMap<String, String> finalSkills = Parser.skillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
+        HashMap<String, String> finalSkills = Parser.skillsAndSavesParser("skills", Parser.getSaveSectionLine("skill", this.saveSection));
         if (!finalSkills.isEmpty()) {
             creature.insertFromHashMap("skill", finalSkills, true);
         }
 
         // Damage resistances 
         // TODO: handle conditionals
-        ArrayList<String> DR = Parser.punctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
+        ArrayList<String> DR = Parser.punctuationSplitter("resistances", Parser.getSaveSectionLine("resistance", this.saveSection));
         if (!DR.isEmpty()) {
             creature.insertLiteralList("resist", DR, true);
         }
 
         // Damage immunities
         // TODO: handle conditionals
-        ArrayList<String> DI = Parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
+        ArrayList<String> DI = Parser.punctuationSplitter("Immunities", Parser.getSaveSectionLine("age im", this.saveSection));
         if (!DI.isEmpty()) {
             creature.insertLiteralList("immune", DI, true);
         }
 
         // Condition Immunities
         // TODO: handle conditionals
-        ArrayList<String> CI = Parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
+        ArrayList<String> CI = Parser.punctuationSplitter("Immunities", Parser.getSaveSectionLine("condition", this.saveSection));
         if (!CI.isEmpty()) {
             creature.insertLiteralList("conditionImmune", CI, true);
         }
 
         // languages
-        ArrayList<String> languages = Parser.punctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
+        ArrayList<String> languages = Parser.punctuationSplitter("Languages", Parser.getSaveSectionLine("lang", this.saveSection));
         if (!languages.isEmpty()) {
             creature.insertLiteralList("languages", languages, true);
         }
 
         // senses and passive
         
-        ArrayList<String> cleanSenses = Parser.punctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
+        ArrayList<String> cleanSenses = Parser.punctuationSplitter("Senses", Parser.getSaveSectionLine("sense", this.saveSection));
        
         ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
         String passive = Parser.removeNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
