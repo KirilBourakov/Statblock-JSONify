@@ -11,10 +11,9 @@ class ParserTest {
 
     @Test
     void splitBeforeChar() {
-//      TODO: failures here
         String[] parsed = Parser.splitBeforeChar("asd_123", "_");
         assertEquals("asd", parsed[0]);
-        assertEquals("123", parsed[1]);
+        assertEquals("_123", parsed[1]);
 
         String[] unfoundParsed = Parser.splitBeforeChar("asd_123", "/");
         assertEquals(unfoundParsed[0], "asd_123");

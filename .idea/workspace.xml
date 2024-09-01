@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Finished formating TODO">
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Finished TODO: add test to handle a stat with a 30">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/helpers/ParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/helpers/ParserTest.java" afterDir="false" />
@@ -96,7 +96,7 @@
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ParserTest.handleMalformedStats">
+  <component name="RunManager" selected="JUnit.ParserTest.splitBeforeChar">
     <configuration name="ParserTest.getFirstLetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
@@ -129,22 +129,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ParserTest.isNumeric" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.helpers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.helpers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
-      <option name="METHOD_NAME" value="isNumeric" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ParserTest.punctuationSplitter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
@@ -156,6 +140,22 @@
       <option name="PACKAGE_NAME" value="org.example.helpers" />
       <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
       <option name="METHOD_NAME" value="punctuationSplitter" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParserTest.splitBeforeChar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.helpers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.helpers" />
+      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
+      <option name="METHOD_NAME" value="splitBeforeChar" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -190,11 +190,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
         <item itemvalue="JUnit.ParserTest.handleMalformedStats" />
         <item itemvalue="JUnit.ParserTest.toTitleCase" />
         <item itemvalue="JUnit.ParserTest.punctuationSplitter" />
         <item itemvalue="JUnit.ParserTest.getFirstLetters" />
-        <item itemvalue="JUnit.ParserTest.isNumeric" />
       </list>
     </recent_temporary>
   </component>
@@ -255,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725146989070</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Finished TODO: add test to handle a stat with a 30">
+      <option name="closed" value="true" />
+      <created>1725198095100</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1725198095100</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -265,7 +273,8 @@
     <MESSAGE value="Added tests for CreatureManagerTest" />
     <MESSAGE value="refactored Parser" />
     <MESSAGE value="Finished formating TODO" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished formating TODO" />
+    <MESSAGE value="Finished TODO: add test to handle a stat with a 30" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished TODO: add test to handle a stat with a 30" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

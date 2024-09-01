@@ -13,7 +13,7 @@ public class Parser {
         int splitIndex = initial.lastIndexOf(target);
         String[] finalList = {"", ""};
         if (splitIndex != -1){
-            finalList[0] = initial.substring(0, splitIndex-1).trim();
+            finalList[0] = initial.substring(0, splitIndex).trim();
             finalList[1] = initial.substring(splitIndex).trim();
         }
         if (finalList[0].isEmpty()){
