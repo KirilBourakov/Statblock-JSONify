@@ -15,9 +15,9 @@ class ParserTest {
         assertEquals("asd", parsed[0]);
         assertEquals("_123", parsed[1]);
 
-        String[] unfoundParsed = Parser.splitBeforeChar("asd_123", "/");
-        assertEquals(unfoundParsed[0], "asd_123");
-        assertEquals(unfoundParsed[1], "");
+        String[] emptyParsed = Parser.splitBeforeChar("asd_123", "/");
+        assertEquals(emptyParsed[0], "asd_123");
+        assertEquals(emptyParsed[1], "");
     }
 
     @Test
@@ -35,7 +35,7 @@ class ParserTest {
     @Test
     void isNumeric() {
         assertTrue(Parser.isNumeric("2313"));
-        assertFalse(Parser.isNumeric("asd12323sdsafdd"));
+        assertFalse(Parser.isNumeric("This is a non numeric string with the number 123 in it."));
     }
 
     @Test
