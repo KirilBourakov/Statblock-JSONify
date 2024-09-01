@@ -69,7 +69,11 @@ public class Main {
 
         converstionStatus = new JLabel();
         frame.add(converstionStatus);
-        
+
+        frame.setTitle("Converter");
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/images/convert.png")));
+        frame.setIconImage(icon.getImage());
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
