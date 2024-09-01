@@ -3,7 +3,10 @@ package org.example.Creature;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
+import org.example.helpers.Parser;
+
 // TODO: Rework size and header parsing in general.
 public class CreatureFactory {
     private int linecount;
@@ -17,8 +20,6 @@ public class CreatureFactory {
     private ArrayList<String> statsSection; 
     private ArrayList<String> saveSection;
     private ArrayList<String> traitsSection;
-
-    private org.example.helpers.Parser parser = new org.example.helpers.Parser();
 
     public CreatureFactory(){
         linecount = 0;
@@ -107,7 +108,7 @@ public class CreatureFactory {
     private void constructHeaders(){
         ArrayList<String> finalHeaderList = new ArrayList<>();
         for (String header : headerSection) {
-            finalHeaderList.add(this.parser.replaceNonAlphaNumeric(header).strip().toLowerCase());
+            finalHeaderList.add(Parser.replaceNonAlphaNumeric(header).strip().toLowerCase());
         }
         System.out.println(finalHeaderList);
         String unparsedType = finalHeaderList.get(1);
@@ -132,7 +133,7 @@ public class CreatureFactory {
 
 
         HashMap<String, String> finalMap = new HashMap<>();
-        finalMap.put("name", finalHeaderList.get(0));
+        finalMap.put("name", finalHeaderList.getFirst());
         finalMap.put("alignment", foundAlignment);
 
         String[] finalType = unparsedTypeWithoutAlignment.split(" ");
@@ -155,12 +156,12 @@ public class CreatureFactory {
         }
 
         // insert
-        creature.insertStringNode("name", this.parser.toTitleCase(finalMap.get("name")), true);
-        creature.insertLiteralList("size", this.parser.getFirstLetters(finalMap.get("size")), true);
-        creature.insertLiteralList("alignment", this.parser.getFirstLetters(finalMap.get("alignment")), true);
+        creature.insertStringNode("name", Parser.toTitleCase(finalMap.get("name")), true);
+        creature.insertLiteralList("size", Parser.getFirstLetters(finalMap.get("size")), true);
+        creature.insertLiteralList("alignment", Parser.getFirstLetters(finalMap.get("alignment")), true);
 
         // insert type
-        if (tags.size() > 0){
+        if (!tags.isEmpty()){
             CreatureNode typeNode = new CreatureNode("type", finalMap.get("type"), true);
             CreatureNode tagNode = creature.createLiteralList("tags", tags, true);
             typeNode.setChild(tagNode);
@@ -181,23 +182,23 @@ public class CreatureFactory {
 
         // handle AC
         // TODO: handle several AC values
-        String[] splitAC = this.parser.splitBeforeChar(cleanHPSectionList.get(0), "(");
-        String ACvalue = this.parser.removeNonNumeric(splitAC[0]);
-        String ACtype = this.parser.replaceNonAlphaNumeric(splitAC[1]);
+        String[] splitAC = Parser.splitBeforeChar(cleanHPSectionList.get(0), "(");
+        String ACvalue = Parser.removeNonNumeric(splitAC[0]);
+        String ACtype = Parser.replaceNonAlphaNumeric(splitAC[1]);
 
         if (!ACtype.isEmpty()){
             CreatureNode ACvalueNode = new CreatureNode("ac", ACvalue, false);
             CreatureNode ACtypeNode = creature.createLiteralList("type", new ArrayList<>(Arrays.asList(ACtype)), true);
             ACvalueNode.setChild(ACtypeNode);
             CreatureNode AcObj = new CreatureNode(null, ACvalueNode);
-            creature.insertNodeList("ac", new ArrayList<>(Arrays.asList(AcObj)));
+            creature.insertNodeList("ac", new ArrayList<>(List.of(AcObj)));
         } else {
-            creature.insertLiteralList("ac", new ArrayList<>(Arrays.asList(ACvalue)), false);
+            creature.insertLiteralList("ac", new ArrayList<>(List.of(ACvalue)), false);
         }
 
         //handle HP
-        String[] splitHp = this.parser.splitBeforeChar(cleanHPSectionList.get(1), "(");
-        String hpValue = this.parser.removeNonNumeric(splitHp[0]);
+        String[] splitHp = Parser.splitBeforeChar(cleanHPSectionList.get(1), "(");
+        String hpValue = Parser.removeNonNumeric(splitHp[0]);
         String hpFormula = splitHp[1].replace("(", "").replace(")", "");
 
         CreatureNode hpValueNode = new CreatureNode("average", hpValue, false);
@@ -210,10 +211,10 @@ public class CreatureFactory {
         HashMap<String, String> speedMap = new HashMap<>();
         String speedType = "walk";
         for (String speedPortion : unparsedSpeed) {
-            speedPortion = this.parser.replaceNonAlphaNumeric(speedPortion).strip();
+            speedPortion = Parser.replaceNonAlphaNumeric(speedPortion).strip();
             if(!speedPortion.equalsIgnoreCase("ft")){
-                if (this.parser.isNumeric(speedPortion.replace("ft", ""))){
-                    speedMap.put(speedType, this.parser.removeNonNumeric(speedPortion));
+                if (Parser.isNumeric(speedPortion.replace("ft", ""))){
+                    speedMap.put(speedType, Parser.removeNonNumeric(speedPortion));
                 } 
                 //
                 else if(!speedPortion.equalsIgnoreCase("ft")){
@@ -234,7 +235,7 @@ public class CreatureFactory {
         try{
             for (String stat : parsedStats){
                 stat = stat.replaceAll("\\|", "");
-                if (!stat.isEmpty() && stat.contains("(")) {
+                if (stat.contains("(")) {
                     int indexOfParen = stat.indexOf('(');
                     if (indexOfParen > 0) {
                         stat = stat.substring(0, indexOfParen).replaceAll(" ", "").trim();
@@ -243,10 +244,10 @@ public class CreatureFactory {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e){
-            finalStats = this.parser.handleMalformedStats(statsStr);
+            finalStats = Parser.handleMalformedStats(statsStr);
         }
         if (finalStats.size() != 6) {
-            finalStats = this.parser.handleMalformedStats(statsStr);
+            finalStats = Parser.handleMalformedStats(statsStr);
         }
 
         System.out.println("________________________");
@@ -262,50 +263,50 @@ public class CreatureFactory {
 
     private void constructSaveSection(){
         // saves
-        HashMap<String, String> finalSaves = this.parser.skillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
+        HashMap<String, String> finalSaves = Parser.skillsAndSavesParser("throws", this.parser.getSaveSectionLine("saving", this.saveSection));
         if (!finalSaves.isEmpty()) {
             creature.insertFromHashMap("save", finalSaves, true);
         }
 
         // skills
-        HashMap<String, String> finalSkills = this.parser.skillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
+        HashMap<String, String> finalSkills = Parser.skillsAndSavesParser("skills", this.parser.getSaveSectionLine("skill", this.saveSection));
         if (!finalSkills.isEmpty()) {
             creature.insertFromHashMap("skill", finalSkills, true);
         }
 
         // Damage resistances 
         // TODO: handle conditionals
-        ArrayList<String> DR = this.parser.punctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
+        ArrayList<String> DR = Parser.punctuationSplitter("resistances", this.parser.getSaveSectionLine("resistance", this.saveSection));
         if (!DR.isEmpty()) {
             creature.insertLiteralList("resist", DR, true);
         }
 
         // Damage immunities
         // TODO: handle conditionals
-        ArrayList<String> DI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
+        ArrayList<String> DI = Parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("age im", this.saveSection));
         if (!DI.isEmpty()) {
             creature.insertLiteralList("immune", DI, true);
         }
 
         // Condition Immunities
         // TODO: handle conditionals
-        ArrayList<String> CI = this.parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
+        ArrayList<String> CI = Parser.punctuationSplitter("Immunities", this.parser.getSaveSectionLine("condition", this.saveSection));
         if (!CI.isEmpty()) {
             creature.insertLiteralList("conditionImmune", CI, true);
         }
 
         // languages
-        ArrayList<String> languages = this.parser.punctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
+        ArrayList<String> languages = Parser.punctuationSplitter("Languages", this.parser.getSaveSectionLine("lang", this.saveSection));
         if (!languages.isEmpty()) {
             creature.insertLiteralList("languages", languages, true);
         }
 
         // senses and passive
         
-        ArrayList<String> cleanSenses = this.parser.punctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
+        ArrayList<String> cleanSenses = Parser.punctuationSplitter("Senses", this.parser.getSaveSectionLine("sense", this.saveSection));
        
         ArrayList<String> senses = new ArrayList<>(cleanSenses.stream().filter(sense -> !sense.toLowerCase().contains("passive")).collect(Collectors.toList()));
-        String passive = this.parser.removeNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
+        String passive = Parser.removeNonNumeric(cleanSenses.stream().filter(sense -> sense.toLowerCase().contains("passive")).findFirst().orElse("0"));
         if (!senses.isEmpty()) {
             creature.insertLiteralList("senses", senses, true);
         }
@@ -313,12 +314,12 @@ public class CreatureFactory {
 
         // Challenge Rating
         // TODO: handle special CRs (above 30, increase in lair, etc)
-        String unparsedCR = this.parser.getSaveSectionLine("chall", this.saveSection);
-        String CR = "0";
+        String unparsedCR = Parser.getSaveSectionLine("chall", this.saveSection);
+        String CR;
         if (unparsedCR.indexOf("(") > 0){
-            CR = this.parser.removeNonNumeric(unparsedCR.substring(0, unparsedCR.indexOf("(")));
+            CR = Parser.removeNonNumeric(unparsedCR.substring(0, unparsedCR.indexOf("(")));
         } else {
-            CR = this.parser.removeNonNumeric(unparsedCR);
+            CR = Parser.removeNonNumeric(unparsedCR);
         }
         creature.insertStringNode("cr", CR, true);
     }
@@ -346,10 +347,10 @@ public class CreatureFactory {
             } else {
                 if (TypeMap.containsKey(inputPoint)) {
                     ArrayList<HashMap<String, String>> in = TypeMap.get(inputPoint);
-                    in.add(parser.parseATrait(trait));
+                    in.add(Parser.parseATrait(trait));
                 } else {
                     ArrayList<HashMap<String, String>> in = new ArrayList<>();
-                    in.add(parser.parseATrait(trait));
+                    in.add(Parser.parseATrait(trait));
                     TypeMap.put(inputPoint, in);
                 }
             }
@@ -373,7 +374,7 @@ public class CreatureFactory {
                     } else if (traitLine.contains("*")){
                         cleanTraits.add(traitLine);
                     } else {
-                        String lastTrait = cleanTraits.get(cleanTraits.size() - 1);
+                        String lastTrait = cleanTraits.getLast();
                         cleanTraits.set(cleanTraits.size() - 1, lastTrait + traitLine);
                     }
                 }

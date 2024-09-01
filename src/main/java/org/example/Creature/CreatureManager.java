@@ -88,12 +88,10 @@ public class CreatureManager {
         if (head == null){
             this.head = node;
         }
-        if (tail == null){
-            this.tail = node;
-        } else {
+        if (tail != null) {
             this.tail.setChild(node);
-            this.tail = node;
         }
+        this.tail = node;
     }
 
     public void print(CreatureNode pointer, int depth){

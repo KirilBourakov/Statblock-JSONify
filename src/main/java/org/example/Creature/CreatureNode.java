@@ -1,9 +1,10 @@
 package org.example.Creature;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CreatureNode {
-    String name = null; 
+    String name;
     String value = null;
     boolean printValueAsString;
     CreatureNode objectValue = null;
@@ -84,11 +85,11 @@ public class CreatureNode {
 
     public String toString(){
         String type = this.getType();
-        if (type == "literal"){
+        if (Objects.equals(type, "literal")){
             return this.name + ": " + this.value;
-        } else if (type == "object"){
+        } else if (Objects.equals(type, "object")){
             return this.name + ":";
-        } else if (type == "list"){
+        } else if (Objects.equals(type, "list")){
             return this.name + ": " + this.listValue;
         }
 

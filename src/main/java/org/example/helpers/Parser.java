@@ -24,7 +24,7 @@ public class Parser {
     }
 
     public static String replaceNonAlphaNumeric(String input){
-        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll("  ", " ");
+        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ").replaceAll(" {2}", " ");
         input = input.strip(); 
         return input;
     }
@@ -114,15 +114,15 @@ public class Parser {
 
         String[] words = input.split("\\s+");
 
-        String titlecased = "";
+        StringBuilder titlecased = new StringBuilder();
         for (String word : words) {
             if (!word.isEmpty()) {
                 String titleCasedWord = word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
-                titlecased = titlecased + titleCasedWord + " ";
+                titlecased.append(titleCasedWord).append(" ");
             }
         }
 
-        return titlecased.trim();
+        return titlecased.toString().trim();
     }
 
     // This method handles malformed stats, likely resulting from an OCR failing to read them properly
@@ -179,7 +179,7 @@ public class Parser {
     }
 
     private static String ReplaceNonAlphaNumericNotAddOrSubtract(String input){
-        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll("  ", " ");
+        input = input.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}+\\-]", " ").replaceAll(" {2}", " ");
         input = input.strip(); 
         return input;
     }

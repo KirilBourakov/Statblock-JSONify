@@ -24,6 +24,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.example.helpers.Logic;
 
@@ -88,7 +89,7 @@ public class Main {
         inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         inputPanel.add(inputFile);
 
-        ImageIcon folder = new ImageIcon(Main.class.getResource("/images/folder.png"));
+        ImageIcon folder = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/images/folder.png")));
         JButton explorerButton = new JButton(folder);
         explorerButton.addActionListener(new ActionListener() {
             @Override
