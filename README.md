@@ -3,8 +3,8 @@ This app can convert homebrewery .txt files, as well as images of statblocks, in
 
 Before                     |  After
 :-------------------------:|:-------------------------:
-![original.txt](README assets/beforeTextConvert.png)  |  ![after using txt.png](README assets/afterTextConvert.png)
-![original.png](README assets/beforeOCR.png)  |  ![after using OCR.png](README assets/afterOCR.png)
+![original.txt](README_assets/beforeTextConvert.png)  |  ![after using txt.png](README_assets/afterTextConvert.png)
+![original.png](README_assets/beforeOCR.png)  |  ![after using OCR.png](README_assets/afterOCR.png)
 
 # Usage
 ## Requirements
@@ -30,7 +30,7 @@ With this done, you can run the application by simply running the Main file. The
 
 ## Running
 The resulting GUI will look something like this. \
-![app.png](README assets/app.png) \
+![app.png](README_assets/app.png) \
 Enter or select and input file/folder. Note that only OCR currently supports folders.
 Then enter or select a file as the output path. Selected files will be overwritten. 
 If you would like to convert images, click use ocr. \
