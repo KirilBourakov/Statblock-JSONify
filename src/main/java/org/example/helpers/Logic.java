@@ -64,7 +64,7 @@ public class Logic{
         if (line.length() > 1 && lastline.equals("___") && line.charAt(0) == '>'){
             ReadingStatblock = true;
         }
-        boolean endOfStatBlockFound = (line.length() == 0 || line.charAt(0) != '>');
+        boolean endOfStatBlockFound = (line.isEmpty() || line.charAt(0) != '>');
         if (ReadingStatblock && endOfStatBlockFound){
             ReadingStatblock = false;
             finishedReading = true;
@@ -80,9 +80,7 @@ public class Logic{
         if (in.isDirectory()) {
             try {
                 Path directoryPath = Paths.get(input);
-                inputs = new ArrayList<>(
-                    Files.list(directoryPath).filter(Files::isRegularFile).map(Path::toAbsolutePath).map(Path::toString).collect(Collectors.toList())
-                );
+                inputs = Files.list(directoryPath).filter(Files::isRegularFile).map(Path::toAbsolutePath).map(Path::toString).collect(Collectors.toCollection(ArrayList::new));
             } catch (IOException e) {
                 System.err.println("An error occurred while listing files: " + e.getMessage());
             }
