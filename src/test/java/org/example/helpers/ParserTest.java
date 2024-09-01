@@ -60,7 +60,8 @@ class ParserTest {
 
     @Test
     void handleMalformedStats() {
-//        TODO: add test to handle a stat with a 30
         assertEquals(new ArrayList<>(Arrays.asList("2", "15", "8", "2", "12", "4")), Parser.handleMalformedStats("2-4152812412143"));
+        assertEquals(new ArrayList<>(Arrays.asList("30", "11", "30", "3", "11", "11")), Parser.handleMalformedStats("30+10 11+0 30+10 3-4 110 110"));
+
     }
 }

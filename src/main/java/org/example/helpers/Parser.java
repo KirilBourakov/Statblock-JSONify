@@ -147,12 +147,12 @@ public class Parser {
                 finalStats.add(stat);
             } else {
                 stat = reverseString(stat + statNumbers.charAt(i-1));
-                System.out.println("stats: " + stat);
                 i--;
                 if(Character.getNumericValue(c) == Math.abs(roundDownDivision(Integer.parseInt(stat)))){
                     finalStats.add(stat);
                 } else {
                     finalStats.add("30");
+                    i--;
                 }
             }
             i--;
