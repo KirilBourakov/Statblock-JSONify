@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Changed frame and title">
-      <change afterPath="$PROJECT_DIR$/README assets/afterOCR.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README assets/afterTextConvert.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README assets/app.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README assets/beforeOCR.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README assets/beforeTextConvert.png" afterDir="false" />
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Updated README">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +55,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main (1).executor": "Run",
+    "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
     "JUnit.CreatureManagerTest.executor": "Run",
     "JUnit.CreatureManagerTest.getPointer.executor": "Run",
@@ -113,8 +110,21 @@
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="converter" />
       <extension name="coverage">
@@ -172,22 +182,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ParserTest.toTitleCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.helpers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.helpers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
-      <option name="METHOD_NAME" value="toTitleCase" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -201,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
         <item itemvalue="JUnit.ParserTest.handleMalformedStats" />
-        <item itemvalue="JUnit.ParserTest.toTitleCase" />
       </list>
     </recent_temporary>
   </component>
@@ -322,7 +316,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725202787929</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Updated README">
+      <option name="closed" value="true" />
+      <created>1725203124727</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1725203124727</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated README">
+      <option name="closed" value="true" />
+      <created>1725203187772</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1725203187772</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -339,7 +349,8 @@
     <MESSAGE value="Fixed issues found by ide" />
     <MESSAGE value="Fixed missed issues in CreatureFactory" />
     <MESSAGE value="Changed frame and title" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed frame and title" />
+    <MESSAGE value="Updated README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -57,10 +57,19 @@ public class Parser {
 
             line = line.substring(line.indexOf(title) + title.length()).trim();
             String[] savelist = line.split("\\s+");
-
+            for (String save : savelist){
+                System.out.println(save);
+            }
             for (int i = 0; i < savelist.length; i += 2) {
                 String key = savelist[i].toLowerCase();
                 String value = savelist[i+1];
+//                TODO: test for animal handling
+//                To handle several word abilities
+                if (Parser.removeNonNumeric(value).isEmpty()){
+                    key += " " + value;
+                    value = savelist[i+2];
+                    i++;
+                }
                 finalMap.put(key, value);
             }   
         }
