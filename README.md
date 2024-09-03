@@ -50,6 +50,6 @@ TODO:
  - add updating of module is given an existing json target as output
  - handle errors in OCR
 - add support for modern homebrewery stayblocks
-- fix bugs when using the app several times.
+- Handle objects
 
 Assets taken from [Iconpacks.net](https://www.iconpacks.net/)
