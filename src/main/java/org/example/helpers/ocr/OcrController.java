@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class OcrController {
-    private static String pathToPython;
-
     public static ArrayList<String> read(String filepath){
-        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, "target/scripts/ocr/reader.py", filepath);
+        String path = Paths.get(System.getProperty("user.dir"), "scripts/ocr/reader.py").toString();
+        String pathToPython =  Paths.get(System.getProperty("user.dir"), "ocr_venv/Scripts/python.exe").toString();
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToPython, path, filepath);
         System.out.println(pathToPython);
         try {
             Process process = processBuilder.start();
@@ -33,7 +33,9 @@ public class OcrController {
     }
 
     public static int setup(){
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "target/scripts/ocr/setup.py");
+        String path = Paths.get(System.getProperty("user.dir"), "scripts/ocr/setup.py").toString();
+        ProcessBuilder processBuilder = new ProcessBuilder("python", path);
+        System.out.println("path: " + path);
 
         try {
             Process process = processBuilder.start();
@@ -41,9 +43,9 @@ public class OcrController {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
-                if (isFile(line)) {
-                    pathToPython = line;
-                }
+//                if (isFile(line)) {
+//                    pathToPython = line;
+//                }
             }
             
             // Wait for the process to complete

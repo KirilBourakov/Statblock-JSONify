@@ -47,4 +47,4 @@ def setup(venv_dir: str, packages: list):
     print(python_executable)
 
 if __name__ == "__main__":
-    setup("target/scripts/ocr_venv", ["pytesseract", "pillow"])
+    setup("ocr_venv", ["pytesseract", "pillow"])

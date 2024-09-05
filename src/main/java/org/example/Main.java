@@ -32,21 +32,37 @@ public class Main {
     static JFrame frame;
     static JFileChooser fileChooser;
     static JCheckBox OCRBox;
-    static JLabel converstionStatus;
+    static JLabel conversionStatus;
 
     static HashMap<String, JTextField> textfields = new HashMap<>();
     static Logic logic = new Logic();
     
     public static void main(String[] args){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        if (args.length > 0){
+            if(args.length == 3){
+                if (Objects.equals(args[0].toLowerCase(), "osr")){
+                    boolean response = logic.imgToJSON(args[1], args[2], new JLabel());
+                    System.out.println("Response: " + response);
+                }
+                if (Objects.equals(args[0].toLowerCase(), "txt")){
+                    boolean response = logic.txtToJSON(args[1], args[2]);
+                    System.out.println("Response: " + response);
+                }
+            } else {
+                System.out.println("Incorrect number of arguments.");
+            }
+        } else {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                     IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            frame = new JFrame();
+            fileChooser = new JFileChooser(".");
+
+            createGUI();
         }
-        frame = new JFrame();
-        fileChooser = new JFileChooser(".");
-        
-        createGUI();
     }
 
     private static void createGUI(){
@@ -67,8 +83,8 @@ public class Main {
 
         createSubmitButton();
 
-        converstionStatus = new JLabel();
-        frame.add(converstionStatus);
+        conversionStatus = new JLabel();
+        frame.add(conversionStatus);
 
         frame.setTitle("Converter");
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/images/convert.png")));
@@ -143,7 +159,7 @@ public class Main {
                 String outputFile = textfields.get("output").getText();
                 boolean response;
                 if (OCRBox.isSelected()){
-                    response = logic.imgToJSON(input, outputFile, converstionStatus);
+                    response = logic.imgToJSON(input, outputFile, conversionStatus);
                 } else {
                     response = logic.txtToJSON(input, outputFile);
                 }

@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Updated README">
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Added mvn wrappers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scripts/ocr/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scripts/ocr/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +42,13 @@
     &quot;accountId&quot;: &quot;6ddfdffa-1330-4cfc-a81a-d39f0a7d28b0&quot;
   }
 }</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
@@ -56,6 +64,7 @@
   "keyToString": {
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
+    "Application.Main OSR test.executor": "Run",
     "Application.Main.executor": "Run",
     "JUnit.CreatureManagerTest.executor": "Run",
     "JUnit.CreatureManagerTest.getPointer.executor": "Run",
@@ -79,18 +88,13 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Core/Desktop/Projects/homebrewery to json/README assets",
+    "last_opened_file_path": "D:/Core/Desktop/Projects/Statblock-JSONify/target",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="QodanaReportsService">
-    <option name="descriptions">
-      <ReportDescription localRun="true" path="C:\Users\Kiril\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="59a543a8-2f93-49e2-ab11-0092ea9e1c2f" reportId="homebrewery to json/qodana/2024-09-01" />
-    </option>
-  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\README assets" />
@@ -110,62 +114,7 @@
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (2)">
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ParserTest.handleMalformedStats" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="converter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.helpers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.helpers" />
-      <option name="MAIN_CLASS_NAME" value="org.example.helpers.ParserTest" />
-      <option name="METHOD_NAME" value="handleMalformedStats" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="ParserTest.splitBeforeChar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
@@ -193,13 +142,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Main OSR test" />
+      <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (2)" />
-        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
-        <item itemvalue="JUnit.ParserTest.handleMalformedStats" />
       </list>
     </recent_temporary>
   </component>
@@ -332,8 +283,43 @@
       <option name="project" value="LOCAL" />
       <updated>1725203187772</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixed bug when handling stats and saves with several words in them">
+      <option name="closed" value="true" />
+      <created>1725323172074</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1725323172074</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Updated TODO">
+      <option name="closed" value="true" />
+      <created>1725323186020</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1725323186020</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added mvn wrappers">
+      <option name="closed" value="true" />
+      <created>1725323208199</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1725323208199</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored method names" />
@@ -350,7 +336,10 @@
     <MESSAGE value="Fixed missed issues in CreatureFactory" />
     <MESSAGE value="Changed frame and title" />
     <MESSAGE value="Updated README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated README" />
+    <MESSAGE value="Fixed bug when handling stats and saves with several words in them" />
+    <MESSAGE value="Updated TODO" />
+    <MESSAGE value="Added mvn wrappers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added mvn wrappers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
