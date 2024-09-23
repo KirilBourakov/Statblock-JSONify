@@ -38,6 +38,8 @@ public class Main {
     static Logic logic = new Logic();
     
     public static void main(String[] args){
+        System.out.println("RUNNING!");
+        System.out.println("RUNNING!");
         if (args.length > 0){
             if(args.length == 3){
                 if (Objects.equals(args[0].toLowerCase(), "osr")){
