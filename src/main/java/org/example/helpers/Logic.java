@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import javax.swing.JLabel;
+import javafx.scene.text.Text;
 
 import org.example.helpers.writer.NodeWriter;
 import org.example.helpers.ocr.OcrController;
@@ -71,7 +71,7 @@ public class Logic{
         }
     }
 
-    public boolean imgToJSON(String input, String outputFile, JLabel converstionStatus){
+    public boolean imgToJSON(String input, String outputFile, Text converstionStatus){
         converstionStatus.setText("Preparing OCR script...");
         OcrController.setup();
 

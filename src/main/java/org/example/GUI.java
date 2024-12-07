@@ -5,57 +5,59 @@ import javax.swing.*;
 import java.util.HashMap;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.control.CheckBox;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.AnchorPane;
 
 import org.example.helpers.Logic;
 
 public class GUI extends Application {
-    static JFrame frame;
-    static JFileChooser fileChooser;
-    static JCheckBox OCRBox;
-    static JLabel conversionStatus;
 
     static HashMap<String, JTextField> textfields = new HashMap<>();
     static Logic logic = new Logic();
+
+    private Text programStatus;
+    private TextField inField;
+    private TextField outField;
+    private CheckBox useOCR;
 
     public void start(Stage primaryStage){
         System.out.println("RUNNING!");
         primaryStage.setTitle("Converter");
 
         Label inLabel = new Label("Input");
-        TextField inField = new TextField();
+        inField = new TextField();
         inField.setPrefSize(250, 30);
         Button inButton = new Button("file");
+        inButton.setOnAction(this::handleFolder);
         Text inText = new Text("The input can be either a folder of a file. Files should be a .txt, or .jpg/.png using OCR.\nFolder inputs will try to convert all files within the folder.");
 
         Label outLabel = new Label("Output");
-        TextField outField = new TextField();
+        outField = new TextField();
         outField.setPrefSize(250, 30);
         Button outButton = new Button("file");
+        outButton.setOnAction(this::handleFolder);
         Text outText = new Text("The output location can be either a file or a folder.\nIf it is a folder, the output will be done in that folder, in a file named output.json");
 
-        CheckBox useOSR = new CheckBox();
+        useOCR = new CheckBox();
         Label OSRlabel = new Label("Use OSR");
 
-        Text status = new Text("Click to start");
+        programStatus = new Text();
         Button submit = new Button("Submit");
+        submit.setOnAction(this::handleSubmit);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setGridLinesVisible(true);
+//        grid.setGridLinesVisible(true);
         grid.setAlignment(Pos.CENTER);
 
         grid.add(inLabel, 0, 0);
@@ -70,15 +72,36 @@ public class GUI extends Application {
 
         grid.add(outText, 0, 3, 3, 1);
 
-        HBox pane = new HBox(useOSR, OSRlabel);
+        HBox pane = new HBox(useOCR, OSRlabel);
         grid.add(pane, 0,4);
 
-        grid.add(status, 0, 5, 2, 1);
+        grid.add(programStatus, 0, 5, 2, 1);
         grid.add(submit, 2, 5);
 
         Scene scene = new Scene (grid, 500, 270);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void handleFolder(ActionEvent event){
+        return;
+    }
+
+    private void handleSubmit(ActionEvent event){
+        String input = inField.getText();
+        String output = outField.getText();
+        boolean response;
+        if (useOCR.isSelected()){
+            response = logic.imgToJSON(input, output, programStatus);
+        } else {
+            response = logic.txtToJSON(input, output);
+        }
+
+        if (response) {
+            programStatus.setText("Success!");
+        } else {
+            programStatus.setText("Something went wrong.");
+        }
     }
 
 //    private static void createGUI(){
