@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="Added mvn wrappers">
+    <list default="true" id="23974267-c916-4b19-a449-61f5f9cdfef9" name="Changes" comment="fixed python scripts not being found">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/helpers/ocr/OcrController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scripts/ocr/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scripts/ocr/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +17,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -38,8 +37,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/thepug432/homebreweryJSON-converter.git&quot;,
-    &quot;accountId&quot;: &quot;6ddfdffa-1330-4cfc-a81a-d39f0a7d28b0&quot;
+    &quot;url&quot;: &quot;https://github.com/KirilBourakov/Statblock-JSONify.git&quot;,
+    &quot;accountId&quot;: &quot;a2d5d9ad-258b-40fb-ba2b-b973ed151ff9&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -50,7 +49,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -60,41 +59,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main OSR test.executor": "Run",
-    "Application.Main.executor": "Run",
-    "JUnit.CreatureManagerTest.executor": "Run",
-    "JUnit.CreatureManagerTest.getPointer.executor": "Run",
-    "JUnit.CreatureManagerTest.insertFromMapListOfMaps.executor": "Run",
-    "JUnit.CreatureManagerTest.insertLiteralList.executor": "Run",
-    "JUnit.CreatureManagerTest.movePointer.executor": "Run",
-    "JUnit.CreatureNodeTest.executor": "Coverage",
-    "JUnit.CreatureNodeTest.getObjectValue.executor": "Run",
-    "JUnit.CreatureNodeTest.setChild.executor": "Run",
-    "JUnit.OcrControllerTest.ReaderReadsProperly.executor": "Run",
-    "JUnit.OcrControllerTest.SetupReturns0.executor": "Run",
-    "JUnit.ParserTest.getFirstLetters.executor": "Run",
-    "JUnit.ParserTest.handleMalformedStats.executor": "Run",
-    "JUnit.ParserTest.isNumeric.executor": "Run",
-    "JUnit.ParserTest.punctuationSplitter.executor": "Run",
-    "JUnit.ParserTest.removeNonNumeric.executor": "Run",
-    "JUnit.ParserTest.replaceNonAlphaNumeric.executor": "Run",
-    "JUnit.ParserTest.splitBeforeChar.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Core/Desktop/Projects/Statblock-JSONify/target",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main OSR test.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureManagerTest.getPointer.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureManagerTest.insertFromMapListOfMaps.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureManagerTest.insertLiteralList.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureManagerTest.movePointer.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureNodeTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.CreatureNodeTest.getObjectValue.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CreatureNodeTest.setChild.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OcrControllerTest.ReaderReadsProperly.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OcrControllerTest.SetupReturns0.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.getFirstLetters.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.handleMalformedStats.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.isNumeric.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.punctuationSplitter.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.removeNonNumeric.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.replaceNonAlphaNumeric.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ParserTest.splitBeforeChar.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;javafx&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexb/Desktop/Statblock-JSONify&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\README assets" />
@@ -108,13 +110,29 @@
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources\images" />
       <recent name="D:\Core\Desktop\Projects\homebrewery to json\src\test\resources" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="org.example.helpers" />
       <recent name="org.example.Creature" />
       <recent name="org.example.helpers.ocr" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Run">
+    <configuration name="Run" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="converter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ParserTest.splitBeforeChar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="converter" />
       <extension name="coverage">
@@ -145,11 +163,12 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Main OSR test" />
+      <item itemvalue="Application.Run" />
       <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Run" />
         <item itemvalue="JUnit.ParserTest.splitBeforeChar" />
       </list>
     </recent_temporary>
@@ -307,7 +326,47 @@
       <option name="project" value="LOCAL" />
       <updated>1725323208199</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added javafx to dependencies">
+      <option name="closed" value="true" />
+      <created>1733415088867</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1733415088867</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Switched to JavaFX grid">
+      <option name="closed" value="true" />
+      <created>1733530674017</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1733530674017</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Updated handleSubmit">
+      <option name="closed" value="true" />
+      <created>1733531541536</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1733531541536</updated>
+    </task>
+    <task id="LOCAL-00022" summary="recreated basic functionality in javafx">
+      <option name="closed" value="true" />
+      <created>1733532877656</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1733532877656</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fixed python scripts not being found">
+      <option name="closed" value="true" />
+      <created>1733579115510</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1733579115510</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,16 +398,16 @@
     <MESSAGE value="Fixed bug when handling stats and saves with several words in them" />
     <MESSAGE value="Updated TODO" />
     <MESSAGE value="Added mvn wrappers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added mvn wrappers" />
+    <MESSAGE value="Added javafx to dependencies" />
+    <MESSAGE value="Switched to JavaFX grid" />
+    <MESSAGE value="Updated handleSubmit" />
+    <MESSAGE value="recreated basic functionality in javafx" />
+    <MESSAGE value="fixed python scripts not being found" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed python scripts not being found" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/org/example/helpers/ocr/OcrControllerTest.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/org/example/Creature/CreatureNodeTest.java</url>
           <line>14</line>

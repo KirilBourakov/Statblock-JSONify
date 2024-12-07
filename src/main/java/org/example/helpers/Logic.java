@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import javax.swing.JLabel;
+import javafx.scene.text.Text;
 
 import org.example.helpers.writer.NodeWriter;
 import org.example.helpers.ocr.OcrController;
@@ -71,9 +71,9 @@ public class Logic{
         }
     }
 
-    public boolean imgToJSON(String input, String outputFile, JLabel converstionStatus){
-        converstionStatus.setText("Preparing OCR script...");
-        OcrController.setup();
+    public boolean imgToJSON(String input, String outputFile, Text conversionStatus){
+        conversionStatus.setText("Preparing OCR script...");
+        int r = OcrController.setup();
 
         File in = new File(input);
         ArrayList<String> inputs = new ArrayList<>();
@@ -91,10 +91,10 @@ public class Logic{
         NodeWriter writer = new NodeWriter(outputFile, in.getName(), null);
         writer.start();
         for (String inputFile : inputs) {
-            converstionStatus.setText("Reading " + inputFile + "...");
+            conversionStatus.setText("Reading " + inputFile + "...");
             ArrayList<String> lines = OcrController.read(inputFile);
 
-            converstionStatus.setText("Converting " + inputFile + "...");
+            conversionStatus.setText("Converting " + inputFile + "...");
 
             int lineCount = 0;
             boolean addedStats = false;
@@ -147,7 +147,7 @@ public class Logic{
 
         writer.finish();
 
-        converstionStatus.setText("Converting Finished!");
+        conversionStatus.setText("Converting Finished!");
 
         return true;
     }
