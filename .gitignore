@@ -42,3 +42,5 @@ build/
 output.json
 /userInfo/*
 /src/test/tests/
+
+ocr_venv
