@@ -1,9 +1,13 @@
 package org.example;
 
 import java.io.File;
+import java.net.URL;
+import java.util.Objects;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -34,21 +38,30 @@ public class GUI extends Application {
     private final DirectoryChooser directoryChooser = new DirectoryChooser();
 
     public void start(Stage primaryStage){
-        System.out.println("RUNNING!");
         primaryStage.setTitle("Converter");
+        primaryStage.getIcons().add(new Image(
+                Objects.requireNonNull(GUI.class.getResource("/images/convert.png")).toString()
+        ));
+
+        Image imageDecline = new Image(Objects.requireNonNull(GUI.class.getResource("/images/folder.png")).toString());
+
 
         Label inLabel = new Label("Input");
         inField = new TextField();
         inField.setPrefSize(250, 30);
         inDir = new CheckBox();
-        inButton = new Button("file");
+        inButton = new Button();
+        ImageView inButtonImg = new ImageView(imageDecline);
+        inButton.setGraphic(inButtonImg);
         inButton.setOnAction(this::handleFolder);
         Text inText = new Text("The input can be either a folder of a file. Files should be a .txt, or .jpg/.png using OCR.\nFolder inputs will try to convert all files within the folder.");
 
         Label outLabel = new Label("Output");
         outField = new TextField();
         outField.setPrefSize(250, 30);
-        Button outButton = new Button("file");
+        Button outButton = new Button();
+        ImageView outButtonImg = new ImageView(imageDecline);
+        outButton.setGraphic(outButtonImg);
         outButton.setOnAction(this::handleFolder);
         Text outText = new Text("The output location can must be a file. Existing files will be overwritten.");
 
@@ -68,7 +81,10 @@ public class GUI extends Application {
         grid.add(inLabel, 0, 0);
         grid.add(inField, 1, 0);
 
+
         HBox pane1 = new HBox(inButton, inDir, new Text("select folder"));
+        pane1.setAlignment(Pos.CENTER_LEFT);
+        pane1.setSpacing(5);
         grid.add(pane1, 2, 0);
 
         grid.add(inText, 0, 1, 3, 1);
