@@ -1,7 +1,6 @@
 package org.example;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Objects;
 
 import javafx.application.Application;
@@ -43,7 +42,9 @@ public class GUI extends Application {
                 Objects.requireNonNull(GUI.class.getResource("/images/convert.png")).toString()
         ));
 
-        Image imageDecline = new Image(Objects.requireNonNull(GUI.class.getResource("/images/folder.png")).toString());
+        Image imageDecline = new Image(Objects.requireNonNull(
+                GUI.class.getResource("/images/folder.png")).toString()
+        );
 
 
         Label inLabel = new Label("Input");
